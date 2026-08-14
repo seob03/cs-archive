@@ -52,3 +52,65 @@ Additional verification:
 ## Concerns
 
 None.
+
+## Fix Round 1
+
+### Finding addressed
+
+The homepage hero now reports the real category total from `categories.length` in addition to its published-note total.
+
+### Changed files
+
+- `quartz/components/StudyNotes.tsx`
+- `quartz/components/StudyNotes.test.tsx`
+- `.superpowers/sdd/2026-08-15-cslog-inspired-redesign/task-2-report.md`
+
+### Test evidence
+
+Covering test file: `quartz/components/StudyNotes.test.tsx`
+
+RED command:
+
+```text
+npx tsx --test quartz/components/StudyNotes.test.tsx
+```
+
+RED output:
+
+```text
+not ok 2 - renders the dynamic study catalog structure on the home page
+error: The input did not match the regular expression /2 CATEGORIES/.
+# tests 2
+# pass 1
+# fail 1
+```
+
+GREEN command:
+
+```text
+npx tsx --test quartz/components/StudyNotes.test.tsx
+```
+
+GREEN output:
+
+```text
+# tests 2
+# suites 1
+# pass 2
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+```
+
+Additional checks: `npx prettier --check quartz/components/StudyNotes.tsx quartz/components/StudyNotes.test.tsx`, `npx tsc --noEmit`, and `git diff --check` passed.
+
+### Implementation and self-review
+
+- Updated the existing rendered-homepage test before production code to require `2 CATEGORIES` for the two catalog categories in its fixtures.
+- Added only `{categories.length} CATEGORIES` to the existing hero publication line, preserving the existing real note count and catalog-derived category source.
+- Reviewed the four-line source/test diff: it does not recreate category logic, does not alter filtering, and preserves server rendering for every card.
+
+### Commit
+
+`bd26bd1b42efb07f89550d3eb5f9153089529f24` — `fix: show category total in homepage hero`
