@@ -113,4 +113,4 @@ Additional checks: `npx prettier --check quartz/components/StudyNotes.tsx quartz
 
 ### Commit
 
-`bd26bd1b42efb07f89550d3eb5f9153089529f24` — `fix: show category total in homepage hero`
+`bd26bd1efd745cd0179424a9952af640bae08616` — `fix: show category total in homepage hero`
