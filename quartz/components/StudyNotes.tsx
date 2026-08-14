@@ -59,7 +59,9 @@ const StudyNotes: QuartzComponent = ({ fileData, allFiles }: QuartzComponentProp
           <h1 id="study-notes-title" class="study-hero-title study-hero-accent">
             배운 CS를 오래 남기는 공간
           </h1>
-          <p class="study-hero-publication">{notes.length} NOTES PUBLISHED</p>
+          <p class="study-hero-publication">
+            {notes.length} NOTES PUBLISHED · {categories.length} CATEGORIES
+          </p>
         </div>
       </header>
 
