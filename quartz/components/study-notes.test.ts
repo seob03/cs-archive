@@ -7,7 +7,7 @@ import { QuartzPluginData } from "../plugins/vfile"
 const modified = (value: string) => new Date(`${value}T00:00:00.000Z`)
 
 describe("study note catalog", () => {
-  it("builds a folder-driven catalog and excludes index pages", () => {
+  it("builds a folder-driven catalog and excludes index pages and virtual 404", () => {
     const index = buildStudyNotesIndex([
       {
         slug: "backend/spring/jpa" as FullSlug,
@@ -43,6 +43,10 @@ describe("study note catalog", () => {
       {
         slug: "index" as FullSlug,
         frontmatter: { title: "홈" },
+      },
+      {
+        slug: "404" as FullSlug,
+        frontmatter: { title: "Not Found" },
       },
       {
         slug: "readme" as FullSlug,

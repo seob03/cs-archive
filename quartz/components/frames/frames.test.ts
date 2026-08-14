@@ -1,9 +1,11 @@
 import test, { describe } from "node:test"
 import assert from "node:assert"
+import { render } from "preact-render-to-string"
 import { resolveFrame, frameRegistry } from "./index"
 import { DefaultFrame } from "./DefaultFrame"
 import { FullWidthFrame } from "./FullWidthFrame"
 import type { PageFrame } from "./types"
+import type { QuartzComponent, QuartzComponentProps } from "../types"
 
 const customFrame: PageFrame = {
   name: "custom-test-frame",
@@ -37,5 +39,32 @@ describe("resolveFrame", () => {
     frameRegistry.register("custom-test-frame", customFrame, "test-plugin")
     const result = resolveFrame("totally-unknown")
     assert.strictEqual(result, DefaultFrame)
+  })
+})
+
+describe("DefaultFrame", () => {
+  test("omits the source article and separator for the generated home catalog", () => {
+    const component = (() => "catalog source body") as QuartzComponent
+    const componentData = {
+      fileData: { slug: "index" },
+      children: [],
+    } as QuartzComponentProps
+
+    const html = render(
+      DefaultFrame.render({
+        componentData,
+        head: component,
+        header: [],
+        beforeBody: [],
+        pageBody: component,
+        afterBody: [],
+        left: [],
+        right: [],
+        footer: [],
+      }),
+    )
+
+    assert.doesNotMatch(html, /catalog source body/)
+    assert.doesNotMatch(html, /<hr\/>/)
   })
 })

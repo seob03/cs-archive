@@ -21,6 +21,8 @@ export const DefaultFrame: PageFrame = {
     right,
     footer,
   }: PageFrameProps) {
+    const isStudyHome = componentData.fileData.slug === "index"
+
     return (
       <>
         <div class="left sidebar">
@@ -41,8 +43,8 @@ export const DefaultFrame: PageFrame = {
               ))}
             </div>
           </div>
-          <Content {...componentData} />
-          <hr />
+          {!isStudyHome && <Content {...componentData} />}
+          {!isStudyHome && <hr />}
           <div class="page-footer">
             {afterBody.map((BodyComponent) => (
               <BodyComponent {...componentData} />

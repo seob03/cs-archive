@@ -66,7 +66,7 @@ function tagsFrom(file: QuartzPluginData): string[] {
 export function buildStudyNotesIndex(files: QuartzPluginData[]): StudyNotesIndex {
   const notes = files
     .flatMap((file) => {
-      if (typeof file.slug !== "string") return []
+      if (typeof file.slug !== "string" || file.slug === "404") return []
 
       const segments = file.slug
         .split("/")
