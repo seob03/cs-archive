@@ -26,10 +26,12 @@
 ### Task 1: Define and test note-card data selection
 
 **Files:**
+
 - Create: `quartz/components/study-notes.ts`
 - Test: `quartz/components/study-notes.test.ts`
 
 **Interfaces:**
+
 - Produces `StudyNoteCard` with `slug`, `title`, `excerpt`, and `categories` fields for the renderer.
 - Produces `selectStudyNotes(files: QuartzPluginData[]): StudyNoteCard[]`.
 - Produces `summarizeNote(description?: string, fallback?: string): string`.
@@ -50,7 +52,10 @@ describe("study note data", () => {
       { slug: "backend/other-note", frontmatter: { title: "Other" }, description: "other" },
     ])
 
-    assert.deepEqual(cards.map((card) => card.title), ["A note", "Z note"])
+    assert.deepEqual(
+      cards.map((card) => card.title),
+      ["A note", "Z note"],
+    )
     assert.deepEqual(cards[0]?.categories, ["BACKEND", "SPRING"])
   })
 
@@ -79,7 +84,10 @@ export type StudyNoteCard = {
 }
 
 export function summarizeNote(description?: string, fallback = "노트 내용을 열어보세요."): string {
-  const normalized = unescapeHTML(description ?? "").replace(/<[^>]+>/g, "").replace(/\s+/g, " ").trim()
+  const normalized = unescapeHTML(description ?? "")
+    .replace(/<[^>]+>/g, "")
+    .replace(/\s+/g, " ")
+    .trim()
   return (normalized || fallback).slice(0, 150)
 }
 
@@ -118,10 +126,12 @@ git commit -m "test: define study note card data"
 ### Task 2: Render the automatic home card component
 
 **Files:**
+
 - Create: `quartz/components/StudyNotes.tsx`
 - Create: `quartz/components/StudyNotes.test.tsx`
 
 **Interfaces:**
+
 - Consumes `selectStudyNotes` and `summarizeNote` from Task 1.
 - Produces a `StudyNotes` `QuartzComponent` that returns `null` unless `fileData.slug === "index"`.
 - Renders `.study-notes`, `.study-notes-filters`, `.study-notes-grid`, and `.study-note-card` markup.
@@ -134,12 +144,17 @@ import assert from "node:assert/strict"
 import { render } from "preact-render-to-string"
 import StudyNotes from "./StudyNotes"
 
-const props = (slug: string) => ({
-  fileData: { slug },
-  allFiles: [
-    { slug: "backend/spring/@bean", frontmatter: { title: "@Bean" }, description: "Register a bean." },
-  ],
-}) as any
+const props = (slug: string) =>
+  ({
+    fileData: { slug },
+    allFiles: [
+      {
+        slug: "backend/spring/@bean",
+        frontmatter: { title: "@Bean" },
+        description: "Register a bean.",
+      },
+    ],
+  }) as any
 
 describe("StudyNotes component", () => {
   it("does not render on a note page", () => {
@@ -195,11 +210,13 @@ git commit -m "feat: render study note cards on home"
 ### Task 3: Connect the component and simplify layout configuration
 
 **Files:**
+
 - Modify: `quartz.ts`
 - Modify: `quartz.config.yaml`
 - Modify: `content/index.md`
 
 **Interfaces:**
+
 - Consumes the `StudyNotes` component from Task 2.
 - Replaces the YAML-created `PageTypeDispatcher` emitter with a new dispatcher whose default `beforeBody` list includes `StudyNotes`.
 - Keeps the exported `layout` in sync with the dispatcher so both runtime paths use the same component layout.
@@ -252,9 +269,11 @@ git commit -m "feat: simplify notes layout and navigation"
 ### Task 4: Implement the reading-first visual system
 
 **Files:**
+
 - Modify: `quartz/styles/custom.scss`
 
 **Interfaces:**
+
 - Styles the markup from Task 2 and existing Quartz search/graph/TOC markup without changing community package code.
 
 - [ ] **Step 1: Remove obsolete home hero/card selectors and add the compact archive styles**
@@ -297,6 +316,7 @@ git commit -m "style: refine study notes reading experience"
 ### Task 5: Verify production output and local interaction
 
 **Files:**
+
 - Modify only if verification finds a concrete regression in the files above.
 
 - [ ] **Step 1: Run the complete automated checks**
@@ -340,4 +360,3 @@ Re-read `docs/superpowers/specs/2026-08-14-study-notes-clean-layout-design.md` a
 git add quartz/components/study-notes.ts quartz/components/study-notes.test.ts quartz/components/StudyNotes.tsx quartz/components/StudyNotes.test.tsx quartz.ts quartz.config.yaml content/index.md quartz/styles/custom.scss
 git commit -m "fix: polish study notes verification findings"
 ```
-
