@@ -1,12 +1,12 @@
 # yaml-language-server: $schema=./quartz/plugins/quartz-plugins.schema.json
 configuration:
-  pageTitle: Quartz 5
+  pageTitle: "SEOB / CS NOTES"
   pageTitleSuffix: ""
   enableSPA: true
   enablePopovers: true
   analytics:
     provider: plausible
-  locale: en-US
+  locale: ko-KR
   baseUrl: seob03.github.io/cs-note
   ignorePatterns:
     - private
@@ -18,30 +18,30 @@ configuration:
     fontOrigin: googleFonts
     cdnCaching: true
     typography:
-      header: Schibsted Grotesk
-      body: Source Sans Pro
-      code: IBM Plex Mono
+      header: Inter
+      body: Inter
+      code: JetBrains Mono
     colors:
       lightMode:
-        light: "#faf8f8"
-        lightgray: "#e5e5e5"
-        gray: "#b8b8b8"
-        darkgray: "#4e4e4e"
-        dark: "#2b2b2b"
-        secondary: "#284b63"
-        tertiary: "#84a59d"
-        highlight: rgba(143, 159, 169, 0.15)
-        textHighlight: "#fff23688"
+        light: "#f8f8f6"
+        lightgray: "#e8e8eb"
+        gray: "#8b8b95"
+        darkgray: "#51515b"
+        dark: "#161618"
+        secondary: "#5b5ce2"
+        tertiary: "#7c6ee6"
+        highlight: "rgba(91, 92, 226, 0.08)"
+        textHighlight: "rgba(255, 215, 64, 0.55)"
       darkMode:
-        light: "#161618"
-        lightgray: "#393639"
-        gray: "#646464"
-        darkgray: "#d4d4d4"
-        dark: "#ebebec"
-        secondary: "#7b97aa"
-        tertiary: "#84a59d"
-        highlight: rgba(143, 159, 169, 0.15)
-        textHighlight: "#b3aa0288"
+        light: "#0f0f12"
+        lightgray: "#25252a"
+        gray: "#73737c"
+        darkgray: "#c9c9d1"
+        dark: "#f5f5f7"
+        secondary: "#9b9cf7"
+        tertiary: "#b8a9ff"
+        highlight: "rgba(91, 92, 226, 0.08)"
+        textHighlight: "rgba(129, 140, 248, 0.45)"
 plugins:
   - source: "@quartz-community/created-modified-date"
     enabled: true
@@ -112,6 +112,10 @@ plugins:
     order: 92
   - source: "@quartz-community/quartz-fonts"
     enabled: true
+    options:
+      header: Inter
+      body: Inter
+      code: JetBrains Mono
   - source: "@quartz-themes/core"
     enabled: true
     options:
@@ -165,7 +169,7 @@ plugins:
       position: left
       priority: 50
   - source: "@quartz-community/graph"
-    enabled: true
+    enabled: false
     layout:
       position: right
       priority: 10
@@ -178,7 +182,7 @@ plugins:
       groupOptions:
         grow: true
   - source: "@quartz-community/backlinks"
-    enabled: true
+    enabled: false
     layout:
       position: right
       priority: 50
@@ -232,8 +236,8 @@ plugins:
     enabled: true
     options:
       links:
-        GitHub: https://github.com/jackyzha0/quartz
-        Discord Community: https://discord.gg/cRFFHYye7t
+        GitHub: https://github.com/seob03/cs-note
+        Website: https://seob03.github.io/cs-note
     layout:
       position: footer
       priority: 50
