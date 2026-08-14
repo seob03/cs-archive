@@ -164,19 +164,37 @@ plugins:
   - source: "@quartz-community/tag-page"
     enabled: true
   - source: "@quartz-community/explorer"
-    enabled: true
+    enabled: false
     layout:
       position: left
       priority: 50
   - source: "@quartz-community/graph"
-    enabled: false
+    enabled: true
+    options:
+      localGraph:
+        depth: 1
+        scale: 1
+        repelForce: 0.65
+        centerForce: 0.3
+        linkDistance: 24
+        fontSize: 0.55
+        opacityScale: 0.9
+        showTags: false
+        removeTags: []
+        focusOnHover: true
     layout:
       position: right
       priority: 10
   - source: "@quartz-community/search"
     enabled: true
+    options:
+      enablePreview: false
+      fieldPriority:
+        - title
+        - content
+        - tags
     layout:
-      position: left
+      position: header
       priority: 20
       group: toolbar
       groupOptions:
@@ -191,11 +209,13 @@ plugins:
     layout:
       position: beforeBody
       priority: 10
+      condition: not-index
   - source: "@quartz-community/content-meta"
     enabled: true
     layout:
       position: beforeBody
       priority: 20
+      condition: not-index
   - source: "@quartz-community/tag-list"
     enabled: false
     layout:
@@ -204,18 +224,18 @@ plugins:
   - source: "@quartz-community/page-title"
     enabled: true
     layout:
-      position: left
+      position: header
       priority: 10
   - source: "@quartz-community/darkmode"
     enabled: true
     layout:
-      position: left
+      position: header
       priority: 30
       group: toolbar
   - source: "@quartz-community/reader-mode"
     enabled: true
     layout:
-      position: left
+      position: header
       priority: 35
       group: toolbar
   - source: "@quartz-community/breadcrumbs"
@@ -244,7 +264,7 @@ plugins:
   - source: "@quartz-community/recent-notes"
     enabled: false
   - source: "@quartz-community/spacer"
-    enabled: true
+    enabled: false
     options: {}
     order: 25
     layout:
@@ -272,6 +292,7 @@ plugins:
       position: beforeBody
       priority: 15
       display: all
+      condition: not-index
   - source: "@quartz-community/obsidian-plugin-excalidraw"
     enabled: true
     options:
