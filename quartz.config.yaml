@@ -1,6 +1,6 @@
 # yaml-language-server: $schema=./quartz/plugins/quartz-plugins.schema.json
 configuration:
-  pageTitle: "SEOB / CS NOTES"
+  pageTitle: "seob.log()"
   pageTitleSuffix: ""
   enableSPA: true
   enablePopovers: true
@@ -169,7 +169,7 @@ plugins:
       position: left
       priority: 50
   - source: "@quartz-community/graph"
-    enabled: true
+    enabled: false
     options:
       localGraph:
         depth: 1
@@ -234,7 +234,7 @@ plugins:
       priority: 30
       group: toolbar
   - source: "@quartz-community/reader-mode"
-    enabled: true
+    enabled: false
     layout:
       position: header
       priority: 35
@@ -277,7 +277,7 @@ plugins:
     options: {}
     order: 50
   - source: "@quartz-community/note-properties"
-    enabled: true
+    enabled: false
     options:
       includeAll: false
       includedProperties:
