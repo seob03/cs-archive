@@ -1,31 +1,20 @@
 import { QuartzComponent, QuartzComponentProps } from "./types"
 import { resolveRelative } from "../util/path"
-import { selectStudyNotes } from "./study-notes"
-
-const filters = [
-  { value: "all", label: "ALL NOTES" },
-  { value: "backend", label: "BACKEND" },
-  { value: "spring", label: "SPRING" },
-]
+import { buildStudyNotesIndex, formatNoteDate } from "./study-notes"
 
 const studyNotesScript = `
 const initStudyNotes = () => {
-  const root = document.querySelector(".study-notes")
+  const root = document.querySelector(".study-home")
   if (!root || root.dataset.studyNotesReady === "true") return
 
   const filterButtons = Array.from(root.querySelectorAll("[data-study-filter]"))
   const cards = Array.from(root.querySelectorAll("[data-study-card]"))
-  const count = root.querySelector("[data-study-count]")
-  const empty = root.querySelector("[data-study-empty]")
 
   const applyFilter = (filter) => {
-    let visible = 0
-
     for (const card of cards) {
-      const categories = (card.getAttribute("data-categories") || "").split(" ")
-      const shouldShow = filter === "all" || categories.includes(filter)
+      const category = card.getAttribute("data-study-category")
+      const shouldShow = filter === "ALL" || category === filter
       card.hidden = !shouldShow
-      if (shouldShow) visible += 1
     }
 
     for (const button of filterButtons) {
@@ -33,22 +22,19 @@ const initStudyNotes = () => {
       button.classList.toggle("is-active", isActive)
       button.setAttribute("aria-pressed", String(isActive))
     }
-
-    if (count) count.textContent = visible + " NOTES"
-    if (empty) empty.hidden = visible !== 0
   }
 
   const onClick = (event) => {
     if (!(event.target instanceof Element)) return
     const button = event.target.closest("[data-study-filter]")
     if (!button) return
-    applyFilter(button.getAttribute("data-study-filter") || "all")
+    applyFilter(button.getAttribute("data-study-filter") || "ALL")
   }
 
   root.addEventListener("click", onClick)
   root.dataset.studyNotesReady = "true"
   const activeFilter = root.querySelector("[data-study-filter].is-active")
-  applyFilter(activeFilter?.getAttribute("data-study-filter") || "all")
+  applyFilter(activeFilter?.getAttribute("data-study-filter") || "ALL")
 
   if (typeof window.addCleanup === "function") {
     window.addCleanup(() => root.removeEventListener("click", onClick))
@@ -63,58 +49,64 @@ initStudyNotes()
 const StudyNotes: QuartzComponent = ({ fileData, allFiles }: QuartzComponentProps) => {
   if (fileData.slug !== "index") return null
 
-  const notes = selectStudyNotes(allFiles)
+  const { notes, categories } = buildStudyNotesIndex(allFiles)
 
   return (
-    <section class="study-notes" aria-labelledby="study-notes-title">
-      <div class="study-notes-heading">
-        <div>
-          <p class="study-notes-eyebrow">BACKEND / SPRING</p>
-          <h1 id="study-notes-title">Study notes</h1>
+    <section class="study-home" aria-labelledby="study-notes-title">
+      <header class="study-hero">
+        <div class="study-frame">
+          <p class="study-hero-eyebrow">CS STUDY ARCHIVE</p>
+          <h1 id="study-notes-title" class="study-hero-title study-hero-accent">
+            배운 CS를 오래 남기는 공간
+          </h1>
+          <p class="study-hero-publication">{notes.length} NOTES PUBLISHED</p>
         </div>
-        <span class="study-notes-count" data-study-count>
-          {notes.length} NOTES
-        </span>
-      </div>
+      </header>
 
-      <nav class="study-notes-filters" aria-label="Note categories">
-        {filters.map((filter, index) => (
+      <nav class="study-category-bar" aria-label="노트 카테고리">
+        <div class="study-frame">
           <button
             type="button"
-            class={`study-notes-filter${index === 0 ? " is-active" : ""}`}
-            data-study-filter={filter.value}
-            aria-pressed={index === 0}
+            class="study-category-filter is-active"
+            data-study-filter="ALL"
+            aria-pressed
           >
-            {filter.label}
+            ALL <span>{notes.length}</span>
           </button>
-        ))}
+          {categories.map((category) => (
+            <button
+              type="button"
+              class="study-category-filter"
+              data-study-filter={category.key}
+              aria-pressed={false}
+            >
+              {category.label} <span>{category.count}</span>
+            </button>
+          ))}
+        </div>
       </nav>
 
-      <div class="study-notes-grid">
-        {notes.map((note, index) => (
-          <a
-            class="study-note-card internal"
-            data-study-card
-            data-categories={note.categories.map((category) => category.toLowerCase()).join(" ")}
-            href={resolveRelative(fileData.slug!, note.slug)}
-            title={note.title}
-          >
-            <span class="study-note-card-number">{String(index + 1).padStart(2, "0")}</span>
-            <span class="study-note-card-body">
-              <span class="study-note-card-path">{note.categories.join(" / ")}</span>
-              <span class="study-note-card-title">{note.title}</span>
-              <span class="study-note-card-excerpt">{note.excerpt}</span>
-            </span>
-            <span class="study-note-card-arrow" aria-hidden="true">
-              ↗
-            </span>
-          </a>
-        ))}
+      <div class="study-catalog">
+        <div class="study-frame">
+          <div class="study-card-grid">
+            {notes.map((note, index) => (
+              <a
+                class={`study-card${index === 0 ? " is-featured" : ""} internal`}
+                data-study-card
+                data-study-category={note.categoryKey}
+                href={resolveRelative(fileData.slug!, note.slug)}
+                title={note.title}
+              >
+                <span class="study-card-badge">{note.categoryLabel}</span>
+                <span class="study-card-date">{formatNoteDate(note.modified)}</span>
+                <span class="study-card-title">{note.title}</span>
+                <span class="study-card-excerpt">{note.excerpt}</span>
+                <span class="study-card-path">{note.path.join(" / ") || note.categoryLabel}</span>
+              </a>
+            ))}
+          </div>
+        </div>
       </div>
-
-      <p class="study-notes-empty" data-study-empty hidden>
-        이 카테고리에는 아직 노트가 없습니다.
-      </p>
     </section>
   )
 }
