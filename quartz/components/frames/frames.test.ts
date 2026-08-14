@@ -48,7 +48,7 @@ describe("DefaultFrame", () => {
     const componentData = {
       fileData: { slug: "index" },
       children: [],
-    } as QuartzComponentProps
+    } as unknown as QuartzComponentProps
 
     const html = render(
       DefaultFrame.render({
