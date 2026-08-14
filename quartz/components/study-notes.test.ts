@@ -121,6 +121,33 @@ describe("study note catalog", () => {
     assert.deepEqual(index.notes[0]?.tags, ["spring"])
     assert.deepEqual(index.notes[1]?.tags, ["mysql"])
   })
+
+  it("derives and normalizes an excerpt from rendered HTML when descriptions are missing", () => {
+    const index = buildStudyNotesIndex([
+      {
+        slug: "backend/spring/rendered" as FullSlug,
+        htmlAst: {
+          type: "root",
+          children: [
+            {
+              type: "element",
+              tagName: "p",
+              properties: {},
+              children: [{ type: "text", value: "Rendered" }],
+            },
+            {
+              type: "element",
+              tagName: "strong",
+              properties: {},
+              children: [{ type: "text", value: " HTML\n\n fallback" }],
+            },
+          ],
+        },
+      },
+    ])
+
+    assert.equal(index.notes[0]?.excerpt, "Rendered HTML fallback")
+  })
 })
 
 describe("study note dates", () => {
