@@ -53,3 +53,32 @@ Additional verification:
 ## Concerns
 
 - The existing `StudyNotes.tsx` still consumes the legacy `selectStudyNotes` adapter; later homepage work should migrate it to `buildStudyNotesIndex` when that component is redesigned.
+
+## Fix Round 1
+
+### Finding 1
+
+No Task 2 files were changed. The new `buildStudyNotesIndex` API already exposes the generated `categories` list in its `StudyNotesIndex` result for Task 2. The live homepage integration remains tracked for Task 2, where the static `StudyNotes.tsx` filters will be replaced with the catalog categories.
+
+### Finding 2
+
+Added a rendered-HTML fallback coverage fixture to `quartz/components/study-notes.test.ts`. The fixture has no frontmatter or file description and asserts that nested rendered HTML text is stripped and whitespace-normalized into the excerpt. No production change was necessary.
+
+Covering command:
+
+```text
+npx tsx --test quartz/components/study-notes.test.ts
+```
+
+Output summary: 5 tests passed, 0 failed; 2 suites passed.
+
+Additional checks: `npx prettier quartz/components/study-notes.test.ts --check`, `npx tsc --noEmit`, and `git diff --check` all passed.
+
+Changed files:
+
+- `quartz/components/study-notes.test.ts`
+- This report file
+
+Fix commit: `22b3eb7cc26a935ff155f0da6bc67550c27c8284`
+
+Concern status: `DONE_WITH_CONCERNS` — Task 2 still owns migrating the live homepage from static filters/legacy adapter consumption to the catalog API.
