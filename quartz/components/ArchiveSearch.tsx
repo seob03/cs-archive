@@ -91,6 +91,16 @@ document.addEventListener("render", initArchiveSearch)
 initArchiveSearch()
 `
 
+const graphBasePathScript = `
+const normalizeLocalGraphBasePath = () => {
+  if (!/^(localhost|127(?:\\.[0-9]+){3})$/.test(window.location.hostname)) return
+  if (document.body?.dataset?.basepath) document.body.dataset.basepath = ""
+}
+
+normalizeLocalGraphBasePath()
+document.addEventListener("DOMContentLoaded", normalizeLocalGraphBasePath, { once: true })
+`
+
 const ArchiveSearch: QuartzComponent = ({ fileData, allFiles }: QuartzComponentProps) => {
   const { notes } = buildStudyNotesIndex(allFiles)
   const isHome = fileData.slug === "index"
@@ -154,5 +164,6 @@ const ArchiveSearch: QuartzComponent = ({ fileData, allFiles }: QuartzComponentP
 }
 
 ArchiveSearch.afterDOMLoaded = archiveSearchScript
+ArchiveSearch.beforeDOMLoaded = graphBasePathScript
 
 export default ArchiveSearch

@@ -10,6 +10,7 @@ export function augmentStudyNotesLayout(
   layout: QuartzLayoutParts,
   component: QuartzComponent,
   searchComponent?: QuartzComponent,
+  relatedGraph?: QuartzComponent,
 ): QuartzLayoutParts {
   const contentLayout = layout.byPageType.content ?? {}
   const appendSearch = (header: QuartzComponent[] | undefined) =>
@@ -28,6 +29,7 @@ export function augmentStudyNotesLayout(
         ...contentLayout,
         header: appendSearch(contentLayout.header),
         beforeBody: [...(contentLayout.beforeBody ?? []), component],
+        right: relatedGraph ? [relatedGraph, ...(contentLayout.right ?? [])] : contentLayout.right,
       },
     },
   }

@@ -38,6 +38,15 @@ describe("StudyNotes component", () => {
 
     assert.match(html, /class="study-home"/)
     assert.match(html, /class="study-hero"/)
+    assert.match(html, /class="study-graph"/)
+    assert.match(html, /class="study-graph-preview study-graph-canvas"/)
+    assert.match(html, /class="study-graph-button"[^>]*data-study-graph-open[^>]*>/)
+    assert.match(html, /data-study-graph-data=/)
+    assert.match(html, /data-study-graph-overlay/)
+    assert.match(html, /data-study-graph-category="ALL"/)
+    assert.match(html, /data-study-graph-category="BACKEND"/)
+    assert.match(html, /data-study-graph-category="DATABASE"/)
+    assert.match(html, /KNOWLEDGE GRAPH/)
     assert.match(html, /PERSONAL KNOWLEDGE BASE/)
     assert.match(html, /Seob's <span class="study-hero-accent">CS<\/span> STUDY ARCHIVE/)
     assert.match(html, /배운 것을 오래 남기는 공간/)
@@ -50,12 +59,8 @@ describe("StudyNotes component", () => {
     assert.match(html, /class="study-card-grid"/)
     assert.match(html, /data-study-search=/)
     assert.match(html, /data-study-empty/)
-    assert.match(html, /class="study-card is-featured internal"[^>]*data-study-category="BACKEND"/)
+    assert.doesNotMatch(html, /study-card is-featured/)
     assert.match(html, /class="study-card internal"[^>]*data-study-category="DATABASE"/)
-    assert.doesNotMatch(
-      html,
-      /class="study-card is-featured internal"[^>]*data-study-category="DATABASE"/,
-    )
     assert.match(html, /class="study-card-badge">BACKEND/)
     assert.match(html, /class="study-card-date">2026-08-15/)
     assert.match(html, /class="study-card-title">@Bean/)
@@ -63,6 +68,7 @@ describe("StudyNotes component", () => {
     assert.match(html, /class="study-card-path">BACKEND \/ SPRING/)
     assert.doesNotMatch(html, /study-note-card-number/)
     assert.doesNotMatch(html, /study-note-card-arrow/)
-    assert.doesNotMatch(html, /↗/)
+    assert.doesNotMatch(html, /study-graph-button-mark/)
+    assert.match(html, /class="study-graph-button"[^>]*>Graph<\/button>/)
   })
 })

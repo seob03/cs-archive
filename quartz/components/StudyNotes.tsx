@@ -2,6 +2,9 @@ import { QuartzComponent, QuartzComponentProps } from "./types"
 import { resolveRelative } from "../util/path"
 import { buildStudyNotesIndex, formatNoteDate } from "./study-notes"
 import { studyNoteSearchText } from "./archive-search"
+import StudyGraph from "./StudyGraph"
+import { buildStudyGraphData } from "./study-graph"
+import { studyGraphScript } from "./study-graph-script"
 
 const studyNotesScript = `
 const initStudyNotes = () => {
@@ -70,19 +73,23 @@ const StudyNotes: QuartzComponent = ({ fileData, allFiles }: QuartzComponentProp
   if (fileData.slug !== "index") return null
 
   const { notes, categories } = buildStudyNotesIndex(allFiles)
+  const graphData = buildStudyGraphData(allFiles)
 
   return (
     <section class="study-home" aria-labelledby="study-notes-title">
       <header class="study-hero">
         <div class="study-frame">
-          <p class="study-hero-eyebrow">PERSONAL KNOWLEDGE BASE</p>
-          <h1 id="study-notes-title" class="study-hero-title">
-            Seob&apos;s <span class="study-hero-accent">CS</span> STUDY ARCHIVE
-          </h1>
-          <p class="study-hero-subtitle">배운 것을 오래 남기는 공간</p>
-          <p class="study-hero-publication">
-            {notes.length} NOTES PUBLISHED · {categories.length} CATEGORIES
-          </p>
+          <div class="study-hero-copy">
+            <p class="study-hero-eyebrow">PERSONAL KNOWLEDGE BASE</p>
+            <h1 id="study-notes-title" class="study-hero-title">
+              Seob&apos;s <span class="study-hero-accent">CS</span> STUDY ARCHIVE
+            </h1>
+            <p class="study-hero-subtitle">배운 것을 오래 남기는 공간</p>
+            <p class="study-hero-publication">
+              {notes.length} NOTES PUBLISHED · {categories.length} CATEGORIES
+            </p>
+          </div>
+          <StudyGraph noteCount={notes.length} graphData={graphData} />
         </div>
       </header>
 
@@ -112,9 +119,9 @@ const StudyNotes: QuartzComponent = ({ fileData, allFiles }: QuartzComponentProp
       <div class="study-catalog">
         <div class="study-frame">
           <div class="study-card-grid">
-            {notes.map((note, index) => (
+            {notes.map((note) => (
               <a
-                class={`study-card${index === 0 ? " is-featured" : ""} internal`}
+                class="study-card internal"
                 data-study-card
                 data-study-category={note.categoryKey}
                 data-study-search={studyNoteSearchText(note)}
@@ -138,6 +145,6 @@ const StudyNotes: QuartzComponent = ({ fileData, allFiles }: QuartzComponentProp
   )
 }
 
-StudyNotes.afterDOMLoaded = studyNotesScript
+StudyNotes.afterDOMLoaded = studyNotesScript + "\n" + studyGraphScript
 
 export default StudyNotes
