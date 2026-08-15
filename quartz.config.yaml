@@ -1,6 +1,6 @@
 # yaml-language-server: $schema=./quartz/plugins/quartz-plugins.schema.json
 configuration:
-  pageTitle: "seob.log()"
+  pageTitle: "Seob CS Archive"
   pageTitleSuffix: ""
   enableSPA: true
   enablePopovers: true
@@ -99,6 +99,13 @@ plugins:
     layout:
       position: right
       priority: 30
+  - source: "@quartz-community/backlinks"
+    enabled: true
+    options:
+      hideWhenEmpty: true
+    layout:
+      position: right
+      priority: 40
   - source: "@quartz-community/crawl-links"
     enabled: true
     options:
@@ -178,19 +185,7 @@ plugins:
   - source: "@quartz-community/tag-page"
     enabled: true
   - source: "@quartz-community/search"
-    enabled: true
-    options:
-      enablePreview: false
-      fieldPriority:
-        - title
-        - content
-        - tags
-    layout:
-      position: header
-      priority: 20
-      group: toolbar
-      groupOptions:
-        grow: true
+    enabled: false
   - source: "@quartz-community/article-title"
     enabled: true
     layout:

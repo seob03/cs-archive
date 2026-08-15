@@ -1,11 +1,13 @@
 import { loadQuartzConfig, loadQuartzLayout } from "./quartz/plugins/loader/config-loader"
 import { PageTypeDispatcher } from "./quartz/plugins/pageTypes/dispatcher"
 import StudyNotes from "./quartz/components/StudyNotes"
+import ArchiveSearch from "./quartz/components/ArchiveSearch"
+import RelatedGraph from "./quartz/components/RelatedGraph"
 import { augmentStudyNotesLayout } from "./quartz/components/study-notes-layout"
 
 const config = await loadQuartzConfig()
 const baseLayout = await loadQuartzLayout()
-const layout = augmentStudyNotesLayout(baseLayout, StudyNotes)
+const layout = augmentStudyNotesLayout(baseLayout, StudyNotes, ArchiveSearch, RelatedGraph)
 
 const dispatcher = PageTypeDispatcher({
   defaults: layout.defaults,
