@@ -326,7 +326,11 @@ article td {
 }
 
 article p {
-  margin: 1rem 0;
+  margin: 0.75rem 0;
+}
+
+article > :first-child {
+  margin-top: 0;
 }
 
 article h1,
