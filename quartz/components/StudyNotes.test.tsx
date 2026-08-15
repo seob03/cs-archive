@@ -38,8 +38,9 @@ describe("StudyNotes component", () => {
 
     assert.match(html, /class="study-home"/)
     assert.match(html, /class="study-hero"/)
-    assert.match(html, /배운 CS를 오래 남기는 공간/)
-    assert.match(html, /study-hero-accent/)
+    assert.match(html, /PERSONAL KNOWLEDGE BASE/)
+    assert.match(html, /Seob's <span class="study-hero-accent">CS<\/span> STUDY ARCHIVE/)
+    assert.match(html, /배운 것을 오래 남기는 공간/)
     assert.match(html, /3 NOTES PUBLISHED/)
     assert.match(html, /2 CATEGORIES/)
     assert.match(html, /class="study-category-bar" aria-label="노트 카테고리"/)

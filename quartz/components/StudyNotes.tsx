@@ -55,10 +55,11 @@ const StudyNotes: QuartzComponent = ({ fileData, allFiles }: QuartzComponentProp
     <section class="study-home" aria-labelledby="study-notes-title">
       <header class="study-hero">
         <div class="study-frame">
-          <p class="study-hero-eyebrow">CS STUDY ARCHIVE</p>
-          <h1 id="study-notes-title" class="study-hero-title study-hero-accent">
-            배운 CS를 오래 남기는 공간
+          <p class="study-hero-eyebrow">PERSONAL KNOWLEDGE BASE</p>
+          <h1 id="study-notes-title" class="study-hero-title">
+            Seob&apos;s <span class="study-hero-accent">CS</span> STUDY ARCHIVE
           </h1>
+          <p class="study-hero-subtitle">배운 것을 오래 남기는 공간</p>
           <p class="study-hero-publication">
             {notes.length} NOTES PUBLISHED · {categories.length} CATEGORIES
           </p>

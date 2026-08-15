@@ -43,6 +43,20 @@ configuration:
         highlight: "rgba(91, 92, 226, 0.08)"
         textHighlight: "rgba(129, 140, 248, 0.45)"
 plugins:
+  - source: "@quartz-community/note-properties"
+    enabled: true
+    options:
+      includeAll: false
+      includedProperties:
+        - description
+        - tags
+        - aliases
+      excludedProperties:
+        - notion-id
+      hidePropertiesView: true
+      delimiters: "---"
+      language: yaml
+    order: 5
   - source: "@quartz-community/created-modified-date"
     enabled: true
     options:

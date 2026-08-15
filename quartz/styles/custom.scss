@@ -702,14 +702,26 @@ body[data-slug="index"] .page-footer {
 }
 
 .study-hero-title {
-  max-width: 880px;
+  max-width: 900px;
   margin: 0;
   color: var(--site-ink);
-  font-size: clamp(2.7rem, 5.4vw, 4.65rem);
+  font-size: clamp(2.2rem, 4.2vw, 3.65rem);
   font-weight: 700;
   letter-spacing: -0.075em;
   line-height: 1.08;
   text-wrap: balance;
+}
+
+.study-hero-accent {
+  color: var(--site-brand);
+}
+
+.study-hero-subtitle {
+  margin: 1rem 0 0;
+  color: var(--site-muted);
+  font-size: 1rem;
+  font-weight: 500;
+  letter-spacing: -0.035em;
 }
 
 .study-hero-publication {
@@ -1029,8 +1041,12 @@ a.study-card:focus-visible {
   }
 
   .study-hero-title {
-    font-size: clamp(2.3rem, 12vw, 3.3rem);
+    font-size: clamp(2rem, 10vw, 2.8rem);
     letter-spacing: -0.065em;
+  }
+
+  .study-hero-subtitle {
+    font-size: 0.92rem;
   }
 
   .study-hero-publication {
