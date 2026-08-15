@@ -15,7 +15,9 @@
   --site-code-text: #e5e7eb;
   --site-code-muted: #a7b0be;
   --site-code-line: #26262a;
-  --site-graph-edge: rgba(79, 70, 229, 0.38);
+  --site-graph-bg: #f5f6fb;
+  --site-graph-edge: rgba(67, 56, 202, 0.56);
+  --site-graph-node-stroke: rgba(30, 41, 59, 0.32);
   --site-highlight: rgba(250, 204, 21, 0.5);
   --site-frame: 1280px;
   --site-prose: 760px;
@@ -38,7 +40,9 @@
   --site-code-text: #e5e7eb;
   --site-code-muted: #a7b0be;
   --site-code-line: #2b2b30;
+  --site-graph-bg: #17171a;
   --site-graph-edge: rgba(165, 180, 252, 0.44);
+  --site-graph-node-stroke: var(--site-bg);
   --site-highlight: rgba(129, 140, 248, 0.46);
 }
 
@@ -907,7 +911,7 @@ pre[data-language] code[data-theme] span[data-token-type="punctuation"] {
   overflow: hidden;
   margin-top: 0.4rem;
   border-radius: 8px;
-  background: var(--site-paper-2);
+  background: var(--site-graph-bg);
 }
 
 .backlinks > ul.overflow {
@@ -1123,7 +1127,7 @@ body[data-slug="index"] .page-footer {
       color-mix(in srgb, var(--site-brand) 10%, transparent),
       transparent 64%
     ),
-    var(--site-paper);
+    var(--site-graph-bg);
 }
 
 .study-graph-canvas {
@@ -1161,9 +1165,13 @@ body[data-slug="index"] .page-footer {
 }
 
 .study-graph-node-dot {
-  stroke: var(--site-bg);
+  stroke: var(--site-graph-node-stroke);
   stroke-width: 1.4;
   vector-effect: non-scaling-stroke;
+}
+
+:root:not([saved-theme="dark"]) .study-graph-node-dot {
+  filter: saturate(1.15) brightness(0.92);
 }
 
 .study-graph-node.is-current .study-graph-node-dot {
@@ -1338,7 +1346,7 @@ body[data-slug="index"] .page-footer {
       color-mix(in srgb, var(--site-brand) 8%, transparent),
       transparent 56%
     ),
-    var(--site-bg);
+    var(--site-graph-bg);
 }
 
 .study-graph-close {

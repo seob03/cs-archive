@@ -88,4 +88,15 @@ describe("archive branding and relationship layout", () => {
       /saved-theme="dark"\][\s\S]*button\.darkmode::before\s*\{[\s\S]*mask-image:\s*var\(--moon-icon\);/,
     )
   })
+
+  it("keeps graph colors readable in light mode", () => {
+    assert.match(styles, /--site-graph-bg:\s*#f5f6fb;/)
+    assert.match(styles, /--site-graph-edge:\s*rgba\(67,\s*56,\s*202,\s*0\.56\);/)
+    assert.match(styles, /--site-graph-node-stroke:\s*rgba\(30,\s*41,\s*59,\s*0\.32\);/)
+    assert.match(
+      styles,
+      /:root:not\(\[saved-theme="dark"\]\)\s+\.study-graph-node-dot[\s\S]*filter:\s*saturate\(1\.15\)/,
+    )
+    assert.match(styles, /.related-graph-canvas\s*\{[\s\S]*background:\s*var\(--site-graph-bg\);/)
+  })
 })
