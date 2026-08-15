@@ -48,6 +48,8 @@ describe("StudyNotes component", () => {
     assert.match(html, /data-study-filter="BACKEND"[^>]*>BACKEND.*?<span>2<\/span>/)
     assert.match(html, /data-study-filter="DATABASE"[^>]*>DATABASE.*?<span>1<\/span>/)
     assert.match(html, /class="study-card-grid"/)
+    assert.match(html, /data-study-search=/)
+    assert.match(html, /data-study-empty/)
     assert.match(html, /class="study-card is-featured internal"[^>]*data-study-category="BACKEND"/)
     assert.match(html, /class="study-card internal"[^>]*data-study-category="DATABASE"/)
     assert.doesNotMatch(

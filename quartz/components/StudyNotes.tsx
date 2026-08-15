@@ -1,6 +1,7 @@
 import { QuartzComponent, QuartzComponentProps } from "./types"
 import { resolveRelative } from "../util/path"
 import { buildStudyNotesIndex, formatNoteDate } from "./study-notes"
+import { studyNoteSearchText } from "./archive-search"
 
 const studyNotesScript = `
 const initStudyNotes = () => {
@@ -9,13 +10,23 @@ const initStudyNotes = () => {
 
   const filterButtons = Array.from(root.querySelectorAll("[data-study-filter]"))
   const cards = Array.from(root.querySelectorAll("[data-study-card]"))
+  const emptyState = root.querySelector("[data-study-empty]")
 
   const applyFilter = (filter) => {
+    const query = root.dataset.studyQuery || ""
+    const tokens = query.split(" ").filter(Boolean)
+    let visibleCount = 0
+
     for (const card of cards) {
       const category = card.getAttribute("data-study-category")
-      const shouldShow = filter === "ALL" || category === filter
+      const searchText = card.getAttribute("data-study-search") || ""
+      const matchesSearch = tokens.length === 0 || tokens.every((token) => searchText.includes(token))
+      const shouldShow = (filter === "ALL" || category === filter) && matchesSearch
       card.hidden = !shouldShow
+      if (shouldShow) visibleCount += 1
     }
+
+    if (emptyState instanceof HTMLElement) emptyState.hidden = visibleCount > 0
 
     for (const button of filterButtons) {
       const isActive = button.getAttribute("data-study-filter") === filter
@@ -31,13 +42,22 @@ const initStudyNotes = () => {
     applyFilter(button.getAttribute("data-study-filter") || "ALL")
   }
 
+  const onSearch = () => {
+    const activeFilter = root.querySelector("[data-study-filter].is-active")
+    applyFilter(activeFilter?.getAttribute("data-study-filter") || "ALL")
+  }
+
   root.addEventListener("click", onClick)
+  root.addEventListener("study-search", onSearch)
   root.dataset.studyNotesReady = "true"
   const activeFilter = root.querySelector("[data-study-filter].is-active")
   applyFilter(activeFilter?.getAttribute("data-study-filter") || "ALL")
 
   if (typeof window.addCleanup === "function") {
-    window.addCleanup(() => root.removeEventListener("click", onClick))
+    window.addCleanup(() => {
+      root.removeEventListener("click", onClick)
+      root.removeEventListener("study-search", onSearch)
+    })
   }
 }
 
@@ -97,6 +117,7 @@ const StudyNotes: QuartzComponent = ({ fileData, allFiles }: QuartzComponentProp
                 class={`study-card${index === 0 ? " is-featured" : ""} internal`}
                 data-study-card
                 data-study-category={note.categoryKey}
+                data-study-search={studyNoteSearchText(note)}
                 href={resolveRelative(fileData.slug!, note.slug)}
                 title={note.title}
               >
@@ -108,6 +129,9 @@ const StudyNotes: QuartzComponent = ({ fileData, allFiles }: QuartzComponentProp
               </a>
             ))}
           </div>
+          <p class="study-empty-state" data-study-empty hidden>
+            일치하는 노트가 없습니다.
+          </p>
         </div>
       </div>
     </section>

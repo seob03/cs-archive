@@ -171,57 +171,174 @@ body[data-slug="index"] #quartz-body {
 }
 
 #quartz-body .page-header > header > .flex-component {
-  width: min(100%, 22rem);
+  width: auto;
   align-items: center;
-  margin-left: auto;
+  gap: 0.5rem;
+  margin-left: 0;
+  order: 2;
 }
 
-header .search {
-  width: 100%;
+#quartz-body .page-header > header > .archive-search {
+  position: relative;
+  width: min(100%, 22rem);
   min-width: 0;
-  max-width: none;
+  margin-left: auto;
+  order: 1;
 }
 
-header .search > .search-button {
+.archive-search-label {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+.archive-search-field {
+  display: flex;
   width: 100%;
   height: 2.35rem;
-  justify-content: flex-start;
+  align-items: center;
+  gap: 0.55rem;
   border: 1px solid var(--site-border);
-  border-radius: 8px;
+  border-radius: 10px;
+  background: var(--site-paper);
+  padding: 0 0.7rem;
+  transition:
+    border-color 150ms ease,
+    box-shadow 150ms ease;
+}
+
+.archive-search-field:focus-within {
+  border-color: var(--site-brand);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--site-brand) 15%, transparent);
+}
+
+.archive-search-icon {
+  width: 1rem;
+  height: 1rem;
+  flex: none;
+  fill: none;
+  stroke: var(--site-faint);
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-width: 1.8;
+}
+
+.archive-search input {
+  width: 100%;
+  min-width: 0;
+  border: 0;
+  outline: 0;
+  background: transparent;
+  color: var(--site-ink);
+  font-size: 0.82rem;
+  padding: 0;
+}
+
+.archive-search input::placeholder {
+  color: var(--site-faint);
+}
+
+.archive-search input::-webkit-search-cancel-button {
+  opacity: 0.55;
+}
+
+.archive-search-shortcut {
+  flex: none;
+  border: 1px solid var(--site-border);
+  border-radius: 4px;
   background: var(--site-paper-2);
   color: var(--site-faint);
-  padding: 0 0.75rem;
-  box-shadow: none;
+  font-family: "JetBrains Mono", ui-monospace, SFMono-Regular, monospace;
+  font-size: 0.58rem;
+  line-height: 1;
+  padding: 0.22rem 0.3rem;
 }
 
-header .search > .search-button svg {
-  width: 0.95rem;
-  min-width: 0.95rem;
-  height: 0.95rem;
+.archive-search-results {
+  position: absolute;
+  z-index: 30;
+  top: calc(100% + 0.45rem);
+  right: 0;
+  width: min(26rem, calc(100vw - 2rem));
+  max-height: min(26rem, calc(100vh - 6rem));
+  overflow: auto;
+  border: 1px solid var(--site-border);
+  border-radius: 12px;
+  background: color-mix(in srgb, var(--site-paper) 96%, transparent);
+  box-shadow: 0 16px 36px rgba(15, 23, 42, 0.12);
+  padding: 0.35rem;
+  backdrop-filter: blur(16px);
 }
 
-header .search > .search-button p {
+.archive-search-result {
+  display: flex;
+  flex-direction: column;
+  gap: 0.18rem;
+  min-width: 0;
+  border-radius: 8px;
+  background: transparent !important;
+  color: var(--site-ink) !important;
+  padding: 0.65rem 0.7rem;
+}
+
+.archive-search-result:hover,
+.archive-search-result:focus-visible {
+  background: var(--site-paper-2) !important;
+  color: var(--site-ink) !important;
+  outline: 0;
+}
+
+.archive-search-result-title {
+  overflow: hidden;
   color: inherit;
   font-size: 0.82rem;
+  font-weight: 650;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
-header .search > .search-button:hover,
-header .search > .search-button:focus-visible {
-  border-color: var(--site-brand);
-  color: var(--site-brand);
-  outline: none;
+.archive-search-result-meta {
+  overflow: hidden;
+  color: var(--site-faint);
+  font-family: "JetBrains Mono", ui-monospace, SFMono-Regular, monospace;
+  font-size: 0.62rem;
+  letter-spacing: 0.03em;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.archive-search-empty {
+  margin: 0;
+  color: var(--site-faint);
+  font-size: 0.78rem;
+  padding: 0.8rem;
+}
+
+.archive-search[data-archive-search-page="home"] .archive-search-results {
+  display: none;
 }
 
 .darkmode {
+  appearance: none;
   display: grid;
   width: 2.35rem;
   min-width: 2.35rem;
   height: 2.35rem;
   place-items: center;
   border: 1px solid var(--site-border);
-  border-radius: 8px;
+  border-radius: 9px;
   background: var(--site-paper);
   color: var(--site-muted);
+  cursor: pointer;
+  padding: 0;
+  transition:
+    border-color 150ms ease,
+    background 150ms ease,
+    color 150ms ease;
 }
 
 .darkmode:hover,
@@ -232,9 +349,42 @@ header .search > .search-button:focus-visible {
   outline: none;
 }
 
+:root[saved-theme="dark"] .darkmode {
+  border-color: var(--site-border);
+  background: var(--site-paper-2);
+  color: var(--site-brand);
+}
+
 .darkmode svg {
   width: 1rem;
   height: 1rem;
+}
+
+.darkmode svg path {
+  fill: currentColor;
+}
+
+/* The default Quartz search plugin is disabled in favor of .archive-search. */
+header .search {
+  display: none;
+}
+
+header .flex-component > * {
+  color: var(--site-muted);
+}
+
+.archive-search input:focus-visible {
+  outline: none;
+}
+
+.archive-search-results[hidden],
+.archive-search-result[hidden],
+.study-empty-state[hidden] {
+  display: none !important;
+}
+
+.darkmode:active {
+  transform: translateY(1px);
 }
 
 body:not([data-slug="index"]) .page-header > .popover-hint {
@@ -563,7 +713,7 @@ pre[data-language] code[data-theme] span[data-token-type="punctuation"] {
   height: fit-content;
   align-self: start;
   flex-direction: column;
-  gap: 0;
+  gap: 0.7rem;
   margin: 0;
   padding: 0;
 }
@@ -577,7 +727,7 @@ pre[data-language] code[data-theme] span[data-token-type="punctuation"] {
 .toc {
   overflow: hidden;
   border: 1px solid var(--site-border);
-  border-radius: 9px;
+  border-radius: 14px;
   background: var(--site-paper);
   padding: 0;
 }
@@ -588,18 +738,18 @@ pre[data-language] code[data-theme] span[data-token-type="punctuation"] {
   margin: 0;
   border: 0;
   border-bottom: 1px solid var(--site-border);
-  background: var(--site-paper-2);
+  background: transparent;
   color: var(--site-faint);
-  padding: 0.75rem 0.9rem;
+  padding: 0.7rem 0.85rem;
 }
 
 .toc .toc-header h3 {
   margin: 0;
   color: inherit;
   font-family: "JetBrains Mono", ui-monospace, SFMono-Regular, monospace;
-  font-size: 0.65rem;
+  font-size: 0.62rem;
   font-weight: 600;
-  letter-spacing: 0.1em;
+  letter-spacing: 0.12em;
   text-transform: uppercase;
 }
 
@@ -611,7 +761,7 @@ pre[data-language] code[data-theme] span[data-token-type="punctuation"] {
 .toc .toc-content {
   max-height: calc(100vh - var(--site-header) - 8rem);
   margin: 0;
-  padding: 0.75rem 0.9rem 0.85rem;
+  padding: 0.55rem 0.65rem 0.7rem;
 }
 
 .toc .toc-content li {
@@ -625,13 +775,113 @@ pre[data-language] code[data-theme] span[data-token-type="punctuation"] {
   font-size: 0.76rem;
   font-weight: 400;
   line-height: 1.45;
-  padding: 0.35rem 0;
+  border-radius: 7px;
+  padding: 0.35rem 0.45rem;
   text-overflow: ellipsis;
   white-space: nowrap;
 }
 
 .toc .toc-content li > a:hover,
 .toc .toc-content li > a.in-view {
+  background: var(--site-paper-2);
+  color: var(--site-brand);
+}
+
+.graph,
+.backlinks {
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  border: 1px solid var(--site-border);
+  border-radius: 14px;
+  background: var(--site-paper);
+  padding: 0.8rem;
+}
+
+.graph > h3,
+.backlinks > h3 {
+  margin: 0;
+  color: var(--site-faint);
+  font-family: "JetBrains Mono", ui-monospace, SFMono-Regular, monospace;
+  font-size: 0.62rem;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  line-height: 1.2;
+  text-transform: uppercase;
+}
+
+.graph > h3 {
+  font-size: 0;
+}
+
+.graph > h3::after {
+  content: "연관 그래프";
+  font-size: 0.62rem;
+}
+
+.backlinks > h3 {
+  font-size: 0;
+}
+
+.backlinks > h3::after {
+  content: "참고 노트";
+  font-size: 0.62rem;
+}
+
+.graph > .graph-outer {
+  height: 200px;
+  margin: 0.55rem 0 0;
+  border: 1px solid var(--site-border);
+  border-radius: 10px;
+  background: var(--site-paper-2);
+}
+
+.graph > .graph-outer > .global-graph-icon {
+  top: 0.35rem;
+  right: 0.35rem;
+  width: 1.45rem;
+  height: 1.45rem;
+  border: 1px solid var(--site-border);
+  border-radius: 6px;
+  background: var(--site-paper);
+  color: var(--site-muted);
+  opacity: 0.9;
+}
+
+.graph > .graph-outer > .global-graph-icon:hover {
+  background: var(--site-brand-soft);
+  color: var(--site-brand);
+}
+
+.graph > .global-graph-outer {
+  background: color-mix(in srgb, var(--site-bg) 82%, transparent);
+}
+
+.graph > .global-graph-outer > .global-graph-container {
+  border-color: var(--site-border);
+  border-radius: 14px;
+  background: var(--site-paper);
+}
+
+.backlinks > ul.overflow {
+  max-height: none;
+  margin: 0.4rem 0 0;
+}
+
+.backlinks > ul.overflow > li > a {
+  display: block;
+  overflow: hidden;
+  border-radius: 7px;
+  color: var(--site-muted);
+  font-size: 0.76rem;
+  line-height: 1.4;
+  padding: 0.38rem 0.45rem;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.backlinks > ul.overflow > li > a:hover {
+  background: var(--site-paper-2);
   color: var(--site-brand);
 }
 
@@ -913,50 +1163,20 @@ a.study-card:focus-visible {
   white-space: nowrap;
 }
 
+.study-empty-state {
+  margin: 1.5rem 0 0;
+  border: 1px dashed var(--site-border);
+  border-radius: 12px;
+  color: var(--site-faint);
+  font-size: 0.82rem;
+  padding: 2rem 1rem;
+  text-align: center;
+}
+
 @media (min-width: 1200px) {
   .study-card.is-featured {
     grid-column: span 2;
   }
-}
-
-/* Search dialog */
-.search > .search-container {
-  background: color-mix(in srgb, var(--site-bg) 86%, transparent);
-}
-
-.search > .search-container > .search-space > input {
-  border-color: var(--site-border);
-  border-radius: 9px;
-  background: var(--site-paper);
-  color: var(--site-ink);
-  box-shadow: none;
-}
-
-.search > .search-container > .search-space > .search-layout {
-  border-color: var(--site-border);
-  border-radius: 10px;
-  background: var(--site-paper);
-  box-shadow: none;
-}
-
-.search > .search-container > .search-space > .search-layout > .results-container .result-card {
-  border-bottom: 1px solid var(--site-border);
-  background: var(--site-paper);
-}
-
-.search
-  > .search-container
-  > .search-space
-  > .search-layout
-  > .results-container
-  .result-card:hover,
-.search
-  > .search-container
-  > .search-space
-  > .search-layout
-  > .results-container
-  .result-card.focus {
-  background: var(--site-paper-2);
 }
 
 @media (min-width: 800px) and (max-width: 1199px) {
@@ -999,18 +1219,18 @@ a.study-card:focus-visible {
     justify-content: flex-end;
   }
 
-  header .search {
-    width: auto;
+  #quartz-body .page-header > header > .archive-search {
+    width: min(10rem, 34vw);
     margin-left: auto;
   }
 
-  header .search > .search-button {
-    width: 2.35rem;
-    justify-content: center;
-    padding: 0;
+  .archive-search-field {
+    gap: 0.4rem;
+    padding-right: 0.55rem;
+    padding-left: 0.55rem;
   }
 
-  header .search > .search-button p {
+  .archive-search-shortcut {
     display: none;
   }
 
