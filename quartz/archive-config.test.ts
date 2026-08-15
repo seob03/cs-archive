@@ -26,5 +26,12 @@ describe("archive branding and relationship layout", () => {
   it("keeps the theme toggle readable in both color modes", () => {
     assert.match(styles, /\.darkmode\s*\{[\s\S]*appearance:\s*none;/)
     assert.match(styles, /:root\[saved-theme="dark"\]\s+\.darkmode\s*\{/)
+    assert.match(styles, /button\.darkmode\s*\{[\s\S]*mask-image:\s*none\s*!important;/)
+    assert.match(styles, /button\.darkmode\s*>\s*svg\s*\{[\s\S]*display:\s*inline\s*!important;/)
+    assert.match(styles, /button\.darkmode\s*\{[\s\S]*color:\s*var\(--site-brand\)\s*!important;/)
+    assert.match(
+      styles,
+      /button\.darkmode\s*>\s*svg\s*>\s*path\s*\{[\s\S]*fill:\s*currentColor\s*!important;/,
+    )
   })
 })
