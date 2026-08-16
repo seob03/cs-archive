@@ -754,16 +754,14 @@ pre[data-language] code[data-theme] span[data-token-type="punctuation"] {
   margin: 0 !important;
   border: 0 !important;
   border-radius: 6px;
-  background: transparent;
-  color: #c4b5fd;
+  background: transparent !important;
+  background-color: transparent !important;
+  color: #c4b5fd !important;
   font-family: "JetBrains Mono", ui-monospace, SFMono-Regular, monospace;
   opacity: 1 !important;
   line-height: 1;
   padding: 0 !important;
-  transition:
-    background 150ms ease,
-    color 150ms ease,
-    transform 150ms ease;
+  transition: color 150ms ease;
 }
 
 .clipboard-button > svg {
@@ -777,10 +775,10 @@ pre[data-language] code[data-theme] span[data-token-type="punctuation"] {
 
 .clipboard-button:hover,
 .clipboard-button:focus-visible {
-  background: #23232a;
-  color: #fff;
+  background: transparent !important;
+  background-color: transparent !important;
+  color: #60a5fa !important;
   outline: none;
-  transform: translateY(-1px);
 }
 
 #quartz-body > .right.sidebar {

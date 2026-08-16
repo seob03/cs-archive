@@ -88,15 +88,20 @@ describe("archive branding and relationship layout", () => {
     assert.match(styles, /\.clipboard-button\s*\{[\s\S]*margin:\s*0\s*!important;/)
     assert.match(styles, /\.clipboard-button\s*\{[\s\S]*opacity:\s*1\s*!important;/)
     assert.match(styles, /\.clipboard-button\s*\{[\s\S]*border:\s*0\s*!important;/)
-    assert.match(styles, /\.clipboard-button\s*\{[\s\S]*background:\s*transparent;/)
+    assert.match(styles, /\.clipboard-button\s*\{[\s\S]*background:\s*transparent\s*!important;/)
+    assert.match(
+      styles,
+      /\.clipboard-button\s*\{[\s\S]*background-color:\s*transparent\s*!important;/,
+    )
     assert.match(
       styles,
       /\.clipboard-button\s*>\s*svg\s*\{[\s\S]*width:\s*1rem;[\s\S]*height:\s*1rem;/,
     )
-    assert.match(styles, /\.clipboard-button:hover,[\s\S]*background:\s*#23232a;/)
+    assert.match(styles, /\.clipboard-button:hover,[\s\S]*background:\s*transparent\s*!important;/)
+    assert.match(styles, /\.clipboard-button:hover,[\s\S]*color:\s*#60a5fa\s*!important;/)
     assert.doesNotMatch(
       styles,
-      /\.clipboard-button:hover,\s*\.clipboard-button:focus-visible\s*\{[^}]*border-color:/,
+      /\.clipboard-button:hover,\s*\.clipboard-button:focus-visible\s*\{[^}]*background(?:-color)?:\s*#23232a/,
     )
   })
 
