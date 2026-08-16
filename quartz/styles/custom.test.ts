@@ -14,6 +14,13 @@ describe("article reading rhythm", () => {
     assert.match(styles, /article p\s*\{\s*margin:\s*0\.75rem 0;/)
   })
 
+  it("keeps fenced code blocks close to surrounding text", () => {
+    assert.match(
+      styles,
+      /figure\[data-rehype-pretty-code-figure\]\s*\{[\s\S]*?margin:\s*0\.8rem 0;/,
+    )
+  })
+
   it("keeps the article header connected to the body", () => {
     assert.match(
       styles,
