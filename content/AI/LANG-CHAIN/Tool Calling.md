@@ -1,7 +1,7 @@
 ---
 notion-id: 3be737bad00c8068af0ae778b48c64b4
 ---
-Tool Calling은 LLM이 특정 작업을 수행하기 위해 외부 기능을 호출하는 기능이다. 이를 통해 LLM은 외부 API 통합 등의 더 복잡한 작업을 수행할 수 있게 된다.
+Tool Calling은 LLM이 특정 작업을 수행하기 위해 외부 기능을 호출하는 기능이다. 이를 통해 LLM은 외부 API 통합 등의 더 복잡한 작업을 수행할 수 있다.
 ### 도구 정의하기
 ```python
 from langchain_community.tools import TavilySearchResults
