@@ -52,7 +52,9 @@ function normalizeGraphSlug(value: unknown): string | undefined {
     .map((segment) => segment.trim())
     .filter(Boolean)
 
-  if (segments[0]?.toLowerCase() === "cs-note") segments.shift()
+  if (["cs-note", "cs-archive"].includes(segments[0]?.toLowerCase() ?? "")) {
+    segments.shift()
+  }
   return segments.length > 0 ? segments.join("/") : undefined
 }
 

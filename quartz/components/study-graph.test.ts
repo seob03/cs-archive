@@ -68,6 +68,21 @@ describe("study graph links", () => {
       "https://seob03.github.io/cs-note/backend/spring/@bean",
     )
   })
+
+  it("normalizes both the current and legacy GitHub Pages base paths", () => {
+    const graph = buildStudyGraphData([
+      file("cs-archive/backend/bean", "Bean"),
+      file("cs-note/backend/autowired", "Autowired"),
+    ])
+
+    assert.deepEqual(
+      graph.nodes.map((node) => [node.id, node.category]),
+      [
+        ["backend/bean", "BACKEND"],
+        ["backend/autowired", "BACKEND"],
+      ],
+    )
+  })
 })
 
 describe("related study graph", () => {

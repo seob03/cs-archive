@@ -219,8 +219,8 @@ plugins:
     enabled: true
     options:
       links:
-        GitHub: https://github.com/seob03/cs-note
-        Website: https://seob03.github.io/cs-note
+        GitHub: https://github.com/seob03/cs-archive
+        Website: https://seob03.github.io/cs-archive
     layout:
       position: footer
       priority: 50

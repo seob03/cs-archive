@@ -96,7 +96,9 @@ const initStudyGraph = () => {
         .replace(/\\.html?$/, "")
         .split("/")
         .filter(Boolean)
-      if (targetSegments[0]?.toLowerCase() === "cs-note") targetSegments.shift()
+      if (["cs-note", "cs-archive"].includes(targetSegments[0]?.toLowerCase() || "")) {
+        targetSegments.shift()
+      }
       if (
         baseSegments.length > 0 &&
         targetSegments.slice(0, baseSegments.length).join("/") === baseSegments.join("/")
