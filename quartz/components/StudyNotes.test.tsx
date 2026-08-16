@@ -68,11 +68,19 @@ describe("StudyNotes component", () => {
     assert.match(html, /data-study-filter="ALL"[^>]*>ALL.*?<span>3<\/span>/)
     assert.match(html, /data-study-filter="BACKEND"[^>]*>BACKEND.*?<span>2<\/span>/)
     assert.match(html, /data-study-filter="DATABASE"[^>]*>DATABASE.*?<span>1<\/span>/)
+    assert.match(
+      html,
+      /data-study-filter="BACKEND"[^>]*style="--study-category-color: #37c99b"/,
+    )
     assert.match(html, /class="study-card-grid"/)
     assert.match(html, /data-study-search=/)
     assert.match(html, /data-study-empty/)
     assert.doesNotMatch(html, /study-card is-featured/)
     assert.match(html, /class="study-card internal"[^>]*data-study-category="DATABASE"/)
+    assert.match(
+      html,
+      /data-study-category="DATABASE"[^>]*style="--study-category-color: #54a8ff"/,
+    )
     assert.match(html, /class="study-card-badge">BACKEND/)
     assert.match(html, /class="study-card-date">2026-08-12/)
     assert.match(html, /class="study-card-title">@Bean/)

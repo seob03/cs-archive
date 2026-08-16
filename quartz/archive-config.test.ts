@@ -36,6 +36,25 @@ describe("archive branding and relationship layout", () => {
     assert.doesNotMatch(styles, /\.global-graph-icon/)
   })
 
+  it("uses graph category colors as restrained card and filter accents", () => {
+    assert.match(
+      styles,
+      /\.study-category-filter\s*\{[\s\S]*--study-category-color:\s*var\(--site-brand\);/,
+    )
+    assert.match(
+      styles,
+      /\.study-category-filter\.is-active,[\s\S]*background:\s*color-mix\([\s\S]*var\(--study-category-color\)/,
+    )
+    assert.match(
+      styles,
+      /a\.study-card:hover,[\s\S]*border-color:\s*var\(--study-category-color\)\s*!important;/,
+    )
+    assert.match(
+      styles,
+      /\.study-card-badge\s*\{[\s\S]*background:\s*color-mix\([\s\S]*var\(--study-category-color\)/,
+    )
+  })
+
   it("keeps the note sidebar compact and the table of contents always open", () => {
     assert.match(
       styles,

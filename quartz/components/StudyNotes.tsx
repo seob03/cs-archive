@@ -3,7 +3,7 @@ import { resolveRelative } from "../util/path"
 import { buildStudyNotesIndex, formatNoteDate } from "./study-notes"
 import { studyNoteSearchText } from "./archive-search"
 import StudyGraph from "./StudyGraph"
-import { buildStudyGraphData } from "./study-graph"
+import { buildStudyGraphData, categoryColor } from "./study-graph"
 import { studyGraphScript } from "./study-graph-script"
 import { resolveGitUploadDate } from "./git-upload-date"
 
@@ -109,6 +109,7 @@ const StudyNotes: QuartzComponent = ({ fileData, allFiles }: QuartzComponentProp
               type="button"
               class="study-category-filter"
               data-study-filter={category.key}
+              style={`--study-category-color: ${categoryColor(category.key)}`}
               aria-pressed={false}
             >
               {category.label} <span>{category.count}</span>
@@ -125,6 +126,7 @@ const StudyNotes: QuartzComponent = ({ fileData, allFiles }: QuartzComponentProp
                 class="study-card internal"
                 data-study-card
                 data-study-category={note.categoryKey}
+                style={`--study-category-color: ${categoryColor(note.categoryKey)}`}
                 data-study-search={studyNoteSearchText(note)}
                 href={resolveRelative(fileData.slug!, note.slug)}
                 title={note.title}
