@@ -1,7 +1,7 @@
 import { describe, it } from "node:test"
 import assert from "node:assert/strict"
 import { buildStudyNotesIndex, formatNoteDate } from "./study-notes"
-import { FullSlug } from "../util/path"
+import { FilePath, FullSlug } from "../util/path"
 import { QuartzPluginData } from "../plugins/vfile"
 
 const modified = (value: string) => new Date(`${value}T00:00:00.000Z`)
@@ -18,7 +18,7 @@ describe("study note catalog", () => {
       [
         {
           slug: "backend/older" as FullSlug,
-          filePath: olderPath,
+          filePath: olderPath as FilePath,
           frontmatter: { title: "먼저 업로드" },
           dates: {
             created: modified("2026-08-01"),
@@ -28,7 +28,7 @@ describe("study note catalog", () => {
         },
         {
           slug: "backend/newer" as FullSlug,
-          filePath: newerPath,
+          filePath: newerPath as FilePath,
           frontmatter: { title: "새로 업로드" },
           dates: {
             created: modified("2026-08-15"),

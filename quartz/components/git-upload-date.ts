@@ -12,9 +12,7 @@ function gitOutput(repository: string, args: string[]): string {
   }).trim()
 }
 
-export function createGitUploadDateResolver(
-  startDirectory = process.cwd(),
-): GitUploadDateResolver {
+export function createGitUploadDateResolver(startDirectory = process.cwd()): GitUploadDateResolver {
   let repository: string
   try {
     repository = realpathSync(gitOutput(startDirectory, ["rev-parse", "--show-toplevel"]))
@@ -29,7 +27,9 @@ export function createGitUploadDateResolver(
 
     let absolutePath: string
     try {
-      absolutePath = realpathSync(isAbsolute(filePath) ? filePath : resolve(startDirectory, filePath))
+      absolutePath = realpathSync(
+        isAbsolute(filePath) ? filePath : resolve(startDirectory, filePath),
+      )
     } catch {
       return undefined
     }
