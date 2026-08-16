@@ -769,8 +769,8 @@ pre[data-language] code[data-theme] span[data-token-type="punctuation"] {
   width: 1rem;
   height: 1rem;
   margin: 0;
-  fill: currentColor;
-  filter: none;
+  fill: currentColor !important;
+  filter: none !important;
 }
 
 .clipboard-button:hover,

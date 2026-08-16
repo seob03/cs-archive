@@ -95,7 +95,7 @@ describe("archive branding and relationship layout", () => {
     )
     assert.match(
       styles,
-      /\.clipboard-button\s*>\s*svg\s*\{[\s\S]*width:\s*1rem;[\s\S]*height:\s*1rem;/,
+      /\.clipboard-button\s*>\s*svg\s*\{[\s\S]*width:\s*1rem;[\s\S]*height:\s*1rem;[\s\S]*fill:\s*currentColor\s*!important;[\s\S]*filter:\s*none\s*!important;/,
     )
     assert.match(styles, /\.clipboard-button:hover,[\s\S]*background:\s*transparent\s*!important;/)
     assert.match(styles, /\.clipboard-button:hover,[\s\S]*color:\s*#60a5fa\s*!important;/)
