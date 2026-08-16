@@ -9,21 +9,33 @@ const props = (slug: string) =>
     allFiles: [
       {
         slug: "backend/spring/@bean",
+        filePath: "/missing/content/backend/spring/@bean.md",
         frontmatter: { title: "@Bean" },
         description: "Register a bean.",
-        dates: { modified: new Date("2026-08-15T00:00:00.000Z") },
+        dates: {
+          created: new Date("2026-08-12T00:00:00.000Z"),
+          modified: new Date("2026-08-15T00:00:00.000Z"),
+        },
       },
       {
         slug: "backend/spring/lifecycle",
+        filePath: "/missing/content/backend/spring/lifecycle.md",
         frontmatter: { title: "Bean lifecycle" },
         description: "Follow a bean from creation to destruction.",
-        dates: { modified: new Date("2026-08-13T00:00:00.000Z") },
+        dates: {
+          created: new Date("2026-08-10T00:00:00.000Z"),
+          modified: new Date("2026-08-13T00:00:00.000Z"),
+        },
       },
       {
         slug: "database/redis/transactions",
+        filePath: "/missing/content/database/redis/transactions.md",
         frontmatter: { title: "Redis transactions" },
         description: "Understand Redis transaction boundaries.",
-        dates: { modified: new Date("2026-08-14T00:00:00.000Z") },
+        dates: {
+          created: new Date("2026-08-11T00:00:00.000Z"),
+          modified: new Date("2026-08-14T00:00:00.000Z"),
+        },
       },
     ],
   }) as any
@@ -56,19 +68,22 @@ describe("StudyNotes component", () => {
     assert.match(html, /data-study-filter="ALL"[^>]*>ALL.*?<span>3<\/span>/)
     assert.match(html, /data-study-filter="BACKEND"[^>]*>BACKEND.*?<span>2<\/span>/)
     assert.match(html, /data-study-filter="DATABASE"[^>]*>DATABASE.*?<span>1<\/span>/)
+    assert.match(html, /data-study-filter="BACKEND"[^>]*style="--study-category-color: #37c99b"/)
     assert.match(html, /class="study-card-grid"/)
     assert.match(html, /data-study-search=/)
     assert.match(html, /data-study-empty/)
     assert.doesNotMatch(html, /study-card is-featured/)
     assert.match(html, /class="study-card internal"[^>]*data-study-category="DATABASE"/)
+    assert.match(html, /data-study-category="DATABASE"[^>]*style="--study-category-color: #54a8ff"/)
     assert.match(html, /class="study-card-badge">BACKEND/)
-    assert.match(html, /class="study-card-date">2026-08-15/)
+    assert.match(html, /class="study-card-date">2026-08-12/)
     assert.match(html, /class="study-card-title">@Bean/)
     assert.match(html, /class="study-card-excerpt">Register a bean\./)
     assert.match(html, /class="study-card-path">BACKEND \/ SPRING/)
     assert.doesNotMatch(html, /study-note-card-number/)
     assert.doesNotMatch(html, /study-note-card-arrow/)
     assert.doesNotMatch(html, /study-graph-button-mark/)
+    assert.doesNotMatch(html, /min read/)
     assert.match(html, /class="study-graph-button"[^>]*>Graph<\/button>/)
   })
 })

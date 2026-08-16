@@ -29,6 +29,7 @@ const categoryPalette = [
 ]
 
 const categoryColors: Record<string, string> = {
+  AI: "#6f7cf6",
   BACKEND: "#37c99b",
   DATABASE: "#54a8ff",
   FRONTEND: "#ff9c52",

@@ -3,8 +3,9 @@ import { resolveRelative } from "../util/path"
 import { buildStudyNotesIndex, formatNoteDate } from "./study-notes"
 import { studyNoteSearchText } from "./archive-search"
 import StudyGraph from "./StudyGraph"
-import { buildStudyGraphData } from "./study-graph"
+import { buildStudyGraphData, categoryColor } from "./study-graph"
 import { studyGraphScript } from "./study-graph-script"
+import { resolveGitUploadDate } from "./git-upload-date"
 
 const studyNotesScript = `
 const initStudyNotes = () => {
@@ -72,7 +73,7 @@ initStudyNotes()
 const StudyNotes: QuartzComponent = ({ fileData, allFiles }: QuartzComponentProps) => {
   if (fileData.slug !== "index") return null
 
-  const { notes, categories } = buildStudyNotesIndex(allFiles)
+  const { notes, categories } = buildStudyNotesIndex(allFiles, resolveGitUploadDate)
   const graphData = buildStudyGraphData(allFiles)
 
   return (
@@ -108,6 +109,7 @@ const StudyNotes: QuartzComponent = ({ fileData, allFiles }: QuartzComponentProp
               type="button"
               class="study-category-filter"
               data-study-filter={category.key}
+              style={`--study-category-color: ${categoryColor(category.key)}`}
               aria-pressed={false}
             >
               {category.label} <span>{category.count}</span>
@@ -124,12 +126,13 @@ const StudyNotes: QuartzComponent = ({ fileData, allFiles }: QuartzComponentProp
                 class="study-card internal"
                 data-study-card
                 data-study-category={note.categoryKey}
+                style={`--study-category-color: ${categoryColor(note.categoryKey)}`}
                 data-study-search={studyNoteSearchText(note)}
                 href={resolveRelative(fileData.slug!, note.slug)}
                 title={note.title}
               >
                 <span class="study-card-badge">{note.categoryLabel}</span>
-                <span class="study-card-date">{formatNoteDate(note.modified)}</span>
+                <span class="study-card-date">{formatNoteDate(note.uploaded)}</span>
                 <span class="study-card-title">{note.title}</span>
                 <span class="study-card-excerpt">{note.excerpt}</span>
                 <span class="study-card-path">{note.path.join(" / ") || note.categoryLabel}</span>

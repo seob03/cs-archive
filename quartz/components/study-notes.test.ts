@@ -1,12 +1,52 @@
 import { describe, it } from "node:test"
 import assert from "node:assert/strict"
 import { buildStudyNotesIndex, formatNoteDate } from "./study-notes"
-import { FullSlug } from "../util/path"
+import { FilePath, FullSlug } from "../util/path"
 import { QuartzPluginData } from "../plugins/vfile"
 
 const modified = (value: string) => new Date(`${value}T00:00:00.000Z`)
 
 describe("study note catalog", () => {
+  it("sorts by first upload date instead of later modifications", () => {
+    const olderPath = "/repo/content/backend/older.md"
+    const newerPath = "/repo/content/backend/newer.md"
+    const uploadedByPath = new Map([
+      [olderPath, modified("2026-08-01")],
+      [newerPath, modified("2026-08-15")],
+    ])
+    const index = buildStudyNotesIndex(
+      [
+        {
+          slug: "backend/older" as FullSlug,
+          filePath: olderPath as FilePath,
+          frontmatter: { title: "먼저 업로드" },
+          dates: {
+            created: modified("2026-08-01"),
+            modified: modified("2026-08-20"),
+            published: modified("2026-08-01"),
+          },
+        },
+        {
+          slug: "backend/newer" as FullSlug,
+          filePath: newerPath as FilePath,
+          frontmatter: { title: "새로 업로드" },
+          dates: {
+            created: modified("2026-08-15"),
+            modified: modified("2026-08-15"),
+            published: modified("2026-08-15"),
+          },
+        },
+      ],
+      (filePath) => uploadedByPath.get(filePath ?? ""),
+    )
+
+    assert.deepEqual(
+      index.notes.map((note) => note.title),
+      ["새로 업로드", "먼저 업로드"],
+    )
+    assert.equal(index.notes[0]?.uploaded?.toISOString(), "2026-08-15T00:00:00.000Z")
+  })
+
   it("builds a folder-driven catalog and excludes index pages and virtual 404", () => {
     const index = buildStudyNotesIndex([
       {
@@ -65,7 +105,7 @@ describe("study note catalog", () => {
       categoryKey: "BACKEND",
       categoryLabel: "BACKEND",
       path: ["BACKEND", "SPRING"],
-      modified: modified("2026-08-15"),
+      uploaded: modified("2026-08-15"),
       tags: ["backend", "jpa"],
     })
     assert.equal(index.notes[1]?.excerpt, "트랜잭션 경계를 설명합니다.")
@@ -79,7 +119,7 @@ describe("study note catalog", () => {
     ])
   })
 
-  it("uses Korean title order when dates are equal or missing", () => {
+  it("uses Korean title order when upload dates are equal or missing", () => {
     const index = buildStudyNotesIndex([
       {
         slug: "same/z" as FullSlug,

@@ -1396,6 +1396,7 @@ body.study-graph-open {
 }
 
 .study-category-filter {
+  --study-category-color: var(--site-brand);
   flex: none;
   border: 1px solid var(--site-border);
   border-radius: 999px;
@@ -1417,24 +1418,25 @@ body.study-graph-open {
 }
 
 .study-category-filter:hover {
-  border-color: var(--site-brand);
-  color: var(--site-brand);
+  border-color: var(--study-category-color);
+  color: color-mix(in srgb, var(--study-category-color) 72%, var(--site-ink));
 }
 
 .study-category-filter.is-active,
 .study-category-filter[aria-pressed="true"] {
-  border-color: var(--site-brand);
-  background: var(--site-brand);
-  color: #fff;
+  border-color: color-mix(in srgb, var(--study-category-color) 65%, var(--site-border));
+  background: color-mix(in srgb, var(--study-category-color) 12%, var(--site-paper));
+  color: color-mix(in srgb, var(--study-category-color) 72%, var(--site-ink));
 }
 
 .study-category-filter.is-active span,
 .study-category-filter[aria-pressed="true"] span {
-  color: rgba(255, 255, 255, 0.72);
+  color: inherit;
+  opacity: 0.65;
 }
 
 .study-category-filter:focus-visible {
-  outline: 2px solid var(--site-brand);
+  outline: 2px solid var(--study-category-color);
   outline-offset: 3px;
 }
 
@@ -1454,6 +1456,7 @@ body.study-graph-open {
 }
 
 a.study-card {
+  --study-category-color: var(--site-brand);
   display: grid;
   min-width: 0;
   min-height: 14rem;
@@ -1473,7 +1476,7 @@ a.study-card {
 
 a.study-card:hover,
 a.study-card:focus-visible {
-  border-color: color-mix(in srgb, var(--site-brand) 60%, var(--site-border)) !important;
+  border-color: var(--study-category-color) !important;
   background: var(--site-paper-2) !important;
   color: var(--site-muted);
   outline: none;
@@ -1483,15 +1486,15 @@ a.study-card:focus-visible {
 a.study-card:focus-visible {
   box-shadow:
     0 0 0 2px var(--site-bg),
-    0 0 0 4px var(--site-brand);
+    0 0 0 4px var(--study-category-color);
 }
 
 .study-card-badge {
   width: fit-content;
   align-self: start;
   border-radius: 4px;
-  background: var(--site-brand-soft);
-  color: var(--site-brand);
+  background: color-mix(in srgb, var(--study-category-color) 12%, var(--site-paper));
+  color: color-mix(in srgb, var(--study-category-color) 72%, var(--site-ink));
   font-family: "JetBrains Mono", ui-monospace, SFMono-Regular, monospace;
   font-size: 0.65rem;
   font-weight: 600;
