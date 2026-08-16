@@ -194,6 +194,9 @@ plugins:
       condition: not-index
   - source: "@quartz-community/content-meta"
     enabled: true
+    options:
+      showReadingTime: false
+      showComma: false
     layout:
       position: beforeBody
       priority: 20

@@ -55,6 +55,13 @@ describe("archive branding and relationship layout", () => {
     )
   })
 
+  it("removes estimated reading time from note metadata", () => {
+    assert.match(
+      config,
+      /source:\s*["']@quartz-community\/content-meta["'][\s\S]*?enabled:\s*true[\s\S]*?options:[\s\S]*?showReadingTime:\s*false[\s\S]*?showComma:\s*false/,
+    )
+  })
+
   it("keeps the note sidebar compact and the table of contents always open", () => {
     assert.match(
       styles,
