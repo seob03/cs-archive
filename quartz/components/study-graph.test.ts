@@ -38,15 +38,19 @@ describe("study graph data", () => {
       file("backend/spring/bean", "Bean"),
       file("backend/spring/autowired", "Autowired"),
       file("database/redis", "Redis"),
+      file("ai/lang-chain/tool-calling", "Tool Calling"),
     ])
 
     const backendColors = graph.nodes
       .filter((node) => node.category === "BACKEND")
       .map((node) => node.color)
     const databaseColor = graph.nodes.find((node) => node.category === "DATABASE")?.color
+    const aiColor = graph.nodes.find((node) => node.category === "AI")?.color
 
     assert.equal(new Set(backendColors).size, 1)
     assert.notEqual(backendColors[0], databaseColor)
+    assert.notEqual(backendColors[0], aiColor)
+    assert.notEqual(databaseColor, aiColor)
   })
 })
 
