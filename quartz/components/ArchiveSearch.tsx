@@ -2,6 +2,7 @@ import { QuartzComponent, QuartzComponentProps } from "./types"
 import { resolveRelative } from "../util/path"
 import { buildStudyNotesIndex, formatNoteDate } from "./study-notes"
 import { studyNoteSearchText } from "./archive-search"
+import { resolveGitUploadDate } from "./git-upload-date"
 
 const archiveSearchScript = `
 const initArchiveSearch = () => {
@@ -102,7 +103,7 @@ document.addEventListener("DOMContentLoaded", normalizeLocalGraphBasePath, { onc
 `
 
 const ArchiveSearch: QuartzComponent = ({ fileData, allFiles }: QuartzComponentProps) => {
-  const { notes } = buildStudyNotesIndex(allFiles)
+  const { notes } = buildStudyNotesIndex(allFiles, resolveGitUploadDate)
   const isHome = fileData.slug === "index"
 
   return (
@@ -151,7 +152,7 @@ const ArchiveSearch: QuartzComponent = ({ fileData, allFiles }: QuartzComponentP
           >
             <span class="archive-search-result-title">{note.title}</span>
             <span class="archive-search-result-meta">
-              {note.categoryLabel} · {formatNoteDate(note.modified)}
+              {note.categoryLabel} · {formatNoteDate(note.uploaded)}
             </span>
           </a>
         ))}

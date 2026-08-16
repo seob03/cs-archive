@@ -1,6 +1,7 @@
 import { QuartzPluginData } from "../plugins/vfile"
 import { unescapeHTML } from "../util/escape"
 import { FullSlug } from "../util/path"
+import { GitUploadDateResolver } from "./git-upload-date"
 
 export type StudyNoteCard = {
   slug: FullSlug
@@ -9,7 +10,7 @@ export type StudyNoteCard = {
   categoryKey: string
   categoryLabel: string
   path: string[]
-  modified?: Date
+  uploaded?: Date
   tags: string[]
 }
 
@@ -51,9 +52,19 @@ function textFromHtml(value: unknown): string {
   return (node.children ?? []).map(textFromHtml).join(" ")
 }
 
-function modifiedDate(file: QuartzPluginData): Date | undefined {
-  const value = file.dates && typeof file.dates === "object" ? file.dates.modified : undefined
+function createdDate(file: QuartzPluginData): Date | undefined {
+  const value = file.dates && typeof file.dates === "object" ? file.dates.created : undefined
   return value instanceof Date && !Number.isNaN(value.getTime()) ? value : undefined
+}
+
+function uploadDate(
+  file: QuartzPluginData,
+  resolveUploadDate?: GitUploadDateResolver,
+): Date | undefined {
+  const filePath = typeof file.filePath === "string" ? file.filePath : undefined
+  const resolved = resolveUploadDate?.(filePath)
+  if (resolved instanceof Date && !Number.isNaN(resolved.getTime())) return resolved
+  return createdDate(file)
 }
 
 function tagsFrom(file: QuartzPluginData): string[] {
@@ -63,7 +74,10 @@ function tagsFrom(file: QuartzPluginData): string[] {
   return []
 }
 
-export function buildStudyNotesIndex(files: QuartzPluginData[]): StudyNotesIndex {
+export function buildStudyNotesIndex(
+  files: QuartzPluginData[],
+  resolveUploadDate?: GitUploadDateResolver,
+): StudyNotesIndex {
   const notes = files
     .flatMap((file) => {
       if (typeof file.slug !== "string" || file.slug === "404") return []
@@ -86,7 +100,7 @@ export function buildStudyNotesIndex(files: QuartzPluginData[]): StudyNotesIndex
           : typeof file.description === "string"
             ? file.description
             : textFromHtml(file.htmlAst)
-      const modified = modifiedDate(file)
+      const uploaded = uploadDate(file, resolveUploadDate)
 
       return [
         {
@@ -96,18 +110,18 @@ export function buildStudyNotesIndex(files: QuartzPluginData[]): StudyNotesIndex
           categoryKey,
           categoryLabel: categoryKey,
           path: folders,
-          ...(modified ? { modified } : {}),
+          ...(uploaded ? { uploaded } : {}),
           tags: tagsFrom(file),
         },
       ]
     })
     .sort((a, b) => {
-      if (a.modified && b.modified) {
-        const difference = b.modified.getTime() - a.modified.getTime()
+      if (a.uploaded && b.uploaded) {
+        const difference = b.uploaded.getTime() - a.uploaded.getTime()
         if (difference !== 0) return difference
-      } else if (a.modified) {
+      } else if (a.uploaded) {
         return -1
-      } else if (b.modified) {
+      } else if (b.uploaded) {
         return 1
       }
       return a.title.localeCompare(b.title, "ko")

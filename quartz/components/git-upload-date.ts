@@ -63,3 +63,5 @@ export function createGitUploadDateResolver(
     }
   }
 }
+
+export const resolveGitUploadDate = createGitUploadDateResolver()
