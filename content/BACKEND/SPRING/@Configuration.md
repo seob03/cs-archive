@@ -1,7 +1,7 @@
 ---
 notion-id: 307737bad00c804da589fe670d3fa257
 ---
-`@Configuration`은 “**해당 클래스를 스프링 설정 클래스로 등록하고, @Bean들을 프록시(CGLIB)로 관리해서 싱글톤을 보장”**해주는 애노테이션이다.
+`@Configuration`은 “**해당 클래스를 스프링 설정 클래스로 등록하고, @Bean들을 프록시(CGLIB)로 관리해서 싱글톤을 보장**”해주는 애노테이션이다.
 
 ```java
 @Configuration
