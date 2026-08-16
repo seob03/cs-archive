@@ -743,34 +743,46 @@ pre[data-language] code[data-theme] span[data-token-type="punctuation"] {
 
 .clipboard-button {
   display: grid !important;
-  width: 1.65rem;
-  min-width: 1.65rem;
-  height: 1.65rem;
+  width: 2rem !important;
+  min-width: 2rem;
+  height: 2rem !important;
   place-items: center;
+  box-sizing: border-box;
   z-index: 2;
-  top: 0.25rem;
-  right: 0.55rem;
+  top: 0.075rem;
+  right: 0.35rem;
+  margin: 0 !important;
   border: 1px solid #3a3a40;
-  border-radius: 5px;
+  border-radius: 6px;
   background: #19191d;
   color: #c4b5fd;
   font-family: "JetBrains Mono", ui-monospace, SFMono-Regular, monospace;
+  opacity: 1 !important;
   line-height: 1;
   padding: 0 !important;
+  transition:
+    border-color 150ms ease,
+    background 150ms ease,
+    color 150ms ease,
+    transform 150ms ease;
 }
 
 .clipboard-button > svg {
   display: block;
-  width: 0.8rem;
-  height: 0.8rem;
+  width: 1rem;
+  height: 1rem;
   margin: 0;
+  fill: currentColor;
+  filter: none;
 }
 
 .clipboard-button:hover,
 .clipboard-button:focus-visible {
   border-color: #818cf8;
+  background: #23232a;
   color: #fff;
   outline: none;
+  transform: translateY(-1px);
 }
 
 #quartz-body > .right.sidebar {

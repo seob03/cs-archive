@@ -82,14 +82,16 @@ describe("archive branding and relationship layout", () => {
     )
   })
 
-  it("sizes the code copy control independently from Quartz defaults", () => {
-    assert.match(styles, /\.clipboard-button\s*\{[\s\S]*width:\s*1\.65rem;/)
-    assert.match(styles, /\.clipboard-button\s*\{[\s\S]*height:\s*1\.65rem;/)
-    assert.match(styles, /\.clipboard-button\s*\{[\s\S]*padding:\s*0\s*!important;/)
+  it("keeps the code copy control visible and correctly aligned", () => {
+    assert.match(styles, /\.clipboard-button\s*\{[\s\S]*width:\s*2rem\s*!important;/)
+    assert.match(styles, /\.clipboard-button\s*\{[\s\S]*height:\s*2rem\s*!important;/)
+    assert.match(styles, /\.clipboard-button\s*\{[\s\S]*margin:\s*0\s*!important;/)
+    assert.match(styles, /\.clipboard-button\s*\{[\s\S]*opacity:\s*1\s*!important;/)
     assert.match(
       styles,
-      /\.clipboard-button\s*>\s*svg\s*\{[\s\S]*width:\s*0\.8rem;[\s\S]*height:\s*0\.8rem;/,
+      /\.clipboard-button\s*>\s*svg\s*\{[\s\S]*width:\s*1rem;[\s\S]*height:\s*1rem;/,
     )
+    assert.match(styles, /\.clipboard-button:hover,[\s\S]*background:\s*#23232a;/)
   })
 
   it("enables compact graph and backlinks context on note pages", () => {
