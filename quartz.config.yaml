@@ -7,7 +7,7 @@ configuration:
   analytics:
     provider: plausible
   locale: ko-KR
-  baseUrl: seob03.github.io/cs-note
+  baseUrl: seob03.github.io/cs-archive
   ignorePatterns:
     - private
     - templates
