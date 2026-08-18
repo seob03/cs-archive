@@ -1,4 +1,47 @@
 export const studyGraphScript = `
+let cleanupTocHighlight = () => {}
+
+const syncTocHighlight = () => {
+  const tocLinks = Array.from(document.querySelectorAll(".toc .toc-content a[data-for]"))
+  const tocHeadingIds = new Set(
+    tocLinks.map((link) => link.getAttribute("data-for")).filter((id) => Boolean(id)),
+  )
+  const headings = Array.from(
+    document.querySelectorAll("h1[id], h2[id], h3[id], h4[id], h5[id], h6[id]"),
+  ).filter((heading) => tocHeadingIds.has(heading.id))
+
+  for (const link of tocLinks) link.classList.remove("is-current")
+  if (tocLinks.length === 0 || headings.length === 0) return
+
+  const readingLine = window.scrollY + 120
+  let currentHeading = headings[0]
+  for (const heading of headings) {
+    const headingTop = heading.getBoundingClientRect().top + window.scrollY
+    if (headingTop <= readingLine) currentHeading = heading
+    else break
+  }
+
+  const currentHeadingId = currentHeading.id
+  for (const link of tocLinks) {
+    link.classList.toggle("is-current", link.getAttribute("data-for") === currentHeadingId)
+  }
+}
+
+const initTocHighlight = () => {
+  cleanupTocHighlight()
+  if (document.querySelectorAll(".toc .toc-content a[data-for]").length === 0) return
+
+  const onScroll = () => syncTocHighlight()
+  window.addEventListener("scroll", onScroll, { passive: true })
+  window.addEventListener("resize", onScroll)
+  syncTocHighlight()
+  cleanupTocHighlight = () => {
+    window.removeEventListener("scroll", onScroll)
+    window.removeEventListener("resize", onScroll)
+    cleanupTocHighlight = () => {}
+  }
+}
+
 const initStudyGraph = () => {
   const localHost = /^(localhost|127(?:\\.[0-9]+){3})$/.test(window.location.hostname)
   if (localHost && document.body?.dataset?.basepath) document.body.dataset.basepath = ""
@@ -18,6 +61,8 @@ const initStudyGraph = () => {
   for (const overflowEnd of document.querySelectorAll(".toc .overflow-end, .backlinks .overflow-end")) {
     overflowEnd.remove()
   }
+
+  initTocHighlight()
 
   const waitForD3 = () => {
     if (window.d3) return Promise.resolve(window.d3)

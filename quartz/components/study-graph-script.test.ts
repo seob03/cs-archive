@@ -25,4 +25,14 @@ describe("study graph interactions", () => {
     )
     assert.match(studyGraphScript, /svg\s*\.transition\(\)[\s\S]*?duration\(760\)/)
   })
+
+  it("activates one table-of-contents entry at the reading line", () => {
+    assert.match(studyGraphScript, /const readingLine = window\.scrollY \+ 120/)
+    assert.match(
+      studyGraphScript,
+      /document\.querySelectorAll\("\.toc \.toc-content a\[data-for\]"\)/,
+    )
+    assert.match(studyGraphScript, /link\.classList\.toggle\("is-current"/)
+    assert.match(studyGraphScript, /window\.addEventListener\("scroll", onScroll/)
+  })
 })

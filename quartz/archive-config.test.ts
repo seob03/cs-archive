@@ -156,4 +156,16 @@ describe("archive branding and relationship layout", () => {
     assert.match(styles, /:root\[saved-theme="dark"\][\s\S]*--secondary:\s*#9b9cf7;/)
     assert.match(styles, /:root\[saved-theme="dark"\][\s\S]*--tertiary:\s*#b8a9ff;/)
   })
+
+  it("keeps Mermaid controls minimal and edge labels readable in dark mode", () => {
+    assert.match(
+      styles,
+      /pre:has\(>\s*code\.mermaid\)\s*>\s*\.expand-button\s*\{[\s\S]*display:\s*none\s*!important;/,
+    )
+    assert.match(
+      styles,
+      /:root\[saved-theme="dark"\][\s\S]*\.mermaid \.edgeLabel \.labelBkg[\s\S]*background:/,
+    )
+    assert.match(styles, /:root\[saved-theme="dark"\][\s\S]*\.mermaid \.edgeLabel[\s\S]*color:/)
+  })
 })

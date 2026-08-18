@@ -785,6 +785,25 @@ pre[data-language] code[data-theme] span[data-token-type="punctuation"] {
   outline: none;
 }
 
+pre:has(> code.mermaid) > .expand-button {
+  display: none !important;
+}
+
+:root[saved-theme="dark"] pre:has(> code.mermaid) .mermaid .edgeLabel .labelBkg,
+:root[saved-theme="dark"] pre:has(> code.mermaid) .mermaid .edgeLabel rect.labelBkg {
+  background: #3a3214 !important;
+  fill: #3a3214 !important;
+  stroke: none !important;
+}
+
+:root[saved-theme="dark"] pre:has(> code.mermaid) .mermaid .edgeLabel,
+:root[saved-theme="dark"] pre:has(> code.mermaid) .mermaid .edgeLabel text,
+:root[saved-theme="dark"] pre:has(> code.mermaid) .mermaid .edgeLabel span,
+:root[saved-theme="dark"] pre:has(> code.mermaid) .mermaid .edgeLabel p {
+  color: #fde68a !important;
+  fill: #fde68a !important;
+}
+
 #quartz-body > .right.sidebar {
   display: flex;
   width: 100%;
@@ -893,9 +912,19 @@ pre[data-language] code[data-theme] span[data-token-type="punctuation"] {
 }
 
 .toc .toc-content li > a:hover,
-.toc .toc-content li > a.in-view {
+.toc .toc-content li > a.is-current {
   background: var(--site-paper-2);
   color: var(--site-brand);
+}
+
+.toc .toc-content li > a.is-current {
+  opacity: 1;
+}
+
+.toc .toc-content li > a.in-view:not(.is-current) {
+  background: transparent;
+  color: var(--site-muted);
+  opacity: 1;
 }
 
 .toc .overflow-end,
