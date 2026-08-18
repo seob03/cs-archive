@@ -5,6 +5,7 @@ import { readFileSync } from "node:fs"
 const config = readFileSync("quartz.config.yaml", "utf8")
 const styles = readFileSync("quartz/styles/custom.scss", "utf8")
 const home = readFileSync("content/index.md", "utf8")
+const studyNotes = readFileSync("quartz/components/StudyNotes.tsx", "utf8")
 
 describe("archive branding and relationship layout", () => {
   it("uses the archive name instead of the default index label", () => {
@@ -36,7 +37,8 @@ describe("archive branding and relationship layout", () => {
     assert.doesNotMatch(styles, /\.global-graph-icon/)
   })
 
-  it("caps card titles at two lines and excerpts at three", () => {
+  it("balances card previews and keeps cards uniform", () => {
+    assert.match(styles, /a\.study-card\s*\{[\s\S]*height:\s*14rem;/)
     assert.match(
       styles,
       /\.study-card-title\s*\{[\s\S]*max-height:\s*calc\(1\.4em\s*\*\s*2\);/,
@@ -47,6 +49,13 @@ describe("archive branding and relationship layout", () => {
       /\.study-card-excerpt\s*\{[\s\S]*max-height:\s*calc\(1\.65em\s*\*\s*3\);/,
     )
     assert.match(styles, /\.study-card-excerpt\s*\{[\s\S]*-webkit-line-clamp:\s*3;/)
+    assert.match(
+      styles,
+      /a\.study-card\[data-study-title-lines="2"\]\s+\.study-card-excerpt\s*\{[\s\S]*max-height:\s*calc\(1\.65em\s*\*\s*2\);/,
+    )
+    assert.match(styles, /a\.study-card\[data-study-title-lines="2"\][\s\S]*-webkit-line-clamp:\s*2;/)
+    assert.match(studyNotes, /data-study-title-lines/)
+    assert.match(studyNotes, /getBoundingClientRect\(\)/)
   })
 
   it("uses graph category colors as restrained card and filter accents", () => {

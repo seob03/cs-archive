@@ -15,6 +15,28 @@ const initStudyNotes = () => {
   const filterButtons = Array.from(root.querySelectorAll("[data-study-filter]"))
   const cards = Array.from(root.querySelectorAll("[data-study-card]"))
   const emptyState = root.querySelector("[data-study-empty]")
+  let disposed = false
+
+  const syncCardPreviewLines = () => {
+    for (const card of cards) {
+      const title = card.querySelector(".study-card-title")
+      if (!(title instanceof HTMLElement)) continue
+
+      const lineHeight = Number.parseFloat(getComputedStyle(title).lineHeight)
+      const titleHeight = title.getBoundingClientRect().height
+      if (!Number.isFinite(lineHeight) || lineHeight <= 0 || titleHeight <= 0) continue
+
+      const titleLines = titleHeight > lineHeight * 1.5 ? "2" : "1"
+      card.setAttribute("data-study-title-lines", titleLines)
+    }
+  }
+
+  const scheduleCardPreviewLines = () => {
+    if (disposed) return
+    window.requestAnimationFrame(() => {
+      if (!disposed) syncCardPreviewLines()
+    })
+  }
 
   const applyFilter = (filter) => {
     const query = root.dataset.studyQuery || ""
@@ -53,14 +75,19 @@ const initStudyNotes = () => {
 
   root.addEventListener("click", onClick)
   root.addEventListener("study-search", onSearch)
+  window.addEventListener("resize", scheduleCardPreviewLines)
   root.dataset.studyNotesReady = "true"
   const activeFilter = root.querySelector("[data-study-filter].is-active")
   applyFilter(activeFilter?.getAttribute("data-study-filter") || "ALL")
+  scheduleCardPreviewLines()
+  document.fonts?.ready.then(scheduleCardPreviewLines)
 
   if (typeof window.addCleanup === "function") {
     window.addCleanup(() => {
+      disposed = true
       root.removeEventListener("click", onClick)
       root.removeEventListener("study-search", onSearch)
+      window.removeEventListener("resize", scheduleCardPreviewLines)
     })
   }
 }
