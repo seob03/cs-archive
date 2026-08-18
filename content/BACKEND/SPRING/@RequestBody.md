@@ -1,5 +1,5 @@
 ---
-created: 2026-08-14T18:08:55+09:00
+created: 2026-02-27T21:43:00+09:00
 notion-id: 310737bad00c80b3a108eb312cd77e4b
 ---
 `@RequestBody`는 **요청 바디(Body)에 담긴 데이터(JSON ⭐)** 를 **객체(DTO)로 자동 역직렬화(Deserialize)해서** 컨트롤러 파라미터로 넘겨주는 애노테이션이다. 즉, **쿼리 스트링/form-urlencoded가 아니라** application/json 같은 **Body 기반 요청 데이터**를 꺼내서 DTO 필드에 자동으로 채워준다.

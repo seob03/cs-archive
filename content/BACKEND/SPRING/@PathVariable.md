@@ -1,5 +1,5 @@
 ---
-created: 2026-08-14T18:08:55+09:00
+created: 2026-02-27T21:42:00+09:00
 notion-id: 310737bad00c80909c12d00d5fedee54
 ---
 `@PathVariable`은 **URL 경로 자체에 박힌 값(/posts/{id}의 id)을 메서드 파라미터로 꺼내서 바인딩**해주는 스프링 MVC 애노테이션이다.

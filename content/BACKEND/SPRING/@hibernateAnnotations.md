@@ -1,5 +1,5 @@
 ---
-created: 2026-08-14T18:08:55+09:00
+created: 2026-02-23T20:20:00+09:00
 notion-id: 310737bad00c8055bbb6cda9a9edcd6e
 ---
 ### ==`Bean Validation + 하이버네이트 Validator`== 애노테이션 모음 URL

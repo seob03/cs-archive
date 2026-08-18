@@ -1,5 +1,5 @@
 ---
-created: 2026-08-14T18:08:55+09:00
+created: 2026-02-23T15:47:00+09:00
 notion-id: 30d737bad00c805a8fc1e47be766ea25
 ---
 `@Controller`는 **스프링 MVC에서 “웹 요청을 받아서 뷰(View)를 반환하는 컨트롤러”** 임을 표시하는 애노테이션이다. ==(이 클래스의 메서드가 @RequestMapping, @GetMapping 같은 걸로 **URL 매핑 대상**이 된다)==

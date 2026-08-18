@@ -1,5 +1,5 @@
 ---
-created: 2026-08-14T18:08:55+09:00
+created: 2026-02-27T21:28:00+09:00
 notion-id: 314737bad00c809fbfcbdc33ef3adde4
 ---
 `AnnotationFormatterFactory`는 **“특정 애노테이션이 붙은 필드(파라미터)에 어떤 Formatter(Printer/Parser)를 적용할지 연결해주는 팩토리 (인터페이스)**”다.

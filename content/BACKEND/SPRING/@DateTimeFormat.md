@@ -1,5 +1,5 @@
 ---
-created: 2026-08-14T18:08:55+09:00
+created: 2026-02-27T21:15:00+09:00
 notion-id: 314737bad00c8046a003ff6da7cbe549
 ---
 **문자열 ↔ 날짜/시간 타입**(Date/LocalDate/LocalDateTime 등) 변환 규칙을 지정한다. iso나 pattern(직접 패턴) 같은 옵션을 쓴다. 

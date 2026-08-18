@@ -1,5 +1,5 @@
 ---
-created: 2026-08-14T18:08:55+09:00
+created: 2026-02-26T21:05:00+09:00
 notion-id: 313737bad00c8091bd80dba1eba06bb4
 ---
 `@ControllerAdvice`는 **여러 컨트롤러에 공통으로 적용되는 “컨트롤러 전역 설정/처리 클래스”**를 만드는 스프링 MVC 애노테이션이다. 대표적으로 `@ExceptionHandler`를 한 곳에 모을 때 사용한다.

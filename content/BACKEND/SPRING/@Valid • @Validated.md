@@ -1,5 +1,5 @@
 ---
-created: 2026-08-14T18:08:55+09:00
+created: 2026-02-23T20:16:00+09:00
 notion-id: 310737bad00c8031a764db3881a3edf9
 ---
 `@Valid`와 `@Validated` 둘 다 **스프링에서 Bean Validation(객체 검증)을 트리거해서 제약조건 위반을 검출**하게 해주는 애노테이션이다.

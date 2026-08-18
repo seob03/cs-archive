@@ -1,5 +1,5 @@
 ---
-created: 2026-08-14T18:08:55+09:00
+created: 2026-02-23T17:42:00+09:00
 notion-id: 310737bad00c80b49765deedbd11af3a
 ---
 DTO는 **Data Transfer Object**의 약자

@@ -1,5 +1,5 @@
 ---
-created: 2026-08-14T18:08:55+09:00
+created: 2026-02-23T16:35:00+09:00
 notion-id: 30d737bad00c801aa4bec9f5d9e647f0
 ---
 `@Slf4j`은 클래스에 **SLF4J Logger(log) 필드**를 자동 생성해서 log.info(), log.error() 같은 로그를 바로 쓰게 해주는 **Lombok 애노테이션**이다.

@@ -1,5 +1,5 @@
 ---
-created: 2026-08-14T18:08:55+09:00
+created: 2026-02-23T19:37:00+09:00
 notion-id: 310737bad00c80cf8164dd3e069340ab
 ---
 `reject()` • `rejectValue()`는 Validator에서 `Errors`(=`BindingResult`)에 에러를 “수동으로 추가”하는 메서드다. `FieldError`와 `ObjectError`를 스프링이 내부적으로 생성해서 `BindingResult`에 넣어주기 때문에 내가 에러 객체들을 `new` 키워드를 통해 직접 생성할 필요가 없다.

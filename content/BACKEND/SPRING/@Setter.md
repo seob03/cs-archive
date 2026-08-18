@@ -1,5 +1,5 @@
 ---
-created: 2026-08-14T18:08:55+09:00
+created: 2026-02-21T02:21:00+09:00
 notion-id: 30d737bad00c80409504dd19da98a7ae
 ---
 `@Setter`는 **Lombok이 클래스/필드의 setter 메서드(setX(value))를 자동 생성**해주는 애노테이션이다.
