@@ -36,6 +36,14 @@ describe("archive branding and relationship layout", () => {
     assert.doesNotMatch(styles, /\.global-graph-icon/)
   })
 
+  it("caps study card excerpts at two visual lines", () => {
+    assert.match(
+      styles,
+      /\.study-card-excerpt\s*\{[\s\S]*max-height:\s*calc\(1\.65em\s*\*\s*2\);/,
+    )
+    assert.match(styles, /\.study-card-excerpt\s*\{[\s\S]*-webkit-line-clamp:\s*2;/)
+  })
+
   it("uses graph category colors as restrained card and filter accents", () => {
     assert.match(
       styles,
