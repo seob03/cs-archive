@@ -216,6 +216,49 @@ describe("study note catalog", () => {
 
     assert.equal(index.notes[0]?.excerpt, "Rendered HTML fallback")
   })
+
+  it("excludes fenced code blocks while keeping inline code in excerpts", () => {
+    const index = buildStudyNotesIndex([
+      {
+        slug: "backend/spring/code-example" as FullSlug,
+        htmlAst: {
+          type: "root",
+          children: [
+            {
+              type: "element",
+              tagName: "p",
+              properties: {},
+              children: [
+                { type: "text", value: "설명 " },
+                {
+                  type: "element",
+                  tagName: "code",
+                  properties: {},
+                  children: [{ type: "text", value: "inlineCode" }],
+                },
+                { type: "text", value: " 다음 설명" },
+              ],
+            },
+            {
+              type: "element",
+              tagName: "pre",
+              properties: {},
+              children: [
+                {
+                  type: "element",
+                  tagName: "code",
+                  properties: {},
+                  children: [{ type: "text", value: "const hidden = true" }],
+                },
+              ],
+            },
+          ],
+        },
+      },
+    ])
+
+    assert.equal(index.notes[0]?.excerpt, "설명 inlineCode 다음 설명")
+  })
 })
 
 describe("study note dates", () => {

@@ -43,13 +43,22 @@ export function summarizeNote(description?: string, fallback = "노트 내용을
   return `${normalized.slice(0, excerptLimit - 1).trimEnd()}…`
 }
 
-function textFromHtml(value: unknown): string {
+function textFromHtml(value: unknown, skipCodeBlocks = false): string {
   if (typeof value === "string") return value
   if (!value || typeof value !== "object") return ""
 
-  const node = value as { value?: unknown; children?: unknown[] }
+  const node = value as { value?: unknown; children?: unknown[]; tagName?: unknown }
+  if (skipCodeBlocks && node.tagName === "pre") return ""
   if (typeof node.value === "string") return node.value
-  return (node.children ?? []).map(textFromHtml).join(" ")
+  return (node.children ?? []).map((child) => textFromHtml(child, skipCodeBlocks)).join(" ")
+}
+
+function hasCodeBlock(value: unknown): boolean {
+  if (!value || typeof value !== "object") return false
+
+  const node = value as { children?: unknown[]; tagName?: unknown }
+  if (node.tagName === "pre") return true
+  return (node.children ?? []).some(hasCodeBlock)
 }
 
 function validDate(value: unknown): Date | undefined {
@@ -113,9 +122,11 @@ export function buildStudyNotesIndex(
       const description =
         typeof file.frontmatter?.description === "string"
           ? file.frontmatter.description
-          : typeof file.description === "string"
-            ? file.description
-            : textFromHtml(file.htmlAst)
+          : hasCodeBlock(file.htmlAst)
+            ? textFromHtml(file.htmlAst, true)
+            : typeof file.description === "string"
+              ? file.description
+              : textFromHtml(file.htmlAst)
       const uploaded = uploadDate(file, resolveUploadDate)
 
       return [
