@@ -1,4 +1,5 @@
 ---
+created: 2026-08-14T18:08:55+09:00
 notion-id: 30d737bad00c809294dbc9d70168e8db
 ---
 `@RestController`는 **컨트롤러의 모든 메서드 반환값을 뷰가 아니라 HTTP 응답 바디(JSON 등)로 바로 내려주는** 스프링 MVC 애노테이션이다. (@Controller + @ResponseBody 합친 효과)

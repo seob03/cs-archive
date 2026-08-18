@@ -1,4 +1,5 @@
 ---
+created: 2026-08-18T19:56:42+09:00
 notion-id: 3c0737bad00c8012a2cede85c70083e6
 ---
 단순 함수에서는 `@tool`을 통해 도구를 만들었지만, 이미 만들어둔 chain이나 Runnable 객체에 대해서도 `RunnableLambda → as_tool()` 방식으로도 Tool을 만들 수 있다.

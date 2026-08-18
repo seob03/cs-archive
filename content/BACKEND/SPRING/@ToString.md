@@ -1,4 +1,5 @@
 ---
+created: 2026-08-14T18:08:55+09:00
 notion-id: 30d737bad00c803abec5e2d2ca456af1
 ---
 `@ToString`은 **Lombok이 toString() 메서드를 자동 생성**해주는 애노테이션이다. 클래스의 필드들을 이용해 ClassName(field=..., ...) 형태로 만들어준다.

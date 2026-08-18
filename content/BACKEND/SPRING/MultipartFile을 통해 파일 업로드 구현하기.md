@@ -1,4 +1,5 @@
 ---
+created: 2026-08-14T18:08:55+09:00
 notion-id: 319737bad00c80d4bcd9e4985f017fc3
 ---
 ```java

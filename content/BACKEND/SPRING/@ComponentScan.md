@@ -1,4 +1,5 @@
 ---
+created: 2026-08-14T18:08:55+09:00
 notion-id: 307737bad00c80b28a79da2b279dfdf6
 ---
 `@ComponentScan`은 “**@Component 계열(@Service/@Repository/@Controller 등) 붙은 클래스를 찾아 스프링 빈으로 자동 등록하는 설정”**이다.

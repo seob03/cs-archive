@@ -1,4 +1,5 @@
 ---
+created: 2026-08-14T18:08:55+09:00
 notion-id: 30d737bad00c804a8acef7cb2d128e01
 ---
 `@Getter`는 **Lombok이 클래스/필드의 getter 메서드(getX(), boolean이면 isX())를 자동 생성**해주는 애노테이션이다. 주로 `@Setter`와 같이 사용한다.

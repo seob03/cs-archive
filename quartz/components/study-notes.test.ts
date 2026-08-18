@@ -47,6 +47,30 @@ describe("study note catalog", () => {
     assert.equal(index.notes[0]?.uploaded?.toISOString(), "2026-08-15T00:00:00.000Z")
   })
 
+  it("prefers an explicit frontmatter created timestamp over the Git upload timestamp", () => {
+    const notePath = "/repo/content/backend/created-note.md"
+    const index = buildStudyNotesIndex(
+      [
+        {
+          slug: "backend/created-note" as FullSlug,
+          filePath: notePath as FilePath,
+          frontmatter: {
+            title: "직접 기록한 날짜",
+            created: "2026-08-14T15:42:00+09:00",
+          },
+          dates: {
+            created: modified("2026-08-14"),
+            modified: modified("2026-08-20"),
+            published: modified("2026-08-14"),
+          },
+        },
+      ],
+      () => modified("2026-08-18"),
+    )
+
+    assert.equal(index.notes[0]?.uploaded?.toISOString(), "2026-08-14T06:42:00.000Z")
+  })
+
   it("builds a folder-driven catalog and excludes index pages and virtual 404", () => {
     const index = buildStudyNotesIndex([
       {
@@ -195,8 +219,8 @@ describe("study note catalog", () => {
 })
 
 describe("study note dates", () => {
-  it("formats dates as YYYY-MM-DD and missing dates as empty strings", () => {
-    assert.equal(formatNoteDate(new Date("2026-08-15T13:45:00.000Z")), "2026-08-15")
+  it("formats dates as YYYY-MM-DD in Korean time and missing dates as empty strings", () => {
+    assert.equal(formatNoteDate(new Date("2026-08-15T13:45:00+09:00")), "2026-08-15")
     assert.equal(formatNoteDate(), "")
   })
 })

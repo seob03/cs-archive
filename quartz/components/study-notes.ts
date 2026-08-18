@@ -52,19 +52,35 @@ function textFromHtml(value: unknown): string {
   return (node.children ?? []).map(textFromHtml).join(" ")
 }
 
-function createdDate(file: QuartzPluginData): Date | undefined {
+function validDate(value: unknown): Date | undefined {
+  if (!(value instanceof Date) && typeof value !== "string" && typeof value !== "number") {
+    return undefined
+  }
+
+  const date = value instanceof Date ? value : new Date(value)
+  return !Number.isNaN(date.getTime()) ? date : undefined
+}
+
+function frontmatterCreatedDate(file: QuartzPluginData): Date | undefined {
+  return validDate(file.frontmatter?.created)
+}
+
+function storedCreatedDate(file: QuartzPluginData): Date | undefined {
   const value = file.dates && typeof file.dates === "object" ? file.dates.created : undefined
-  return value instanceof Date && !Number.isNaN(value.getTime()) ? value : undefined
+  return validDate(value)
 }
 
 function uploadDate(
   file: QuartzPluginData,
   resolveUploadDate?: GitUploadDateResolver,
 ): Date | undefined {
+  const explicitCreated = frontmatterCreatedDate(file)
+  if (explicitCreated) return explicitCreated
+
   const filePath = typeof file.filePath === "string" ? file.filePath : undefined
   const resolved = resolveUploadDate?.(filePath)
   if (resolved instanceof Date && !Number.isNaN(resolved.getTime())) return resolved
-  return createdDate(file)
+  return storedCreatedDate(file)
 }
 
 function tagsFrom(file: QuartzPluginData): string[] {
@@ -139,10 +155,15 @@ export function buildStudyNotesIndex(
 
 export function formatNoteDate(date?: Date): string {
   if (!date) return ""
-  const year = date.getFullYear()
-  const month = String(date.getMonth() + 1).padStart(2, "0")
-  const day = String(date.getDate()).padStart(2, "0")
-  return `${year}-${month}-${day}`
+
+  const parts = new Intl.DateTimeFormat("en-CA", {
+    timeZone: "Asia/Seoul",
+    year: "numeric",
+    month: "2-digit",
+    day: "2-digit",
+  }).formatToParts(date)
+  const values = Object.fromEntries(parts.map(({ type, value }) => [type, value]))
+  return `${values.year}-${values.month}-${values.day}`
 }
 
 export function selectStudyNotes(

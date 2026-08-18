@@ -1,4 +1,5 @@
 ---
+created: 2026-08-14T18:08:55+09:00
 notion-id: 30d737bad00c80cb863bd11af8e9548f
 ---
 `@RequiredArgsConstructor`는 **final 필드(+@NonNull 붙은 필드)만 골라서 생성자를 자동 생성**해주는 Lombok 애노테이션이다.

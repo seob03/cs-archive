@@ -1,4 +1,5 @@
 ---
+created: 2026-08-14T18:08:55+09:00
 notion-id: 313737bad00c80fe9d72da2497d3f5b5
 ---
 `@NoArgsConstructor`는 **“인자 없는 생성자(기본 생성자)”를 Lombok이 자동으로 만들어주는 애노테이션**이다. (JPA 엔티티에서 사실상 필수)

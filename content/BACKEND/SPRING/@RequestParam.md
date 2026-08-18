@@ -1,4 +1,5 @@
 ---
+created: 2026-08-14T18:08:55+09:00
 notion-id: 30d737bad00c80b38c7ffeb93a168be0
 ---
 `@RequestParam`은 **요청 파라미터(query string/form 데이터)를 메서드 파라미터로 바인딩**해주는 애노테이션이다.

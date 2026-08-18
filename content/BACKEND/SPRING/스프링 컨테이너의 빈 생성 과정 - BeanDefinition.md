@@ -1,4 +1,5 @@
 ---
+created: 2026-08-14T18:08:55+09:00
 notion-id: 307737bad00c80199515fc23078f4a3a
 ---
 스프링은 언어에 상관 없이 BeanDefinition만 만들어 두면 된다.

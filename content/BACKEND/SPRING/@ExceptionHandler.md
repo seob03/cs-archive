@@ -1,4 +1,5 @@
 ---
+created: 2026-08-14T18:08:55+09:00
 notion-id: 312737bad00c8088a3d6f653acb04a38
 ---
 `@ExceptionHandler`는 **컨트롤러(또는 @ControllerAdvice) 안에서 발생한 예외를 잡아서, 예외별로 “대체 응답”을 만들어 반환**하게 해주는 스프링 MVC 애노테이션이다.

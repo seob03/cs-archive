@@ -1,4 +1,5 @@
 ---
+created: 2026-08-14T18:08:55+09:00
 notion-id: 30d737bad00c80efb438f02a157803af
 ---
 `@RequestMapping`은 **HTTP 요청의 URL(경로)과 메서드(GET/POST 등)를 특정 컨트롤러(또는 메서드)에 매핑**해주는 애노테이션이다.

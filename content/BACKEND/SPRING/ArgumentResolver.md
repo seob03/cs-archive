@@ -1,4 +1,5 @@
 ---
+created: 2026-08-14T18:08:55+09:00
 notion-id: 312737bad00c801ea338ce8b46dc2773
 ---
 ArgumentResolver(정확히는 스프링 MVC의 HandlerMethodArgumentResolver)는 **컨트롤러 메서드 파라미터를 “어떻게 만들어서 넣을지” 결정하는 컴포넌트**다.
