@@ -82,6 +82,17 @@ describe("archive branding and relationship layout", () => {
     )
   })
 
+  it("indents nested table-of-contents levels", () => {
+    assert.match(
+      styles,
+      /\.toc\s+\.toc-content\s+li\.depth-1\s*>\s*a\s*\{[\s\S]*padding-left:\s*1\.35rem;/,
+    )
+    assert.match(
+      styles,
+      /\.toc\s+\.toc-content\s+li\.depth-2\s*>\s*a\s*\{[\s\S]*padding-left:\s*2\.25rem;/,
+    )
+  })
+
   it("keeps the code copy control visible and correctly aligned", () => {
     assert.match(styles, /\.clipboard-button\s*\{[\s\S]*width:\s*2rem\s*!important;/)
     assert.match(styles, /\.clipboard-button\s*\{[\s\S]*height:\s*2rem\s*!important;/)
@@ -137,5 +148,12 @@ describe("archive branding and relationship layout", () => {
       /:root:not\(\[saved-theme="dark"\]\)\s+\.study-graph-node-dot[\s\S]*filter:\s*saturate\(1\.15\)/,
     )
     assert.match(styles, /.related-graph-canvas\s*\{[\s\S]*background:\s*var\(--site-graph-bg\);/)
+  })
+
+  it("keeps Mermaid theme colors compatible with its color parser", () => {
+    assert.match(styles, /--secondary:\s*#5b5ce2;/)
+    assert.match(styles, /--tertiary:\s*#7c6ee6;/)
+    assert.match(styles, /:root\[saved-theme="dark"\][\s\S]*--secondary:\s*#9b9cf7;/)
+    assert.match(styles, /:root\[saved-theme="dark"\][\s\S]*--tertiary:\s*#b8a9ff;/)
   })
 })

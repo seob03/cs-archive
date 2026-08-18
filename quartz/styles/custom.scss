@@ -15,6 +15,8 @@
   --site-code-text: #e5e7eb;
   --site-code-muted: #a7b0be;
   --site-code-line: #26262a;
+  --secondary: #5b5ce2;
+  --tertiary: #7c6ee6;
   --site-graph-bg: #f5f6fb;
   --site-graph-edge: rgba(67, 56, 202, 0.56);
   --site-graph-node-stroke: rgba(30, 41, 59, 0.32);
@@ -40,6 +42,8 @@
   --site-code-text: #e5e7eb;
   --site-code-muted: #a7b0be;
   --site-code-line: #2b2b30;
+  --secondary: #9b9cf7;
+  --tertiary: #b8a9ff;
   --site-graph-bg: #17171a;
   --site-graph-edge: rgba(165, 180, 252, 0.44);
   --site-graph-node-stroke: var(--site-bg);
@@ -858,6 +862,34 @@ pre[data-language] code[data-theme] span[data-token-type="punctuation"] {
   padding: 0.28rem 0.38rem;
   text-overflow: ellipsis;
   white-space: nowrap;
+}
+
+.toc .toc-content li.depth-0 > a {
+  padding-left: 0.38rem;
+}
+
+.toc .toc-content li.depth-1 > a {
+  padding-left: 1.35rem;
+}
+
+.toc .toc-content li.depth-2 > a {
+  padding-left: 2.25rem;
+}
+
+.toc .toc-content li.depth-3 > a {
+  padding-left: 3.15rem;
+}
+
+.toc .toc-content li.depth-4 > a {
+  padding-left: 4.05rem;
+}
+
+.toc .toc-content li.depth-5 > a {
+  padding-left: 4.95rem;
+}
+
+.toc .toc-content li.depth-6 > a {
+  padding-left: 5.85rem;
 }
 
 .toc .toc-content li > a:hover,
