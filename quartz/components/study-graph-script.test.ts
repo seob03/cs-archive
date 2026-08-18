@@ -27,7 +27,7 @@ describe("study graph interactions", () => {
   })
 
   it("activates one table-of-contents entry at the reading line", () => {
-    assert.match(studyGraphScript, /const readingLine = window\.scrollY \+ 120/)
+    assert.match(studyGraphScript, /const readingLine = window\.scrollY \+ window\.innerHeight \/ 2/)
     assert.match(
       studyGraphScript,
       /document\.querySelectorAll\("\.toc \.toc-content a\[data-for\]"\)/,

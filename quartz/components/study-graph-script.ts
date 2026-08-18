@@ -13,7 +13,7 @@ const syncTocHighlight = () => {
   for (const link of tocLinks) link.classList.remove("is-current")
   if (tocLinks.length === 0 || headings.length === 0) return
 
-  const readingLine = window.scrollY + 120
+  const readingLine = window.scrollY + window.innerHeight / 2
   let currentHeading = headings[0]
   for (const heading of headings) {
     const headingTop = heading.getBoundingClientRect().top + window.scrollY
