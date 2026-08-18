@@ -68,4 +68,4 @@ pprint(ai_msg.tool_calls)
 
 ## 참고
 
-[@tool](https://app.notion.com/p/tool-3c0737bad00c803ca9a0da1d4eaed572?pvs=21)
+[[@tool]]

@@ -93,5 +93,4 @@ pprint(ai_msg.tool_calls)
 - 데코레이터 덕분에 LLM에 바인딩을 쉽게 할 수 있고, Tool Calling이 되는 모습이다.
 
 ## 참고
-
-[Tool Calling](https://app.notion.com/p/Tool-Calling-3be737bad00c8068af0ae778b48c64b4?pvs=21)
+[[Tool Calling]]
