@@ -4,4 +4,4 @@
 
 ### [Archive 바로가기 →](https://seob03.github.io/cs-archive/)
 
-Obsidian으로 기록하고 Quartz와 GitHub Pages로 발행합니다.
+Notion + Obsidian으로 필기하고 Quartz + GitHub Pages로 발행합니다.
