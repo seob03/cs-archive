@@ -1,5 +1,6 @@
 export const studyGraphScript = `
 let cleanupTocHighlight = () => {}
+let activeTocHeadingId = ""
 
 const syncTocHighlight = () => {
   const tocLinks = Array.from(document.querySelectorAll(".toc .toc-content a[data-for]"))
@@ -25,10 +26,34 @@ const syncTocHighlight = () => {
   for (const link of tocLinks) {
     link.classList.toggle("is-current", link.getAttribute("data-for") === currentHeadingId)
   }
+
+  const currentLink = tocLinks.find((link) => link.getAttribute("data-for") === currentHeadingId)
+  if (currentLink && currentHeadingId !== activeTocHeadingId) {
+    const tocContent = currentLink.closest(".toc-content")
+    if (tocContent instanceof HTMLElement) {
+      const contentRect = tocContent.getBoundingClientRect()
+      const linkRect = currentLink.getBoundingClientRect()
+      const linkTop = linkRect.top - contentRect.top + tocContent.scrollTop
+      const linkBottom = linkTop + linkRect.height
+      const visibleTop = tocContent.scrollTop
+      const visibleBottom = visibleTop + tocContent.clientHeight
+
+      if (linkTop < visibleTop || linkBottom > visibleBottom) {
+        const maxScrollTop = Math.max(0, tocContent.scrollHeight - tocContent.clientHeight)
+        const targetScrollTop = Math.max(
+          0,
+          Math.min(maxScrollTop, linkTop - (tocContent.clientHeight - linkRect.height) / 2),
+        )
+        tocContent.scrollTo({ top: targetScrollTop, behavior: "smooth" })
+      }
+    }
+  }
+  activeTocHeadingId = currentHeadingId
 }
 
 const initTocHighlight = () => {
   cleanupTocHighlight()
+  activeTocHeadingId = ""
   if (document.querySelectorAll(".toc .toc-content a[data-for]").length === 0) return
 
   const onScroll = () => syncTocHighlight()

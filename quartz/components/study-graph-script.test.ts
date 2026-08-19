@@ -36,6 +36,11 @@ describe("study graph interactions", () => {
     assert.match(studyGraphScript, /window\.addEventListener\("scroll", onScroll/)
   })
 
+  it("keeps the active table-of-contents entry visible while the page scrolls", () => {
+    assert.match(studyGraphScript, /const currentLink = tocLinks\.find\(/)
+    assert.match(studyGraphScript, /tocContent\.scrollTo\(\{[\s\S]*behavior:\s*"smooth"/)
+  })
+
   it("toggles the related graph and notes views with one button", () => {
     assert.match(studyGraphScript, /data-study-related-toggle/)
     assert.match(studyGraphScript, /data-study-related-view="graph"/)

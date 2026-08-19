@@ -113,6 +113,7 @@ describe("archive branding and relationship layout", () => {
       styles,
       /#quartz-body\s*>\s*\.right\.sidebar:not\(:empty\)\s*\{[\s\S]*overflow:\s*hidden;/,
     )
+    assert.match(styles, /\.toc\s*\{[\s\S]*margin-bottom:\s*1rem;/)
     assert.match(
       styles,
       /\.toc\s*\{[\s\S]*display:\s*flex;[\s\S]*flex-direction:\s*column;[\s\S]*min-height:\s*0;/,
