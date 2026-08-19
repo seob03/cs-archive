@@ -107,12 +107,10 @@ print(answer)
 
 ---
 
-이번 구현에서는 항상 검색을 하기 때문에 Tool Calling은 없지만, Retriever 과정을 `@tool` 데코레이터로 등록해두고 LLM에 도구 등록해두면 이후에 Agent가 Tool Calling을 통해 RAG를 수행하는 구조를 만들 수도 있다. 이러한 구조를 Agentic RAG라고도 한다.
+이번 구현에서는 항상 검색을 하기 때문에 Tool Calling은 없지만, Retriever 과정을 도구로 등록해두고 LLM에 도구 등록해두면 이후에 Agent가 Tool Calling을 통해 RAG를 수행하는 구조를 만들 수도 있다. 이러한 구조를 Agentic RAG라고도 한다.
 
 ## 참고
 
 [[LCEL 체인]]
 
 [[Tool Calling]]
-
-[[@tool]]
