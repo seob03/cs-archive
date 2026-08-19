@@ -111,6 +111,4 @@ print(answer)
 
 ## 참고
 
-[[LCEL 체인]]
-
 [[Tool Calling]]
