@@ -1,8 +1,8 @@
 ---
-created: 2026-08-18T19:46:00+09:00
 notion-id: 3c0737bad00c8047a587d03d13f5a983
+created: 2026-08-18T21:51:00+09:00
 ---
-LangChain Agent의 구조는 LLM이 어떤 Tool을 사용할지 판단하고, Tool을 실행하고, 결과를 다시 확인한 뒤 최종 답변을 만들도록 관리하는 실행 구조를 갖고있다.
+LLM이 어떤 Tool을 사용할지 판단하고, Tool을 실행하고, 결과를 다시 확인한 뒤 최종 답변을 만들도록 관리하는 실행 구조를 의미한다.
 
 ## Agent의 전체 흐름
 
@@ -99,10 +99,10 @@ MessagesPlaceholder(
 ```
 
 - Agent가 현재 질문을 처리하면서 만든 중간 실행 기록이 들어가는 자리다.
-	- AIMessage: search_menu를 호출하자.
-	- ToolMessage: 시그니처 스테이크의 가격은 35,000원이다.
-	- AIMessage: 이제 search_wine을 호출하자.
-	- ToolMessage: 스테이크와 어울리는 와인은 Cabernet Sauvignon이다.
+	- `AIMessage`: search_menu를 호출하자.
+	- `ToolMessage`: 시그니처 스테이크의 가격은 35,000원이다.
+	- `AIMessage`: 이제 search_wine을 호출하자.
+	- `ToolMessage`: 스테이크와 어울리는 와인은 Cabernet Sauvignon이다.
 
 ## 2. Agent / AgentExecutor 생성
 
@@ -199,7 +199,7 @@ search_menu.invoke(tool_call)
 search_wine.invoke(tool_call)
 ```
 
-- AgentExecutor가 Tool 이름을 확인하고, 실제 함수를 실행한다.
+- `AgentExecutor`가 Tool 이름을 확인하고, 실제 함수를 실행한다.
 
 ### 3.4. Tool 결과를 scratchpad에 추가
 
@@ -224,6 +224,6 @@ Cabernet Sauvignon 추천
 
 ## 4. 수동 체인과 에이전트의 차이점
 
-수동 체인의 경우에는 개발자가 직접 ToolCall 확인하고 이름 비교하고, Tool을 실행해야 한다. 또한 Tool을 실행한 결과를 가지고 두 번째 LLM을 다시 호출했다. ([[Tool Calling]] 참고)
+수동 체인의 경우에는 개발자가 직접 ToolCall 확인하고 이름 비교하고, Tool을 실행해야 한다. 또한 Tool을 실행한 결과를 가지고 두 번째 LLM을 다시 호출했다. ([[Tool Calling 1]] 참고)
 
 다만 에이전트는 이런 복잡한 반복 실행을 AgentExecutor가 대신 관리를 해준다. 수동 체인의 경우에는 주로 한 번의 흐름이 끝이지만, 에이전트는 결과를 보고 스스로 판단하여 여러 번 실행할 수 있다.

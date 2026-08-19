@@ -1,6 +1,6 @@
 ---
-created: 2026-08-18T18:38:00+09:00
 notion-id: 3c0737bad00c803ca9a0da1d4eaed572
+created: 2026-08-18T15:51:00+09:00
 ---
 `@tool`은 일반적인 파이썬 함수를 LLM이 사용할 수 있는 LangChain Tool로 포장해 주는 데코레이터다. 데코레이터 자체가 실행을 해주는 것은 아니고, 도구를 등록해두는 것과 같다. 공부해본 결과 스프링의 `@Bean`과 비슷하다.
 
@@ -94,4 +94,5 @@ pprint(ai_msg.tool_calls)
 - 데코레이터 덕분에 LLM에 바인딩을 쉽게 할 수 있고, Tool Calling이 되는 모습이다.
 
 ## 참고
-[[Tool Calling]]
+
+[[Tool Calling 1]]

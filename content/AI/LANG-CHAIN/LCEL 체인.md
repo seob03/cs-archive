@@ -1,6 +1,6 @@
 ---
-created: 2026-08-18T18:51:00+09:00
 notion-id: 3c0737bad00c80eba8bfe7f4ca3f7122
+created: 2026-08-18T15:54:00+09:00
 ---
 LCEL은 LangChain Expression Language의 약자로, 여러 컴포넌트를 연결해서 하나의 파이프라인(체인)을 만드는 문법이다. `|` 연산자를 통해 각 컴포넌트를 연결할 수 있다.
 
