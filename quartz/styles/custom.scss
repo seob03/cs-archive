@@ -820,10 +820,18 @@ pre:has(> code.mermaid) > .expand-button {
 #quartz-body > .right.sidebar:not(:empty) {
   position: sticky;
   top: calc(var(--site-header) + 1.5rem);
+  height: calc(100vh - var(--site-header) - 1.5rem);
+  max-height: calc(100vh - var(--site-header) - 1.5rem);
+  min-height: 0;
+  overflow: hidden;
   margin-top: 3.5rem;
 }
 
 .toc {
+  display: flex;
+  min-height: 0;
+  flex: 1 1 auto;
+  flex-direction: column;
   overflow: hidden;
   border: 1px solid var(--site-border);
   border-radius: 10px;
@@ -860,8 +868,12 @@ pre:has(> code.mermaid) > .expand-button {
 
 .toc .toc-content,
 .toc .toc-content.collapsed {
+  min-height: 0;
+  flex: 1 1 auto;
   display: block !important;
-  max-height: calc(100vh - var(--site-header) - 8rem);
+  max-height: none;
+  overflow-y: auto;
+  overscroll-behavior: contain;
   margin: 0;
   padding: 0.35rem 0.45rem 0.45rem;
 }

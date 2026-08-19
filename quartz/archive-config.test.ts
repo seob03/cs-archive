@@ -104,6 +104,25 @@ describe("archive branding and relationship layout", () => {
     )
   })
 
+  it("keeps long table-of-contents lists scrollable inside the sticky sidebar", () => {
+    assert.match(
+      styles,
+      /#quartz-body\s*>\s*\.right\.sidebar:not\(:empty\)\s*\{[\s\S]*height:\s*calc\(100vh\s*-\s*var\(--site-header\)\s*-\s*1\.5rem\);/,
+    )
+    assert.match(
+      styles,
+      /#quartz-body\s*>\s*\.right\.sidebar:not\(:empty\)\s*\{[\s\S]*overflow:\s*hidden;/,
+    )
+    assert.match(
+      styles,
+      /\.toc\s*\{[\s\S]*display:\s*flex;[\s\S]*flex-direction:\s*column;[\s\S]*min-height:\s*0;/,
+    )
+    assert.match(
+      styles,
+      /\.toc\s+\.toc-content,\s*\.toc\s+\.toc-content\.collapsed\s*\{[\s\S]*max-height:\s*none;[\s\S]*overflow-y:\s*auto;[\s\S]*overscroll-behavior:\s*contain;/,
+    )
+  })
+
   it("indents nested table-of-contents levels", () => {
     assert.match(
       styles,
