@@ -95,4 +95,4 @@ pprint(ai_msg.tool_calls)
 
 ## 참고
 
-[[Tool Calling 1]]
+[[Tool Calling]]

@@ -111,8 +111,8 @@ print(answer)
 
 ## 참고
 
-[[LCEL 체인 1]]
+[[LCEL 체인]]
 
-[[Tool Calling 1]]
+[[Tool Calling]]
 
-[[@tool 1]]
+[[@tool]]

@@ -57,7 +57,7 @@ vector_db = Chroma(
 ```
 
 - 검색을 실행하기 전에 기존 Chroma 컬렉션을 로드한다.
-- [[Chroma로 RAG chain 구현하기 1]]에서 정의했던 Chroma를 재사용한다.
+- [[Chroma로 RAG chain 구현]]에서 정의했던 Chroma를 재사용한다.
 	- 이전에 이미 만들어둔 `./chroma_db`를 그래프에 연결하는 단계다.
 
 ```python
@@ -279,8 +279,8 @@ flowchart TD
 
 ## 참고
 
-[[Chroma로 RAG chain 구현하기 1]]
+[[Chroma로 RAG chain 구현]]
 
-[[StateGraph의 개념과 핵심 구성 요소 (State - Node - Edge) 1]]
+[[StateGraph 핵심 구성 요소 (State, Node, Edge)]]
 
-[[LCEL 체인 1]]
+[[LCEL 체인]]

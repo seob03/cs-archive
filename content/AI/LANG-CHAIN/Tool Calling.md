@@ -150,7 +150,7 @@ llm = ChatOpenAI(model="gpt-4o-mini")
 # LLM에 도구를 바인딩
 llm_with_tools = llm.bind_tools(tools=[web_search])
 
-# LLM 체인 생성
+# LLM 체인 생성 (LCEL 체인 사용)
 llm_chain = prompt | llm_with_tools
 
 # 도구 실행 체인 정의
@@ -184,15 +184,19 @@ pprint(response.content)
 1. 사용자 질문 입력: `"오늘 모엣샹동 샴페인의 가격은 얼마인가요?"`
 2. `web_search_chain.invoke(쿼리)`를 통한 Chain 실행된다.
 	- `@Chain`을 통해 평범한 파이썬 함수를 LangChain Runnable로 만들 수 있다.
-3. 도구 실행 체인이 실행되면서 `llm_chain.invoke(쿼리)`가 실행된다. **(첫 번째 LLM 호출)**
+3. 도구 실행 체인이 실행되면서 `llm_chain.invoke()`가 실행된다. **(첫 번째 LLM 호출)**
 	- `llm`은 평균 가격을 알고 있다고 해도 오늘 가격에 대해서는 확실하게 대답하기 어렵다.
 	- 따라서 `llm`은 바로 답변을 내놓는 것이 아니라 모델 리스트를 담은 `AIMessage` 반환한다.
 	- `ai_msg`의 결과를 보면 `content`가 비어있고, 필요한 도구를 리스트로 담아서 반환한다.
+	- 참고로 `llm_chain`은 LCEL 체인이라 `prompt`가 만들어지면 자동으로 `llm`으로 전달된다.
 4. `AIMessage`를 통해 얻은 도구 리스트인 `tool_calls`를 통해 `ToolMessage` 생성한다.
 	- 이때 리스트에 여러 도구가 있을 수 있기 때문에 `.batch()`를 통해 호출했다.
 	- 생성된 `ToolMessage`를 보면 도구를 사용해서 얻어낸 웹 검색 내용이 나온다.
 5. 얻어낸 `ToolMessage`를 `llm_chain`을 호출한다. **(두 번째 LLM 호출)**
-	- 도구로 검색한 결과들이 `prompt`의 인자로 들어간 채로 `llm`에게 입력된다.
+	- 도구로 검색한 결과들이 `prompt`의 인자로 들어간 채로 LCEL에 의해 `llm`에게 자동 입력된다.
 	- 아까와는 상황이 다르다. 이제는 “오늘”의 모엣샹동 가격이 쿼리에 포함되어 있다.
 	- 따라서 이제는 도구 호출 없이 최종 답변을 할 수 있게 된다.
-	- ==참고로 `tool_msgs`는 리스트여서 `*`를 통해 리스트 언패킹을 했고 `input_`은 딕셔너리여서 `**`를 통해 딕셔너리 언패킹 방법 한 것이다.==
+참고로 `tool_msgs`는 리스트여서 `*`를 통해 리스트 언패킹을 했고 `input_`은 딕셔너리여서 `**`를 통해 딕셔너리 언패킹 방법 한 것이다.
+
+## 참고
+[[LCEL 체인]]
