@@ -26,13 +26,19 @@ const props = (slug: string) =>
   }) as any
 
 describe("RelatedGraph component", () => {
-  it("renders a compact graph with a toggleable related-notes view", () => {
+  it("renders independent Graph and List tabs for the related material", () => {
     const html = render(RelatedGraph(props("backend/spring/bean")))
 
     assert.match(html, /class="related-graph"/)
     assert.match(html, /data-study-graph-current="backend\/spring\/bean"/)
     assert.match(html, /data-study-graph-preview/)
-    assert.match(html, /data-study-related-toggle/)
+    assert.match(html, /class="related-panel-tabs"/)
+    assert.match(html, /data-study-related-tab="graph"/)
+    assert.match(html, /data-study-related-tab="list"/)
+    assert.match(html, />Graph<\/button>/)
+    assert.match(html, />List<\/button>/)
+    assert.doesNotMatch(html, /data-study-related-toggle/)
+    assert.doesNotMatch(html, /참고 노트 보기|그래프 보기/)
     assert.match(html, /data-study-related-view="notes"/)
     assert.match(html, /연관 노트가 없습니다\./)
     assert.match(html, /Bean/)
@@ -49,6 +55,13 @@ describe("RelatedGraph component", () => {
     assert.match(html, /related-notes-list/)
     assert.match(html, /href="\.\.\/\.\.\/backend\/spring\/bean"/)
     assert.match(html, />Bean<\/a>/)
+  })
+
+  it("keeps the list tab available when a note has no incoming links", () => {
+    const html = render(RelatedGraph(props("backend/spring/bean")))
+
+    assert.match(html, /data-study-related-tab="list"/)
+    assert.match(html, /연관 노트가 없습니다\./)
   })
 
   it("does not render on the archive home page", () => {

@@ -14,7 +14,9 @@ const RelatedGraph: QuartzComponent = ({ fileData, allFiles }: QuartzComponentPr
   if (graphData.nodes.length === 0 && relatedNotes.length === 0) return null
 
   const startsWithNotes = graphData.nodes.length === 0
-  const notesId = `related-notes-${slug.replace(/[^a-zA-Z0-9_-]+/g, "-")}`
+  const safeSlug = slug.replace(/[^a-zA-Z0-9_-]+/g, "-")
+  const graphId = `related-graph-${safeSlug}`
+  const notesId = `related-notes-${safeSlug}`
 
   return (
     <section
@@ -23,24 +25,41 @@ const RelatedGraph: QuartzComponent = ({ fileData, allFiles }: QuartzComponentPr
       data-study-graph-data={JSON.stringify(graphData)}
       data-study-graph-current={slug}
       data-study-graph-home-href={resolveRelative(slug, "index" as FullSlug)}
-      data-study-related-mode={startsWithNotes ? "notes" : "graph"}
+      data-study-related-mode={startsWithNotes ? "list" : "graph"}
       aria-labelledby="related-graph-title"
     >
       <div class="related-panel-header">
-        <h3 id="related-graph-title" data-study-related-title>
-          {startsWithNotes ? "참고 노트" : "연관 그래프"}
-        </h3>
-        <button
-          type="button"
-          class="related-panel-toggle"
-          data-study-related-toggle
-          aria-controls={notesId}
-          aria-expanded={startsWithNotes}
-        >
-          {startsWithNotes ? "그래프 보기" : "참고 노트 보기"}
-        </button>
+        <h3 id="related-graph-title">연관 자료</h3>
+        <div class="related-panel-tabs" role="group" aria-label="연관 자료 보기">
+          <button
+            type="button"
+            class="related-panel-tab"
+            data-study-related-tab="graph"
+            aria-controls={graphId}
+            aria-pressed={!startsWithNotes}
+          >
+            Graph
+          </button>
+          <span class="related-panel-divider" aria-hidden="true">
+            |
+          </span>
+          <button
+            type="button"
+            class="related-panel-tab"
+            data-study-related-tab="list"
+            aria-controls={notesId}
+            aria-pressed={startsWithNotes}
+          >
+            List
+          </button>
+        </div>
       </div>
-      <div data-study-related-view="graph" class="related-graph-view" hidden={startsWithNotes}>
+      <div
+        id={graphId}
+        data-study-related-view="graph"
+        class="related-graph-view"
+        hidden={startsWithNotes}
+      >
         <div
           class="related-graph-canvas study-graph-canvas"
           data-study-graph-preview

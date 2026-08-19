@@ -116,26 +116,29 @@ const initStudyGraph = () => {
     const preview = root.querySelector("[data-study-graph-preview]")
     if (!(preview instanceof HTMLElement)) continue
 
-    const relatedToggle = root.querySelector("[data-study-related-toggle]")
-    const relatedTitle = root.querySelector("[data-study-related-title]")
+    const relatedTabs = Array.from(root.querySelectorAll("[data-study-related-tab]"))
     const relatedGraphView = root.querySelector('[data-study-related-view="graph"]')
     const relatedNotesView = root.querySelector('[data-study-related-view="notes"]')
-    let relatedMode = root.dataset.studyRelatedMode === "notes" ? "notes" : "graph"
+    let relatedMode = root.dataset.studyRelatedMode === "list" ? "list" : "graph"
 
     const syncRelatedView = () => {
-      if (!(relatedToggle instanceof HTMLButtonElement)) return
-      const showNotes = relatedMode === "notes"
-      if (relatedGraphView instanceof HTMLElement) relatedGraphView.hidden = showNotes
-      if (relatedNotesView instanceof HTMLElement) relatedNotesView.hidden = !showNotes
-      if (relatedTitle instanceof HTMLElement) relatedTitle.textContent = showNotes ? "참고 노트" : "연관 그래프"
-      relatedToggle.textContent = showNotes ? "그래프 보기" : "참고 노트 보기"
-      relatedToggle.setAttribute("aria-label", showNotes ? "연관 그래프 보기" : "참고 노트 보기")
-      relatedToggle.setAttribute("aria-expanded", String(showNotes))
+      const showGraph = relatedMode === "graph"
+      if (relatedGraphView instanceof HTMLElement) relatedGraphView.hidden = !showGraph
+      if (relatedNotesView instanceof HTMLElement) relatedNotesView.hidden = showGraph
+      for (const tab of relatedTabs) {
+        if (!(tab instanceof HTMLButtonElement)) continue
+        const active = tab.dataset.studyRelatedTab === relatedMode
+        tab.classList.toggle("is-active", active)
+        tab.setAttribute("aria-pressed", String(active))
+      }
       root.dataset.studyRelatedMode = relatedMode
     }
 
-    const onRelatedToggle = () => {
-      relatedMode = relatedMode === "notes" ? "graph" : "notes"
+    const onRelatedTabClick = (event) => {
+      if (!(event.currentTarget instanceof HTMLButtonElement)) return
+      const nextMode = event.currentTarget.dataset.studyRelatedTab
+      if (nextMode !== "graph" && nextMode !== "list") return
+      relatedMode = nextMode
       syncRelatedView()
     }
     syncRelatedView()
@@ -438,7 +441,7 @@ const initStudyGraph = () => {
 
     if (openButton instanceof HTMLButtonElement) openButton.addEventListener("click", openGraph)
     if (closeButton instanceof HTMLButtonElement) closeButton.addEventListener("click", closeGraph)
-    if (relatedToggle instanceof HTMLButtonElement) relatedToggle.addEventListener("click", onRelatedToggle)
+    for (const tab of relatedTabs) tab.addEventListener("click", onRelatedTabClick)
     if (overlay instanceof HTMLElement) overlay.addEventListener("click", onOverlayClick)
     for (const button of filterButtons) button.addEventListener("click", onFilterClick)
     document.addEventListener("keydown", onKeydown)
@@ -462,7 +465,7 @@ const initStudyGraph = () => {
       previewCleanup()
       if (openButton instanceof HTMLButtonElement) openButton.removeEventListener("click", openGraph)
       if (closeButton instanceof HTMLButtonElement) closeButton.removeEventListener("click", closeGraph)
-      if (relatedToggle instanceof HTMLButtonElement) relatedToggle.removeEventListener("click", onRelatedToggle)
+      for (const tab of relatedTabs) tab.removeEventListener("click", onRelatedTabClick)
       if (overlay instanceof HTMLElement) overlay.removeEventListener("click", onOverlayClick)
       for (const button of filterButtons) button.removeEventListener("click", onFilterClick)
       document.removeEventListener("keydown", onKeydown)

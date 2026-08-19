@@ -160,12 +160,13 @@ describe("archive branding and relationship layout", () => {
     )
   })
 
-  it("keeps graph and related notes in one toggleable note panel", () => {
+  it("keeps graph and related notes in one tabbed note panel", () => {
     assert.doesNotMatch(config, /source:\s*["']@quartz-community\/backlinks["']/)
     assert.doesNotMatch(config, /source:\s*["']@quartz-community\/graph["']/)
     assert.match(styles, /\.related-graph(?:\s*,|\s*\{)/)
     assert.match(styles, /\.related-panel-header\s*\{/)
-    assert.match(styles, /\.related-panel-toggle\s*\{/)
+    assert.match(styles, /\.related-panel-tabs\s*\{/)
+    assert.match(styles, /\.related-panel-tab\s*\{/)
     assert.match(styles, /\.related-notes-list\s*\{/)
   })
 

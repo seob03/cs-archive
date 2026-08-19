@@ -41,14 +41,15 @@ describe("study graph interactions", () => {
     assert.match(studyGraphScript, /tocContent\.scrollTo\(\{[\s\S]*behavior:\s*"smooth"/)
   })
 
-  it("toggles the related graph and notes views with one button", () => {
-    assert.match(studyGraphScript, /data-study-related-toggle/)
+  it("switches related graph and note views through independent Graph and List tabs", () => {
+    assert.match(studyGraphScript, /data-study-related-tab/)
     assert.match(studyGraphScript, /data-study-related-view="graph"/)
     assert.match(studyGraphScript, /data-study-related-view="notes"/)
-    assert.match(studyGraphScript, /relatedMode === "notes"/)
-    assert.match(studyGraphScript, /relatedGraphView\.hidden = showNotes/)
-    assert.match(studyGraphScript, /relatedNotesView\.hidden = !showNotes/)
-    assert.match(studyGraphScript, /참고 노트 보기/)
-    assert.match(studyGraphScript, /그래프 보기/)
+    assert.match(studyGraphScript, /dataset\.studyRelatedMode === "list"/)
+    assert.match(studyGraphScript, /relatedGraphView\.hidden = !showGraph/)
+    assert.match(studyGraphScript, /relatedNotesView\.hidden = showGraph/)
+    assert.match(studyGraphScript, /tab\.classList\.toggle\("is-active"/)
+    assert.match(studyGraphScript, /tab\.setAttribute\("aria-pressed"/)
+    assert.doesNotMatch(studyGraphScript, /data-study-related-toggle/)
   })
 })

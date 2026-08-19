@@ -983,22 +983,36 @@ pre:has(> code.mermaid) > .expand-button {
   text-transform: uppercase;
 }
 
-.related-panel-toggle {
+.related-panel-tabs {
+  display: inline-flex;
   flex: none;
+  align-items: center;
+  gap: 0.55rem;
+}
+
+.related-panel-tab {
   border: 0;
-  border-radius: 5px;
   background: transparent;
   color: var(--site-faint);
   cursor: pointer;
-  font-family: inherit;
-  font-size: 0.62rem;
+  font-family: "JetBrains Mono", ui-monospace, SFMono-Regular, monospace;
+  font-size: 0.59rem;
+  font-weight: 600;
+  letter-spacing: 0.06em;
   line-height: 1;
-  padding: 0.25rem 0.3rem;
+  padding: 0.22rem 0;
+  transition: color 150ms ease;
 }
 
-.related-panel-toggle:hover,
-.related-panel-toggle:focus-visible {
-  background: transparent;
+.related-panel-divider {
+  color: var(--site-border);
+  font-weight: 400;
+  line-height: 1;
+}
+
+.related-panel-tab:hover,
+.related-panel-tab:focus-visible,
+.related-panel-tab.is-active {
   color: var(--site-brand);
   outline: none;
 }
