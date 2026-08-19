@@ -97,10 +97,10 @@ describe("archive branding and relationship layout", () => {
     assert.match(styles, /\.toc\s+\.toc-header\s*\{[\s\S]*min-height:\s*2\.1rem;/)
     assert.match(styles, /\.toc\s+\.toc-header\s+svg\s*\{[\s\S]*display:\s*none;/)
     assert.match(styles, /\.toc\s+\.toc-content\.collapsed[\s\S]*display:\s*block\s*!important;/)
-    assert.match(styles, /\.related-graph-canvas\s*\{[\s\S]*height:\s*10\.5rem;/)
+    assert.match(styles, /\.related-graph-view,\s*\.related-notes-view\s*\{[\s\S]*height:\s*10\.5rem;/)
     assert.match(
       styles,
-      /\.toc\s+\.overflow-end,\s*\.backlinks\s+\.overflow-end\s*\{[\s\S]*display:\s*none\s*!important;/,
+      /\.toc\s+\.overflow-end\s*\{[\s\S]*display:\s*none\s*!important;/,
     )
   })
 
@@ -121,6 +121,8 @@ describe("archive branding and relationship layout", () => {
       styles,
       /\.toc\s+\.toc-content,\s*\.toc\s+\.toc-content\.collapsed\s*\{[\s\S]*max-height:\s*none;[\s\S]*overflow-y:\s*auto;[\s\S]*overscroll-behavior:\s*contain;/,
     )
+    assert.match(styles, /\.toc\s*\{[\s\S]*flex:\s*0\s+1\s+auto;/)
+    assert.doesNotMatch(styles, /\.toc\s*\{[^}]*flex:\s*1\s+1\s+auto;/)
   })
 
   it("indents nested table-of-contents levels", () => {
@@ -157,11 +159,13 @@ describe("archive branding and relationship layout", () => {
     )
   })
 
-  it("enables compact graph and backlinks context on note pages", () => {
-    assert.match(config, /source:\s*["']@quartz-community\/backlinks["']/)
+  it("keeps graph and related notes in one toggleable note panel", () => {
+    assert.doesNotMatch(config, /source:\s*["']@quartz-community\/backlinks["']/)
     assert.doesNotMatch(config, /source:\s*["']@quartz-community\/graph["']/)
-    assert.match(styles, /\.backlinks(?:\s*,|\s*\{)/)
     assert.match(styles, /\.related-graph(?:\s*,|\s*\{)/)
+    assert.match(styles, /\.related-panel-header\s*\{/)
+    assert.match(styles, /\.related-panel-toggle\s*\{/)
+    assert.match(styles, /\.related-notes-list\s*\{/)
   })
 
   it("keeps the theme toggle readable in both color modes", () => {

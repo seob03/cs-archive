@@ -6,7 +6,7 @@ describe("study graph interactions", () => {
   it("removes Quartz overflow markers from the note sidebar", () => {
     assert.match(
       studyGraphScript,
-      /document\.querySelectorAll\("\.toc \.overflow-end, \.backlinks \.overflow-end"\)/,
+      /document\.querySelectorAll\("\.toc \.overflow-end"\)/,
     )
     assert.match(studyGraphScript, /overflowEnd\.remove\(\)/)
   })
@@ -34,5 +34,16 @@ describe("study graph interactions", () => {
     )
     assert.match(studyGraphScript, /link\.classList\.toggle\("is-current"/)
     assert.match(studyGraphScript, /window\.addEventListener\("scroll", onScroll/)
+  })
+
+  it("toggles the related graph and notes views with one button", () => {
+    assert.match(studyGraphScript, /data-study-related-toggle/)
+    assert.match(studyGraphScript, /data-study-related-view="graph"/)
+    assert.match(studyGraphScript, /data-study-related-view="notes"/)
+    assert.match(studyGraphScript, /relatedMode === "notes"/)
+    assert.match(studyGraphScript, /relatedGraphView\.hidden = showNotes/)
+    assert.match(studyGraphScript, /relatedNotesView\.hidden = !showNotes/)
+    assert.match(studyGraphScript, /참고 노트 보기/)
+    assert.match(studyGraphScript, /그래프 보기/)
   })
 })

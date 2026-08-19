@@ -58,7 +58,7 @@ const initStudyGraph = () => {
     }
   }
 
-  for (const overflowEnd of document.querySelectorAll(".toc .overflow-end, .backlinks .overflow-end")) {
+  for (const overflowEnd of document.querySelectorAll(".toc .overflow-end")) {
     overflowEnd.remove()
   }
 
@@ -90,6 +90,30 @@ const initStudyGraph = () => {
     if (!(root instanceof HTMLElement) || root.dataset.studyGraphReady === "true") continue
     const preview = root.querySelector("[data-study-graph-preview]")
     if (!(preview instanceof HTMLElement)) continue
+
+    const relatedToggle = root.querySelector("[data-study-related-toggle]")
+    const relatedTitle = root.querySelector("[data-study-related-title]")
+    const relatedGraphView = root.querySelector('[data-study-related-view="graph"]')
+    const relatedNotesView = root.querySelector('[data-study-related-view="notes"]')
+    let relatedMode = root.dataset.studyRelatedMode === "notes" ? "notes" : "graph"
+
+    const syncRelatedView = () => {
+      if (!(relatedToggle instanceof HTMLButtonElement)) return
+      const showNotes = relatedMode === "notes"
+      if (relatedGraphView instanceof HTMLElement) relatedGraphView.hidden = showNotes
+      if (relatedNotesView instanceof HTMLElement) relatedNotesView.hidden = !showNotes
+      if (relatedTitle instanceof HTMLElement) relatedTitle.textContent = showNotes ? "참고 노트" : "연관 그래프"
+      relatedToggle.textContent = showNotes ? "그래프 보기" : "참고 노트 보기"
+      relatedToggle.setAttribute("aria-label", showNotes ? "연관 그래프 보기" : "참고 노트 보기")
+      relatedToggle.setAttribute("aria-expanded", String(showNotes))
+      root.dataset.studyRelatedMode = relatedMode
+    }
+
+    const onRelatedToggle = () => {
+      relatedMode = relatedMode === "notes" ? "graph" : "notes"
+      syncRelatedView()
+    }
+    syncRelatedView()
 
     const overlay = root.querySelector("[data-study-graph-overlay]")
     const openButton = root.querySelector("[data-study-graph-open]")
@@ -389,6 +413,7 @@ const initStudyGraph = () => {
 
     if (openButton instanceof HTMLButtonElement) openButton.addEventListener("click", openGraph)
     if (closeButton instanceof HTMLButtonElement) closeButton.addEventListener("click", closeGraph)
+    if (relatedToggle instanceof HTMLButtonElement) relatedToggle.addEventListener("click", onRelatedToggle)
     if (overlay instanceof HTMLElement) overlay.addEventListener("click", onOverlayClick)
     for (const button of filterButtons) button.addEventListener("click", onFilterClick)
     document.addEventListener("keydown", onKeydown)
@@ -412,6 +437,7 @@ const initStudyGraph = () => {
       previewCleanup()
       if (openButton instanceof HTMLButtonElement) openButton.removeEventListener("click", openGraph)
       if (closeButton instanceof HTMLButtonElement) closeButton.removeEventListener("click", closeGraph)
+      if (relatedToggle instanceof HTMLButtonElement) relatedToggle.removeEventListener("click", onRelatedToggle)
       if (overlay instanceof HTMLElement) overlay.removeEventListener("click", onOverlayClick)
       for (const button of filterButtons) button.removeEventListener("click", onFilterClick)
       document.removeEventListener("keydown", onKeydown)

@@ -830,7 +830,7 @@ pre:has(> code.mermaid) > .expand-button {
 .toc {
   display: flex;
   min-height: 0;
-  flex: 1 1 auto;
+  flex: 0 1 auto;
   flex-direction: column;
   overflow: hidden;
   border: 1px solid var(--site-border);
@@ -939,8 +939,7 @@ pre:has(> code.mermaid) > .expand-button {
   opacity: 1;
 }
 
-.toc .overflow-end,
-.backlinks .overflow-end {
+.toc .overflow-end {
   display: none !important;
   height: 0 !important;
   min-height: 0 !important;
@@ -949,14 +948,14 @@ pre:has(> code.mermaid) > .expand-button {
 }
 
 .toc .toc-content,
-.backlinks > ul.overflow {
+.related-notes-list {
   mask-image: none !important;
   -webkit-mask-image: none !important;
 }
 
-.related-graph,
-.backlinks {
+.related-graph {
   display: flex;
+  flex: 0 0 auto;
   flex-direction: column;
   overflow: hidden;
   border: 1px solid var(--site-border);
@@ -965,8 +964,14 @@ pre:has(> code.mermaid) > .expand-button {
   padding: 0.65rem;
 }
 
-.related-graph > h3,
-.backlinks > h3 {
+.related-panel-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+}
+
+.related-panel-header > h3 {
   margin: 0;
   color: var(--site-faint);
   font-family: "JetBrains Mono", ui-monospace, SFMono-Regular, monospace;
@@ -977,31 +982,56 @@ pre:has(> code.mermaid) > .expand-button {
   text-transform: uppercase;
 }
 
-.backlinks > h3 {
-  font-size: 0;
+.related-panel-toggle {
+  flex: none;
+  border: 0;
+  border-radius: 5px;
+  background: transparent;
+  color: var(--site-faint);
+  cursor: pointer;
+  font-family: inherit;
+  font-size: 0.62rem;
+  line-height: 1;
+  padding: 0.25rem 0.3rem;
 }
 
-.backlinks > h3::after {
-  content: "참고 노트";
-  font-size: 0.62rem;
+.related-panel-toggle:hover,
+.related-panel-toggle:focus-visible {
+  background: transparent;
+  color: var(--site-brand);
+  outline: none;
+}
+
+.related-graph-view,
+.related-notes-view {
+  height: 10.5rem;
+  margin-top: 0.4rem;
 }
 
 .related-graph-canvas {
   position: relative;
-  height: 10.5rem;
+  height: 100%;
   overflow: hidden;
-  margin-top: 0.4rem;
   border-radius: 8px;
   background: var(--site-graph-bg);
 }
 
-.backlinks > ul.overflow {
-  max-height: none;
-  margin: 0.25rem 0 0;
-  padding-bottom: 0;
+.related-notes-view {
+  overflow: hidden;
+  border-radius: 8px;
+  background: var(--site-paper-2);
 }
 
-.backlinks > ul.overflow > li > a {
+.related-notes-list {
+  height: 100%;
+  overflow-y: auto;
+  list-style: none;
+  margin: 0;
+  padding: 0.25rem;
+  overscroll-behavior: contain;
+}
+
+.related-notes-list > li > a {
   display: block;
   overflow: hidden;
   border-radius: 7px;
@@ -1013,9 +1043,18 @@ pre:has(> code.mermaid) > .expand-button {
   white-space: nowrap;
 }
 
-.backlinks > ul.overflow > li > a:hover {
+.related-notes-list > li > a:hover {
   background: var(--site-paper-2);
   color: var(--site-brand);
+}
+
+.related-notes-empty {
+  display: grid;
+  height: 100%;
+  place-items: center;
+  margin: 0;
+  color: var(--site-faint);
+  font-size: 0.76rem;
 }
 
 .page-footer {
