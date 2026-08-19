@@ -988,6 +988,7 @@ pre:has(> code.mermaid) > .expand-button {
   flex: none;
   align-items: center;
   gap: 0.55rem;
+  margin-right: 0.2rem;
 }
 
 .related-panel-tab {
@@ -1032,14 +1033,33 @@ pre:has(> code.mermaid) > .expand-button {
 }
 
 .related-notes-view {
-  overflow: hidden;
+  overflow-x: hidden;
+  overflow-y: auto;
   border-radius: 8px;
   background: var(--site-paper-2);
 }
 
+.related-notes-section {
+  padding: 0.35rem 0.25rem 0.4rem;
+}
+
+.related-notes-section + .related-notes-section {
+  border-top: 1px solid var(--site-border);
+}
+
+.related-notes-section-label {
+  margin: 0 0 0.18rem;
+  color: var(--site-faint);
+  font-family: "JetBrains Mono", ui-monospace, SFMono-Regular, monospace;
+  font-size: 0.58rem;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  line-height: 1.2;
+}
+
 .related-notes-list {
-  height: 100%;
-  overflow-y: auto;
+  height: auto;
+  overflow: visible;
   list-style: none;
   margin: 0;
   padding: 0.25rem;
@@ -1064,12 +1084,10 @@ pre:has(> code.mermaid) > .expand-button {
 }
 
 .related-notes-empty {
-  display: grid;
-  height: 100%;
-  place-items: center;
   margin: 0;
   color: var(--site-faint);
-  font-size: 0.76rem;
+  font-size: 0.7rem;
+  padding: 0.3rem 0.38rem 0.45rem;
 }
 
 .page-footer {

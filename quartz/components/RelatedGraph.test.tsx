@@ -25,6 +25,23 @@ const props = (slug: string) =>
     ],
   }) as any
 
+const bidirectionalProps = () =>
+  ({
+    fileData: { slug: "backend/spring/bean" },
+    allFiles: [
+      {
+        slug: "backend/spring/bean",
+        frontmatter: { title: "Bean" },
+        links: ["backend/spring/autowired"],
+      },
+      {
+        slug: "backend/spring/autowired",
+        frontmatter: { title: "Autowired" },
+        links: ["backend/spring/bean"],
+      },
+    ],
+  }) as any
+
 describe("RelatedGraph component", () => {
   it("renders independent Graph and List tabs for the related material", () => {
     const html = render(RelatedGraph(props("backend/spring/bean")))
@@ -40,7 +57,7 @@ describe("RelatedGraph component", () => {
     assert.doesNotMatch(html, /data-study-related-toggle/)
     assert.doesNotMatch(html, /참고 노트 보기|그래프 보기/)
     assert.match(html, /data-study-related-view="notes"/)
-    assert.match(html, /연관 노트가 없습니다\./)
+    assert.match(html, /없음/)
     assert.match(html, /Bean/)
     assert.match(html, /Autowired/)
     assert.doesNotMatch(html, /Redis/)
@@ -61,7 +78,18 @@ describe("RelatedGraph component", () => {
     const html = render(RelatedGraph(props("backend/spring/bean")))
 
     assert.match(html, /data-study-related-tab="list"/)
-    assert.match(html, /연관 노트가 없습니다\./)
+    assert.match(html, /없음/)
+  })
+
+  it("shows outlinks and backlinks as separate List sections", () => {
+    const html = render(RelatedGraph(bidirectionalProps()))
+
+    assert.match(html, /data-study-related-list-section="outlinks"/)
+    assert.match(html, /data-study-related-list-section="backlinks"/)
+    assert.match(html, />아웃링크<\//)
+    assert.match(html, />백링크<\//)
+    assert.match(html, /related-notes-list/)
+    assert.match(html, /Autowired/)
   })
 
   it("does not render on the archive home page", () => {

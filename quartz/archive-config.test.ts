@@ -168,6 +168,9 @@ describe("archive branding and relationship layout", () => {
     assert.match(styles, /\.related-panel-tabs\s*\{/)
     assert.match(styles, /\.related-panel-tab\s*\{/)
     assert.match(styles, /\.related-notes-list\s*\{/)
+    assert.match(styles, /\.related-panel-tabs\s*\{[\s\S]*margin-right:\s*0\.2rem;/)
+    assert.match(styles, /\.related-notes-view\s*\{[\s\S]*overflow-y:\s*auto;/)
+    assert.match(styles, /\.related-notes-section\s*\{/)
   })
 
   it("keeps the theme toggle readable in both color modes", () => {
