@@ -889,6 +889,7 @@ pre:has(> code.mermaid) > .expand-button {
 
 .toc .toc-content li > a {
   display: block;
+  position: relative;
   overflow: visible;
   color: var(--site-muted);
   font-size: 0.76rem;
@@ -935,11 +936,20 @@ pre:has(> code.mermaid) > .expand-button {
 }
 
 .toc .toc-content li > a.is-current {
-  background: color-mix(in srgb, var(--site-brand) 14%, var(--site-paper));
-  box-shadow: inset 2px 0 0 var(--site-brand);
-  color: var(--site-brand);
-  font-weight: 700;
+  background: color-mix(in srgb, var(--site-brand) 8%, var(--site-paper));
+  color: color-mix(in srgb, var(--site-brand) 78%, var(--site-ink));
+  font-weight: 650;
   opacity: 1;
+}
+
+.toc .toc-content li > a.is-current::before {
+  position: absolute;
+  inset: 0 auto 0 0;
+  width: 2px;
+  border-radius: 0;
+  background: color-mix(in srgb, var(--site-brand) 62%, transparent);
+  content: "";
+  pointer-events: none;
 }
 
 .toc .toc-content li > a.in-view:not(.is-current) {

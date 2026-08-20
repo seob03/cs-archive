@@ -140,7 +140,11 @@ describe("archive branding and relationship layout", () => {
     )
     assert.match(
       styles,
-      /\.toc\s+\.toc-content\s+li\s*>\s*a\.is-current\s*\{[\s\S]*background:\s*color-mix\([\s\S]*box-shadow:\s*inset 2px 0 0 var\(--site-brand\);[\s\S]*font-weight:\s*700;/,
+      /\.toc\s+\.toc-content\s+li\s*>\s*a\.is-current\s*\{[\s\S]*background:\s*color-mix\([\s\S]*var\(--site-brand\)\s+8%[\s\S]*color:\s*color-mix\([\s\S]*font-weight:\s*650;/,
+    )
+    assert.match(
+      styles,
+      /\.toc\s+\.toc-content\s+li\s*>\s*a\.is-current::before\s*\{[\s\S]*position:\s*absolute;[\s\S]*inset:\s*0\s+auto\s+0\s+0;[\s\S]*width:\s*2px;[\s\S]*border-radius:\s*0;/,
     )
   })
 
