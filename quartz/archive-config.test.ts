@@ -114,7 +114,7 @@ describe("archive branding and relationship layout", () => {
     )
     assert.match(
       styles,
-      /@media\s+\(min-width:\s*960px\)\s*\{[\s\S]*\.page-afterbody\s*\{[\s\S]*width:\s*min\(calc\(100%\s*-\s*2\.25rem\),\s*var\(--site-related\)\);[\s\S]*margin-left:\s*2\.25rem;/,
+      /@media\s+\(min-width:\s*960px\)\s*\{[\s\S]*\.page-afterbody\s*\{[\s\S]*width:\s*min\(calc\(100%\s*-\s*5\.75rem\),\s*var\(--site-related\)\);[\s\S]*margin-left:\s*5\.75rem;/,
     )
     assert.match(styles, /\.toc\s+\.overflow-end\s*\{[\s\S]*display:\s*none\s*!important;/)
   })

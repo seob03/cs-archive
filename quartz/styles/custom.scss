@@ -1751,9 +1751,9 @@ a.study-card[data-study-title-lines="2"] .study-card-excerpt {
 
 @media (min-width: 960px) {
   .page-afterbody {
-    width: min(calc(100% - 2.25rem), var(--site-related));
+    width: min(calc(100% - 5.75rem), var(--site-related));
     margin-right: 0;
-    margin-left: 2.25rem;
+    margin-left: 5.75rem;
   }
 }
 
