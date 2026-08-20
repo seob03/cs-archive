@@ -31,8 +31,7 @@ for result in search_results:
 
 Tool을 불러와서 `web_search`에 도구를 저장해둔 뒤 `invoke(query)`로 해당 도구를 내가 직접 호출한 모습이다.
 
-### LLM에게 도구 호출시키기  
-(Query → AIMessage)
+### LLM에게 도구 호출시키기 (Query → AIMessage)
 
 ```python
 from langchain_openai import ChatOpenAI
@@ -107,8 +106,7 @@ print("-" * 100)
 - 반대의 경우에는 `content` 속성이 비어있고 `tool_calls`의 인자에 도구가 적혀져 나온다.
 - 이때 핵심은 도구 안에 도구의 이름 뿐만 아니라 `query`가 있다는 것이다.
 
-### 도구 실행하기  
-(AIMessage → ToolMessage)
+### 도구 실행하기 (AIMessage → ToolMessage)
 
 ```python
 tool_call = ai_msg.tool_calls[0]
@@ -126,8 +124,7 @@ print(tool_message)
 
 참고로 여러 도구가 있는 경우에는 `.invoke()`가 아니라 `.batch()`로 동시 실행을 할 수 있다.
 
-### 도구 기반 LLM 답변 완성까지  
-(ToolMessage → Answer)
+### 도구 기반 LLM 답변 완성까지 (ToolMessage → Answer)
 
 ```python
 from datetime import datetime
@@ -198,5 +195,5 @@ pprint(response.content)
 	- 따라서 이제는 도구 호출 없이 최종 답변을 할 수 있게 된다.
 참고로 `tool_msgs`는 리스트여서 `*`를 통해 리스트 언패킹을 했고 `input_`은 딕셔너리여서 `**`를 통해 딕셔너리 언패킹 방법 한 것이다.
 
-## 참고
+### 참고
 [[LCEL 체인]]

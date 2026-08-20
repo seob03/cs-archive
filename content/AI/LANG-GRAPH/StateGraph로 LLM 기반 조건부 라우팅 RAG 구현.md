@@ -270,7 +270,7 @@ flowchart TD
     S([START]) --> U["get_user_query\n사용자 질문 입력"]
     U --> A["analyze_input\n메뉴 관련 여부 판별"]
     A --> D{"is_menu_related?"}
-    D -->|True| R["search_menu_info\nChroma에서 유사 문서 2개 검색"]
+    D -->|True| R["search_menu_info\nChroma에서 유사 문서 검색"]
     R --> M["generate_menu_response\n검색 결과 기반 답변 생성"]
     M --> E1([END])
     D -->|False| G["generate_general_response\n일반 답변 생성"]
