@@ -91,7 +91,7 @@ describe("archive branding and relationship layout", () => {
       /#quartz-body\s*>\s*\.right\.sidebar\s*\{[\s\S]*background:\s*transparent\s*!important;/,
     )
     assert.match(styles, /#quartz-body\s*>\s*\.right\.sidebar\s*\{[\s\S]*gap:\s*0\.45rem;/)
-    assert.match(styles, /--site-toc:\s*280px;/)
+    assert.match(styles, /--site-toc:\s*320px;/)
     assert.match(
       styles,
       /#quartz-body\s*>\s*\.right\.sidebar:not\(:empty\)\s*\{[\s\S]*margin-right:\s*0\.75rem;/,
@@ -99,7 +99,9 @@ describe("archive branding and relationship layout", () => {
     assert.match(styles, /\.toc\s+\.toc-header\s*\{[\s\S]*min-height:\s*2\.1rem;/)
     assert.match(styles, /\.toc\s+\.toc-header\s+svg\s*\{[\s\S]*display:\s*none;/)
     assert.match(styles, /\.toc\s+\.toc-content\.collapsed[\s\S]*display:\s*block\s*!important;/)
-    assert.match(styles, /\.related-graph-view\s*\{[\s\S]*height:\s*18rem;/)
+    assert.match(styles, /\.related-panel-grid\s*\{[\s\S]*display:\s*grid;/)
+    assert.match(styles, /\.related-panel-grid\s*\{[\s\S]*grid-template-columns:/)
+    assert.match(styles, /\.related-graph-view\s*\{[\s\S]*aspect-ratio:\s*1;/)
     assert.match(styles, /\.toc\s+\.overflow-end\s*\{[\s\S]*display:\s*none\s*!important;/)
   })
 
@@ -171,16 +173,19 @@ describe("archive branding and relationship layout", () => {
     )
   })
 
-  it("keeps graph and related notes in one tabbed note panel", () => {
+  it("keeps graph and related links in one two-column note panel", () => {
     assert.doesNotMatch(config, /source:\s*["']@quartz-community\/backlinks["']/)
     assert.doesNotMatch(config, /source:\s*["']@quartz-community\/graph["']/)
     assert.match(styles, /\.related-graph(?:\s*,|\s*\{)/)
     assert.match(styles, /\.related-panel-header\s*\{/)
-    assert.match(styles, /\.related-panel-tabs\s*\{/)
-    assert.match(styles, /\.related-panel-tab\s*\{/)
+    assert.match(styles, /\.related-panel-grid\s*\{/)
     assert.match(styles, /\.related-notes-list\s*\{/)
-    assert.match(styles, /\.related-panel-tabs\s*\{[\s\S]*margin-right:\s*0\.2rem;/)
-    assert.match(styles, /\.related-notes-view\s*\{[\s\S]*overflow-y:\s*auto;/)
+    assert.doesNotMatch(styles, /\.related-panel-tabs\s*\{/)
+    assert.doesNotMatch(styles, /\.related-panel-tab\s*\{/)
+    assert.match(
+      styles,
+      /\.related-notes-view\s*\{[\s\S]*grid-template-columns:\s*minmax\(0,\s*1fr\);/,
+    )
     assert.match(styles, /\.related-notes-section\s*\{/)
     assert.match(
       styles,

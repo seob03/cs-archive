@@ -4,10 +4,7 @@ import { studyGraphScript } from "./study-graph-script"
 
 describe("study graph interactions", () => {
   it("removes Quartz overflow markers from the note sidebar", () => {
-    assert.match(
-      studyGraphScript,
-      /document\.querySelectorAll\("\.toc \.overflow-end"\)/,
-    )
+    assert.match(studyGraphScript, /document\.querySelectorAll\("\.toc \.overflow-end"\)/)
     assert.match(studyGraphScript, /overflowEnd\.remove\(\)/)
   })
 
@@ -27,7 +24,10 @@ describe("study graph interactions", () => {
   })
 
   it("activates one table-of-contents entry at the reading line", () => {
-    assert.match(studyGraphScript, /const readingLine = window\.scrollY \+ window\.innerHeight \/ 2/)
+    assert.match(
+      studyGraphScript,
+      /const readingLine = window\.scrollY \+ window\.innerHeight \/ 2/,
+    )
     assert.match(
       studyGraphScript,
       /document\.querySelectorAll\("\.toc \.toc-content a\[data-for\]"\)/,
@@ -41,15 +41,10 @@ describe("study graph interactions", () => {
     assert.match(studyGraphScript, /tocContent\.scrollTo\(\{[\s\S]*behavior:\s*"smooth"/)
   })
 
-  it("switches related graph and note views through independent Graph and List tabs", () => {
-    assert.match(studyGraphScript, /data-study-related-tab/)
-    assert.match(studyGraphScript, /data-study-related-view="graph"/)
-    assert.match(studyGraphScript, /data-study-related-view="notes"/)
-    assert.match(studyGraphScript, /dataset\.studyRelatedMode === "list"/)
-    assert.match(studyGraphScript, /relatedGraphView\.hidden = !showGraph/)
-    assert.match(studyGraphScript, /relatedNotesView\.hidden = showGraph/)
-    assert.match(studyGraphScript, /tab\.classList\.toggle\("is-active"/)
-    assert.match(studyGraphScript, /tab\.setAttribute\("aria-pressed"/)
-    assert.doesNotMatch(studyGraphScript, /data-study-related-toggle/)
+  it("keeps the related graph and link lists visible without tab state", () => {
+    assert.match(studyGraphScript, /data-study-graph-preview/)
+    assert.doesNotMatch(studyGraphScript, /data-study-related-tab/)
+    assert.doesNotMatch(studyGraphScript, /relatedMode|relatedGraphView|relatedNotesView/)
+    assert.doesNotMatch(studyGraphScript, /onRelatedTabClick|studyRelatedMode/)
   })
 })

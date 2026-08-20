@@ -43,20 +43,20 @@ const bidirectionalProps = () =>
   }) as any
 
 describe("RelatedGraph component", () => {
-  it("renders independent Graph and List tabs for the related material", () => {
+  it("renders the graph and link lists side by side", () => {
     const html = render(RelatedGraph(props("backend/spring/bean")))
 
     assert.match(html, /class="related-graph"/)
     assert.match(html, /data-study-graph-current="backend\/spring\/bean"/)
     assert.match(html, /data-study-graph-preview/)
-    assert.match(html, /class="related-panel-tabs"/)
-    assert.match(html, /data-study-related-tab="graph"/)
-    assert.match(html, /data-study-related-tab="list"/)
-    assert.match(html, />Graph<\/button>/)
-    assert.match(html, />List<\/button>/)
+    assert.match(html, /class="related-panel-grid"/)
+    assert.doesNotMatch(html, /class="related-panel-tabs"/)
+    assert.doesNotMatch(html, /data-study-related-tab=/)
     assert.doesNotMatch(html, /data-study-related-toggle/)
-    assert.doesNotMatch(html, /참고 노트 보기|그래프 보기/)
-    assert.match(html, /data-study-related-view="notes"/)
+    assert.doesNotMatch(html, /<button[^>]*>Graph<\/button>/)
+    assert.doesNotMatch(html, /<button[^>]*>List<\/button>/)
+    assert.match(html, /class="related-notes-view"/)
+    assert.doesNotMatch(html, /class="related-notes-view"[^>]*hidden/)
     assert.match(html, /없음/)
     assert.match(html, /Bean/)
     assert.match(html, /Autowired/)
@@ -68,16 +68,17 @@ describe("RelatedGraph component", () => {
   it("renders incoming related notes inside the same panel", () => {
     const html = render(RelatedGraph(props("backend/spring/autowired")))
 
-    assert.match(html, /data-study-related-view="notes"/)
+    assert.match(html, /class="related-notes-view"/)
     assert.match(html, /related-notes-list/)
     assert.match(html, /href="\.\.\/\.\.\/backend\/spring\/bean"/)
     assert.match(html, />Bean<\/a>/)
   })
 
-  it("keeps the list tab available when a note has no incoming links", () => {
+  it("keeps both link sections when a note has no incoming links", () => {
     const html = render(RelatedGraph(props("backend/spring/bean")))
 
-    assert.match(html, /data-study-related-tab="list"/)
+    assert.match(html, /data-study-related-list-section="outlinks"/)
+    assert.match(html, /data-study-related-list-section="backlinks"/)
     assert.match(html, /없음/)
   })
 

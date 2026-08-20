@@ -116,33 +116,6 @@ const initStudyGraph = () => {
     const preview = root.querySelector("[data-study-graph-preview]")
     if (!(preview instanceof HTMLElement)) continue
 
-    const relatedTabs = Array.from(root.querySelectorAll("[data-study-related-tab]"))
-    const relatedGraphView = root.querySelector('[data-study-related-view="graph"]')
-    const relatedNotesView = root.querySelector('[data-study-related-view="notes"]')
-    let relatedMode = root.dataset.studyRelatedMode === "list" ? "list" : "graph"
-
-    const syncRelatedView = () => {
-      const showGraph = relatedMode === "graph"
-      if (relatedGraphView instanceof HTMLElement) relatedGraphView.hidden = !showGraph
-      if (relatedNotesView instanceof HTMLElement) relatedNotesView.hidden = showGraph
-      for (const tab of relatedTabs) {
-        if (!(tab instanceof HTMLButtonElement)) continue
-        const active = tab.dataset.studyRelatedTab === relatedMode
-        tab.classList.toggle("is-active", active)
-        tab.setAttribute("aria-pressed", String(active))
-      }
-      root.dataset.studyRelatedMode = relatedMode
-    }
-
-    const onRelatedTabClick = (event) => {
-      if (!(event.currentTarget instanceof HTMLButtonElement)) return
-      const nextMode = event.currentTarget.dataset.studyRelatedTab
-      if (nextMode !== "graph" && nextMode !== "list") return
-      relatedMode = nextMode
-      syncRelatedView()
-    }
-    syncRelatedView()
-
     const overlay = root.querySelector("[data-study-graph-overlay]")
     const openButton = root.querySelector("[data-study-graph-open]")
     const closeButton = root.querySelector("[data-study-graph-close]")
@@ -441,7 +414,6 @@ const initStudyGraph = () => {
 
     if (openButton instanceof HTMLButtonElement) openButton.addEventListener("click", openGraph)
     if (closeButton instanceof HTMLButtonElement) closeButton.addEventListener("click", closeGraph)
-    for (const tab of relatedTabs) tab.addEventListener("click", onRelatedTabClick)
     if (overlay instanceof HTMLElement) overlay.addEventListener("click", onOverlayClick)
     for (const button of filterButtons) button.addEventListener("click", onFilterClick)
     document.addEventListener("keydown", onKeydown)
@@ -465,7 +437,6 @@ const initStudyGraph = () => {
       previewCleanup()
       if (openButton instanceof HTMLButtonElement) openButton.removeEventListener("click", openGraph)
       if (closeButton instanceof HTMLButtonElement) closeButton.removeEventListener("click", closeGraph)
-      for (const tab of relatedTabs) tab.removeEventListener("click", onRelatedTabClick)
       if (overlay instanceof HTMLElement) overlay.removeEventListener("click", onOverlayClick)
       for (const button of filterButtons) button.removeEventListener("click", onFilterClick)
       document.removeEventListener("keydown", onKeydown)
