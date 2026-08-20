@@ -1003,7 +1003,7 @@ pre:has(> code.mermaid) > .expand-button {
 
 .related-panel-grid {
   display: grid;
-  grid-template-columns: minmax(0, 21.25rem) minmax(0, 26rem);
+  grid-template-columns: minmax(0, 21.25rem) minmax(0, 30rem);
   width: fit-content;
   max-width: 100%;
   align-items: start;
@@ -1751,9 +1751,9 @@ a.study-card[data-study-title-lines="2"] .study-card-excerpt {
 
 @media (min-width: 960px) {
   .page-afterbody {
-    width: min(calc(100% - 5.75rem), var(--site-related));
+    width: min(calc(100% - 10rem), var(--site-related));
     margin-right: 0;
-    margin-left: 5.75rem;
+    margin-left: 10rem;
   }
 }
 
