@@ -100,8 +100,14 @@ describe("archive branding and relationship layout", () => {
     assert.match(styles, /\.toc\s+\.toc-header\s+svg\s*\{[\s\S]*display:\s*none;/)
     assert.match(styles, /\.toc\s+\.toc-content\.collapsed[\s\S]*display:\s*block\s*!important;/)
     assert.match(styles, /\.related-panel-grid\s*\{[\s\S]*display:\s*grid;/)
-    assert.match(styles, /\.related-panel-grid\s*\{[\s\S]*grid-template-columns:/)
-    assert.match(styles, /\.related-graph-view\s*\{[\s\S]*aspect-ratio:\s*1;/)
+    assert.match(
+      styles,
+      /\.related-panel-grid\s*\{[\s\S]*grid-template-columns:\s*minmax\(0,\s*21\.25rem\)\s+minmax\(0,\s*1fr\);/,
+    )
+    assert.match(
+      styles,
+      /\.related-graph-view\s*\{[\s\S]*max-width:\s*21\.25rem;[\s\S]*aspect-ratio:\s*1;/,
+    )
     assert.match(styles, /\.toc\s+\.overflow-end\s*\{[\s\S]*display:\s*none\s*!important;/)
   })
 

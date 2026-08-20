@@ -1003,14 +1003,15 @@ pre:has(> code.mermaid) > .expand-button {
 
 .related-panel-grid {
   display: grid;
-  grid-template-columns: minmax(0, 1.1fr) minmax(0, 0.9fr);
-  align-items: stretch;
+  grid-template-columns: minmax(0, 21.25rem) minmax(0, 1fr);
+  align-items: start;
   gap: 0.9rem;
   margin-top: 0.75rem;
 }
 
 .related-graph-view {
   width: 100%;
+  max-width: 21.25rem;
   aspect-ratio: 1;
   min-width: 0;
   min-height: 0;
@@ -1871,6 +1872,10 @@ a.study-card[data-study-title-lines="2"] .study-card-excerpt {
 
   .related-panel-grid {
     grid-template-columns: minmax(0, 1fr);
+  }
+
+  .related-graph-view {
+    max-width: none;
   }
 
   .page-afterbody {
