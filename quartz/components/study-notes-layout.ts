@@ -29,7 +29,9 @@ export function augmentStudyNotesLayout(
         ...contentLayout,
         header: appendSearch(contentLayout.header),
         beforeBody: [...(contentLayout.beforeBody ?? []), component],
-        right: relatedGraph ? [relatedGraph, ...(contentLayout.right ?? [])] : contentLayout.right,
+        afterBody: relatedGraph
+          ? [relatedGraph, ...(contentLayout.afterBody ?? [])]
+          : contentLayout.afterBody,
       },
     },
   }

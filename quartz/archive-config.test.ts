@@ -39,21 +39,18 @@ describe("archive branding and relationship layout", () => {
 
   it("balances card previews and keeps cards uniform", () => {
     assert.match(styles, /a\.study-card\s*\{[\s\S]*height:\s*14rem;/)
-    assert.match(
-      styles,
-      /\.study-card-title\s*\{[\s\S]*max-height:\s*calc\(1\.4em\s*\*\s*2\);/,
-    )
+    assert.match(styles, /\.study-card-title\s*\{[\s\S]*max-height:\s*calc\(1\.4em\s*\*\s*2\);/)
     assert.match(styles, /\.study-card-title\s*\{[\s\S]*-webkit-line-clamp:\s*2;/)
-    assert.match(
-      styles,
-      /\.study-card-excerpt\s*\{[\s\S]*max-height:\s*calc\(1\.65em\s*\*\s*3\);/,
-    )
+    assert.match(styles, /\.study-card-excerpt\s*\{[\s\S]*max-height:\s*calc\(1\.65em\s*\*\s*3\);/)
     assert.match(styles, /\.study-card-excerpt\s*\{[\s\S]*-webkit-line-clamp:\s*3;/)
     assert.match(
       styles,
       /a\.study-card\[data-study-title-lines="2"\]\s+\.study-card-excerpt\s*\{[\s\S]*max-height:\s*calc\(1\.65em\s*\*\s*2\);/,
     )
-    assert.match(styles, /a\.study-card\[data-study-title-lines="2"\][\s\S]*-webkit-line-clamp:\s*2;/)
+    assert.match(
+      styles,
+      /a\.study-card\[data-study-title-lines="2"\][\s\S]*-webkit-line-clamp:\s*2;/,
+    )
     assert.match(studyNotes, /data-study-title-lines/)
     assert.match(studyNotes, /getBoundingClientRect\(\)/)
   })
@@ -94,14 +91,16 @@ describe("archive branding and relationship layout", () => {
       /#quartz-body\s*>\s*\.right\.sidebar\s*\{[\s\S]*background:\s*transparent\s*!important;/,
     )
     assert.match(styles, /#quartz-body\s*>\s*\.right\.sidebar\s*\{[\s\S]*gap:\s*0\.45rem;/)
+    assert.match(styles, /--site-toc:\s*280px;/)
+    assert.match(
+      styles,
+      /#quartz-body\s*>\s*\.right\.sidebar:not\(:empty\)\s*\{[\s\S]*margin-right:\s*0\.75rem;/,
+    )
     assert.match(styles, /\.toc\s+\.toc-header\s*\{[\s\S]*min-height:\s*2\.1rem;/)
     assert.match(styles, /\.toc\s+\.toc-header\s+svg\s*\{[\s\S]*display:\s*none;/)
     assert.match(styles, /\.toc\s+\.toc-content\.collapsed[\s\S]*display:\s*block\s*!important;/)
-    assert.match(styles, /\.related-graph-view,\s*\.related-notes-view\s*\{[\s\S]*height:\s*10\.5rem;/)
-    assert.match(
-      styles,
-      /\.toc\s+\.overflow-end\s*\{[\s\S]*display:\s*none\s*!important;/,
-    )
+    assert.match(styles, /\.related-graph-view\s*\{[\s\S]*height:\s*18rem;/)
+    assert.match(styles, /\.toc\s+\.overflow-end\s*\{[\s\S]*display:\s*none\s*!important;/)
   })
 
   it("keeps long table-of-contents lists scrollable inside the sticky sidebar", () => {
@@ -124,6 +123,10 @@ describe("archive branding and relationship layout", () => {
     )
     assert.match(styles, /\.toc\s*\{[\s\S]*flex:\s*0\s+1\s+auto;/)
     assert.doesNotMatch(styles, /\.toc\s*\{[^}]*flex:\s*1\s+1\s+auto;/)
+    assert.match(
+      styles,
+      /\.toc\s+\.toc-content\s+li\s*>\s*a\s*\{[\s\S]*text-overflow:\s*clip;[\s\S]*white-space:\s*normal;[\s\S]*overflow-wrap:\s*anywhere;/,
+    )
   })
 
   it("indents nested table-of-contents levels", () => {
@@ -134,6 +137,10 @@ describe("archive branding and relationship layout", () => {
     assert.match(
       styles,
       /\.toc\s+\.toc-content\s+li\.depth-2\s*>\s*a\s*\{[\s\S]*padding-left:\s*2\.25rem;/,
+    )
+    assert.match(
+      styles,
+      /\.toc\s+\.toc-content\s+li\s*>\s*a\.is-current\s*\{[\s\S]*background:\s*color-mix\([\s\S]*box-shadow:\s*inset 2px 0 0 var\(--site-brand\);[\s\S]*font-weight:\s*700;/,
     )
   })
 
@@ -171,6 +178,18 @@ describe("archive branding and relationship layout", () => {
     assert.match(styles, /\.related-panel-tabs\s*\{[\s\S]*margin-right:\s*0\.2rem;/)
     assert.match(styles, /\.related-notes-view\s*\{[\s\S]*overflow-y:\s*auto;/)
     assert.match(styles, /\.related-notes-section\s*\{/)
+    assert.match(
+      styles,
+      /\.page-afterbody\s*\{[\s\S]*width:\s*min\(100%,\s*var\(--site-related\)\);/,
+    )
+    assert.match(
+      styles,
+      /\.related-notes-list\s*>\s*li\s*>\s*a\s*\{[\s\S]*background:\s*transparent\s*!important;/,
+    )
+    assert.match(
+      styles,
+      /\.related-notes-list\s*>\s*li\s*>\s*a:hover\s*\{[\s\S]*background:\s*transparent\s*!important;/,
+    )
   })
 
   it("keeps the theme toggle readable in both color modes", () => {

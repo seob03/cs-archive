@@ -45,11 +45,13 @@ export const DefaultFrame: PageFrame = {
           </div>
           {!isStudyHome && <Content {...componentData} />}
           {!isStudyHome && <hr />}
-          <div class="page-footer">
-            {afterBody.map((BodyComponent) => (
-              <BodyComponent {...componentData} />
-            ))}
-          </div>
+          {afterBody.length > 0 && (
+            <div class="page-afterbody">
+              {afterBody.map((BodyComponent) => (
+                <BodyComponent {...componentData} />
+              ))}
+            </div>
+          )}
         </div>
         <div class="right sidebar">
           {right.map((BodyComponent) => (

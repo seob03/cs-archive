@@ -8,6 +8,7 @@ const searchComponent = (() => null) as QuartzComponent
 const relatedGraph = (() => null) as QuartzComponent
 const existingDefault = (() => null) as QuartzComponent
 const existingContent = (() => null) as QuartzComponent
+const existingContentAfterBody = (() => null) as QuartzComponent
 
 describe("study notes layout", () => {
   it("adds the home component to the content page-type layout", () => {
@@ -37,11 +38,13 @@ describe("study notes layout", () => {
     assert.deepEqual(layout.byPageType.content?.header, [existingContent, searchComponent])
   })
 
-  it("puts the related graph before existing content sidebar components", () => {
+  it("puts the related graph after content and leaves the right sidebar for navigation", () => {
     const layout = augmentStudyNotesLayout(
       {
         defaults: { right: [existingDefault] },
-        byPageType: { content: { right: [existingContent] } },
+        byPageType: {
+          content: { afterBody: [existingContentAfterBody], right: [existingContent] },
+        },
       },
       component,
       searchComponent,
@@ -49,6 +52,7 @@ describe("study notes layout", () => {
     )
 
     assert.deepEqual(layout.defaults.right, [existingDefault])
-    assert.deepEqual(layout.byPageType.content?.right, [relatedGraph, existingContent])
+    assert.deepEqual(layout.byPageType.content?.afterBody, [relatedGraph, existingContentAfterBody])
+    assert.deepEqual(layout.byPageType.content?.right, [existingContent])
   })
 })

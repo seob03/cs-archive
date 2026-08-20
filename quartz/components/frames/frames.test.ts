@@ -67,4 +67,29 @@ describe("DefaultFrame", () => {
     assert.doesNotMatch(html, /catalog source body/)
     assert.doesNotMatch(html, /<hr\/>/)
   })
+
+  test("renders after-body components in a dedicated section below the article", () => {
+    const content = (() => "article content") as QuartzComponent
+    const related = (() => "related materials") as QuartzComponent
+    const componentData = {
+      fileData: { slug: "backend/spring/bean" },
+      children: [],
+    } as unknown as QuartzComponentProps
+
+    const html = render(
+      DefaultFrame.render({
+        componentData,
+        head: content,
+        header: [],
+        beforeBody: [],
+        pageBody: content,
+        afterBody: [related],
+        left: [],
+        right: [],
+        footer: [],
+      }),
+    )
+
+    assert.match(html, /article content[\s\S]*class="page-afterbody"[\s\S]*related materials/)
+  })
 })
