@@ -102,11 +102,19 @@ describe("archive branding and relationship layout", () => {
     assert.match(styles, /\.related-panel-grid\s*\{[\s\S]*display:\s*grid;/)
     assert.match(
       styles,
-      /\.related-panel-grid\s*\{[\s\S]*grid-template-columns:\s*minmax\(0,\s*21\.25rem\)\s+minmax\(0,\s*1fr\);/,
+      /\.related-panel-grid\s*\{[\s\S]*grid-template-columns:\s*minmax\(0,\s*21\.25rem\)\s+minmax\(0,\s*26rem\);/,
+    )
+    assert.match(
+      styles,
+      /\.related-panel-grid\s*\{[\s\S]*width:\s*fit-content;[\s\S]*max-width:\s*100%;/,
     )
     assert.match(
       styles,
       /\.related-graph-view\s*\{[\s\S]*max-width:\s*21\.25rem;[\s\S]*aspect-ratio:\s*1;/,
+    )
+    assert.match(
+      styles,
+      /@media\s+\(min-width:\s*960px\)\s*\{[\s\S]*\.page-afterbody\s*\{[\s\S]*width:\s*min\(calc\(100%\s*-\s*2\.25rem\),\s*var\(--site-related\)\);[\s\S]*margin-left:\s*2\.25rem;/,
     )
     assert.match(styles, /\.toc\s+\.overflow-end\s*\{[\s\S]*display:\s*none\s*!important;/)
   })
