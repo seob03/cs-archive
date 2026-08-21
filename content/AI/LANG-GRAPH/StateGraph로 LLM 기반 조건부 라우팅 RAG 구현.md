@@ -281,4 +281,4 @@ flowchart TD
 
 [[Chroma로 RAG chain 구현]]
 
-[[StateGraph 핵심 구성 요소 (State, Node, Edge)]]
+[[StateGraph]]
