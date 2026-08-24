@@ -55,7 +55,7 @@ ToolMessage
 - LLM Node: 어떤 Tool을 쓸지 결정
 - Tool Node: 그 Tool을 실제로 실행
 
-[[Tool Calling 1]]의 AIMessage → ToolMessage 쪽을 보면 LLM이 어떤 Tool을 사용해야 겠다고 판단을 하지만, 실제로는 하드 코딩 방식으로 `web_search.invoke(쿼리)`와 같이 도구를 직접 실행했다. 이러한 과정을 `ToolNode`를 통해 `AIMessage`의 `tool_calls`를 통한 도구 요청을 실제 `ToolMessage`로 만들어주는 노드가 `ToolNode`인 거다.
+[[Tool Calling]]의 AIMessage → ToolMessage 쪽을 보면 LLM이 어떤 Tool을 사용해야 겠다고 판단을 하지만, 실제로는 하드 코딩 방식으로 `web_search.invoke(쿼리)`와 같이 도구를 직접 실행했다. 이러한 과정을 `ToolNode`를 통해 `AIMessage`의 `tool_calls`를 통한 도구 요청을 실제 `ToolMessage`로 만들어주는 노드가 `ToolNode`인 거다.
 
 ## 3. 실제 사용 예시
 
@@ -93,10 +93,10 @@ for result in results['messages']:
 - 도구 호출 결과를 그대로 `tool_node`의 인자로 담아서 직접 실행
 	- `tool_call`은 도구 호출 정보가 담긴 `AIMessage`
 - `AIMessage`가 인자로 넘어가기 때문에 `“messages”` 키에 맞춰준다
-	- [[MessagesState 1]] 에서 배운 내용 (메시지들은 `"messages"`로 관리)
+	- [[MessagesState]] 에서 배운 내용 (메시지들은 `"messages"`로 관리)
 
 ## 참고
 
-[[Tool Calling 1]]
+[[Tool Calling]]
 
-[[MessagesState 1]]
+[[MessagesState]]
