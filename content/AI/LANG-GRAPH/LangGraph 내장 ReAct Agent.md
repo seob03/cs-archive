@@ -40,7 +40,7 @@ flowchart TD
 
 - Agent에서 사용할 LLM과 사용 가능한 도구를 인자로 넣어줘야 한다.
 	- 시스템 프롬포트도 넣을 수 있다. (필수는 아님)
-- [[Feedback Loop Chain 1]] 구조를 통해 [[ReAct]] 방식을 구현했다.
+- [[Feedback Loop Chain]] 구조를 통해 [[ReAct]] 방식을 구현했다.
 	- `create_react_agent`를 통해 그래프를 쉽게 만들 수 있다.
 	- 자동으로 위와 같은 구조의 그래프를 생성해 준다.
 

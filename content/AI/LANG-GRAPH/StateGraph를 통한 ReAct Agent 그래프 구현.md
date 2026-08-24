@@ -75,7 +75,7 @@ flowchart TD
 		- 이 전체 대화를 LLM에게 전달한다.
 	- `return {"messages": [response]}`
 		- LLM이 만든 응답을 `messages`에 추가한다.  
-			→ [[MessagesState 1]]의 [[State Reducer 1]] 덕분
+			→ [[MessagesState]]의 [[State Reducer]] 덕분
 - `should_continue`
 	- 가장 최근의 `AIMessage`를 가지고 도구를 호출해야 하는지 판별
 	- 결과에 따라 [[ToolNode]]로 가거나 `END` 처리
@@ -85,7 +85,7 @@ flowchart TD
 	- `ToolNode`와 같은 노드의 실행은 나중에 컴파일된 graph가 알아서 함.
 	- 정확히는 LangGraph의 실행 엔진이 수행함.
 - `builder.add_edge("execute_tools", "call_model")`
-	- [[Feedback Loop Chain 1]]까지 완벽하게 구현했다.
+	- [[Feedback Loop Chain]]까지 완벽하게 구현했다.
 
 ```python
 # 그래프 실행

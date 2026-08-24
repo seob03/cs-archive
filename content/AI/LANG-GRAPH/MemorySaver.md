@@ -45,7 +45,7 @@ for m in messages['messages']:
 ```
 
 - 이어지는 대화에서 같은 `thread_id`를 지정하면 이전 대화의 State를 불러와 이어서 사용할 수 있다.
-	- [[MessagesState 1]]를 사용하는 경우, State의 `"messages"`에 누적된 `HumanMessage`, `AIMessage`, `ToolMessage` 등의 대화 흐름도 함께 복원된다.
+	- [[MessagesState]]를 사용하는 경우, State의 `"messages"`에 누적된 `HumanMessage`, `AIMessage`, `ToolMessage` 등의 대화 흐름도 함께 복원된다.
 
 주의: `MemorySaver`는 `messages` 전용이 아니라 그래프의 전체 State를 저장하는 Checkpointer이다. `MessagesState`를 사용하면 `messages`도 State에 포함되므로 대화 흐름까지 기억하게 되는 것이다.
 
