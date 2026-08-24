@@ -16,3 +16,4 @@ quartz/cli/tui/dist/
 .turbo/
 .worktrees/
 .superpowers/
+content/.trash

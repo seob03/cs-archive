@@ -41,7 +41,7 @@ public class LogTestController {
 }
 ```
 
-![[image.png]]
+![[images/image.png]]
 
 - `/log-test`에 요청을 보내게 되면 아래와 같이 로그가 남게 된다.
 

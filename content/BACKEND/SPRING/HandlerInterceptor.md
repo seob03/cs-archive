@@ -2,7 +2,7 @@
 created: 2026-02-27T21:31:00+09:00
 notion-id: 312737bad00c80e288bff8139322700a
 ---
-![[스크린샷_2026-02-25_오후_7.58.04.png]]
+![[images/스크린샷_2026-02-25_오후_7.58.04.png]]
 
 - 로그인 유저
 	- HTTP 요청 → WAS → 필터 → 서블릿 → 스프링 인터셉터 → 컨트롤러
@@ -35,7 +35,7 @@ public class LogInterceptor implements HandlerInterceptor {
 
 ---
 
-![[스크린샷_2026-02-25_오후_7.58.23.png]]
+![[images/스크린샷_2026-02-25_오후_7.58.23.png]]
 
 - 만약에 컨트롤러에서 예외가 발생하면 `postHandle`은 호출되지 않는다.
 - `afterCompletion`은 항상 호출된다. 예외가 터져도 예외를 파라미터로 받아온다.

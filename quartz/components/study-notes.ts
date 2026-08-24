@@ -99,6 +99,11 @@ function tagsFrom(file: QuartzPluginData): string[] {
   return []
 }
 
+function isMarkdownNote(file: QuartzPluginData): boolean {
+  const filePath = typeof file.filePath === "string" ? file.filePath : ""
+  return !filePath || filePath.toLowerCase().endsWith(".md")
+}
+
 export function buildStudyNotesIndex(
   files: QuartzPluginData[],
   resolveUploadDate?: GitUploadDateResolver,
@@ -106,6 +111,7 @@ export function buildStudyNotesIndex(
   const notes = files
     .flatMap((file) => {
       if (typeof file.slug !== "string" || file.slug === "404") return []
+      if (!isMarkdownNote(file)) return []
 
       const segments = file.slug
         .split("/")

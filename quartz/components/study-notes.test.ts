@@ -143,6 +143,19 @@ describe("study note catalog", () => {
     ])
   })
 
+  it("does not turn static assets into study cards", () => {
+    const index = buildStudyNotesIndex([
+      {
+        slug: "images/screenshot" as FullSlug,
+        filePath: "/repo/content/images/screenshot.png" as FilePath,
+        frontmatter: { title: "screenshot" },
+      },
+    ])
+
+    assert.deepEqual(index.notes, [])
+    assert.deepEqual(index.categories, [])
+  })
+
   it("uses Korean title order when upload dates are equal or missing", () => {
     const index = buildStudyNotesIndex([
       {
