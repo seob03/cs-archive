@@ -1,7 +1,25 @@
 import { QuartzComponent, QuartzComponentConstructor, QuartzComponentProps } from "./types"
 
-const Header: QuartzComponent = ({ children }: QuartzComponentProps) => {
-  return children.length > 0 ? <header>{children}</header> : null
+const Header: QuartzComponent = ({ children, fileData }: QuartzComponentProps) => {
+  if (children.length === 0) return null
+
+  const isStudyHome = fileData.slug === "index"
+  return (
+    <header>
+      {children}
+      {isStudyHome && (
+        <button
+          class="study-graph-header-button"
+          data-study-graph-header-open
+          type="button"
+          aria-label="Open knowledge graph"
+          aria-haspopup="dialog"
+        >
+          Graph
+        </button>
+      )}
+    </header>
+  )
 }
 
 Header.css = `

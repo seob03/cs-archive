@@ -1,17 +1,22 @@
 import { StudyGraphData } from "./study-graph"
+import { buildStudyActivityGrid } from "./study-activity"
+import type { StudyNoteCard } from "./study-notes"
 
 type StudyGraphProps = {
   noteCount: number
   graphData: StudyGraphData
+  notes: StudyNoteCard[]
+  referenceDate?: Date
 }
 
-const StudyGraph = ({ noteCount, graphData }: StudyGraphProps) => {
+const StudyGraph = ({ noteCount, graphData, notes, referenceDate }: StudyGraphProps) => {
   const categories = Array.from(
     graphData.nodes.reduce((counts, node) => {
       counts.set(node.category, (counts.get(node.category) ?? 0) + 1)
       return counts
     }, new Map<string, number>()),
   ).sort(([left], [right]) => left.localeCompare(right))
+  const activity = buildStudyActivityGrid(notes, undefined, referenceDate)
 
   return (
     <aside
@@ -20,27 +25,41 @@ const StudyGraph = ({ noteCount, graphData }: StudyGraphProps) => {
       data-study-graph-data={JSON.stringify(graphData)}
       aria-label="Knowledge graph"
     >
-      <div class="study-graph-heading">
-        <div>
-          <p class="study-graph-kicker">RELATIONSHIPS</p>
-          <p class="study-graph-title">KNOWLEDGE GRAPH</p>
-        </div>
-        <button
-          class="study-graph-button"
-          data-study-graph-open
-          type="button"
-          aria-label="Open knowledge graph"
-          aria-haspopup="dialog"
+      <div class="study-activity" data-study-activity>
+        <p class="study-activity-label">ACTIVITY</p>
+        <div
+          class="study-activity-grid"
+          data-study-activity-grid
+          role="group"
+          aria-label={`${noteCount}개 노트 등록 활동`}
         >
-          Graph
-        </button>
+          {activity.map((week, weekIndex) => (
+            <div class="study-activity-week" key={`week-${weekIndex}`}>
+              {week.map((day) =>
+                day.isFuture ? (
+                  <span
+                    class="study-activity-cell is-future"
+                    data-study-activity-future
+                    aria-hidden="true"
+                    key={day.date}
+                  />
+                ) : (
+                  <button
+                    class={`study-activity-cell level-${day.level}`}
+                    data-study-activity-cell
+                    data-study-activity-date={day.date}
+                    data-study-activity-tooltip={`${day.date} · ${day.count}개 노트`}
+                    type="button"
+                    aria-pressed={false}
+                    key={day.date}
+                    aria-label={`${day.date}: ${day.count}개 노트`}
+                  />
+                ),
+              )}
+            </div>
+          ))}
+        </div>
       </div>
-      <div
-        class="study-graph-preview study-graph-canvas"
-        data-study-graph-preview
-        role="img"
-        aria-label={`${noteCount}개 노트의 관계 그래프`}
-      />
       <div class="study-graph-overlay" data-study-graph-overlay aria-hidden="true" hidden>
         <div class="study-graph-full-header">
           <a class="study-graph-home internal" data-study-graph-home href="./">

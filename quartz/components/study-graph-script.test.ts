@@ -23,6 +23,26 @@ describe("study graph interactions", () => {
     assert.match(studyGraphScript, /svg\s*\.transition\(\)[\s\S]*?duration\(760\)/)
   })
 
+  it("configures spacing and collision forces for dense graphs", () => {
+    assert.match(
+      studyGraphScript,
+      /\.distance\(compact \? \d+(?:\.\d+)? : \d+(?:\.\d+)?\)\.strength\(0\.58\)/,
+    )
+    assert.match(
+      studyGraphScript,
+      /\.force\("charge", d3\.forceManyBody\(\)\.strength\(compact \? -\d+(?:\.\d+)? : -\d+(?:\.\d+)?\)\)/,
+    )
+    assert.match(
+      studyGraphScript,
+      /"collide",[\s\S]*?\.radius\(\(node\) => [\d.]+ \+ [\d.]+ \* Math\.sqrt\(degrees\.get\(node\.id\) \|\| 0\)/,
+    )
+  })
+
+  it("keeps layout driven by graph forces rather than category anchors", () => {
+    assert.doesNotMatch(studyGraphScript, /visibleCategories|categoryTargets|categoryForceStrength/)
+    assert.doesNotMatch(studyGraphScript, /"category-x"|"category-y"/)
+  })
+
   it("activates one table-of-contents entry at the reading line", () => {
     assert.match(
       studyGraphScript,
@@ -46,5 +66,19 @@ describe("study graph interactions", () => {
     assert.doesNotMatch(studyGraphScript, /data-study-related-tab/)
     assert.doesNotMatch(studyGraphScript, /relatedMode|relatedGraphView|relatedNotesView/)
     assert.doesNotMatch(studyGraphScript, /onRelatedTabClick|studyRelatedMode/)
+  })
+
+  it("allows the home graph to use the full canvas without a preview canvas", () => {
+    assert.match(
+      studyGraphScript,
+      /if \(!\(preview instanceof HTMLElement\) && !\(fullCanvas instanceof HTMLElement\)\) continue/,
+    )
+    assert.match(studyGraphScript, /if \(preview instanceof HTMLElement\) renderPreview\(\)/)
+  })
+
+  it("opens the home graph from the global header button", () => {
+    assert.match(studyGraphScript, /data-study-graph-header-open/)
+    assert.match(studyGraphScript, /headerOpenButton\.addEventListener\("click", openGraph\)/)
+    assert.match(studyGraphScript, /headerOpenButton\.removeEventListener\("click", openGraph\)/)
   })
 })

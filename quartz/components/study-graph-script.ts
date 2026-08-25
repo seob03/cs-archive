@@ -114,12 +114,15 @@ const initStudyGraph = () => {
   for (const root of roots) {
     if (!(root instanceof HTMLElement) || root.dataset.studyGraphReady === "true") continue
     const preview = root.querySelector("[data-study-graph-preview]")
-    if (!(preview instanceof HTMLElement)) continue
-
     const overlay = root.querySelector("[data-study-graph-overlay]")
     const openButton = root.querySelector("[data-study-graph-open]")
+    const headerOpenButton =
+      !root.dataset.studyGraphCurrent && overlay instanceof HTMLElement
+        ? document.querySelector("[data-study-graph-header-open]")
+        : null
     const closeButton = root.querySelector("[data-study-graph-close]")
     const fullCanvas = root.querySelector("[data-study-graph-full]")
+    if (!(preview instanceof HTMLElement) && !(fullCanvas instanceof HTMLElement)) continue
     const filterButtons = Array.from(root.querySelectorAll("[data-study-graph-category]"))
     const countLabel = root.querySelector("[data-study-graph-count]")
     const currentSlug = root.dataset.studyGraphCurrent || ""
@@ -234,16 +237,24 @@ const initStudyGraph = () => {
       }
       nodeSelection
         .append("circle")
-        .attr("r", (node) => Math.min(compact ? 6 : 8, 3.2 + Math.sqrt(degrees.get(node.id) || 0)))
+        .attr(
+  "r",
+  (node) =>
+    Math.min(compact ? 6 : 8, 3.2 + Math.sqrt(degrees.get(node.id) || 0)) *
+    (compact ? 1.5 : 1.15),
+)
         .attr("fill", (node) => node.color || "#8c83ff")
         .attr("class", "study-graph-node-dot")
 
       const simulation = d3
         .forceSimulation(nodes)
-        .force("link", d3.forceLink(links).id((node) => node.id).distance(compact ? 42 : 78).strength(0.58))
-        .force("charge", d3.forceManyBody().strength(compact ? -28 : -54))
+        .force("link", d3.forceLink(links).id((node) => node.id).distance(compact ? 55 : 50).strength(0.58))
+        .force("charge", d3.forceManyBody().strength(compact ? -42 : -50))
         .force("center", d3.forceCenter(width / 2, height / 2))
-        .force("collide", d3.forceCollide().radius((node) => 9 + Math.sqrt(degrees.get(node.id) || 0)))
+        .force(
+          "collide",
+          d3.forceCollide().radius((node) => 13 + 1.3 * Math.sqrt(degrees.get(node.id) || 0)),
+        )
         .stop()
 
       const updatePositions = () => {
@@ -413,6 +424,8 @@ const initStudyGraph = () => {
     }
 
     if (openButton instanceof HTMLButtonElement) openButton.addEventListener("click", openGraph)
+    if (headerOpenButton instanceof HTMLButtonElement)
+      headerOpenButton.addEventListener("click", openGraph)
     if (closeButton instanceof HTMLButtonElement) closeButton.addEventListener("click", closeGraph)
     if (overlay instanceof HTMLElement) overlay.addEventListener("click", onOverlayClick)
     for (const button of filterButtons) button.addEventListener("click", onFilterClick)
@@ -423,12 +436,15 @@ const initStudyGraph = () => {
       .then((d3) => {
         if (destroyed) return
         graphLibrary = d3
-        renderPreview()
+        if (preview instanceof HTMLElement) renderPreview()
         if (overlay instanceof HTMLElement && overlay.classList.contains("active")) renderFull()
       })
       .catch(() => {
-        preview.textContent = "그래프를 불러오지 못했습니다."
-        preview.classList.add("is-error")
+        const errorTarget = preview instanceof HTMLElement ? preview : fullCanvas
+        if (errorTarget instanceof HTMLElement) {
+          errorTarget.textContent = "그래프를 불러오지 못했습니다."
+          errorTarget.classList.add("is-error")
+        }
       })
 
     const cleanup = () => {
@@ -436,6 +452,8 @@ const initStudyGraph = () => {
       closeGraph()
       previewCleanup()
       if (openButton instanceof HTMLButtonElement) openButton.removeEventListener("click", openGraph)
+      if (headerOpenButton instanceof HTMLButtonElement)
+        headerOpenButton.removeEventListener("click", openGraph)
       if (closeButton instanceof HTMLButtonElement) closeButton.removeEventListener("click", closeGraph)
       if (overlay instanceof HTMLElement) overlay.removeEventListener("click", onOverlayClick)
       for (const button of filterButtons) button.removeEventListener("click", onFilterClick)

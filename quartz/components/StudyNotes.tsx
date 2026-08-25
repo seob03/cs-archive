@@ -13,8 +13,10 @@ const initStudyNotes = () => {
   if (!root || root.dataset.studyNotesReady === "true") return
 
   const filterButtons = Array.from(root.querySelectorAll("[data-study-filter]"))
+  const activityCells = Array.from(root.querySelectorAll("[data-study-activity-cell]"))
   const cards = Array.from(root.querySelectorAll("[data-study-card]"))
   const emptyState = root.querySelector("[data-study-empty]")
+  let activeActivityDate = ""
   let disposed = false
 
   const syncCardPreviewLines = () => {
@@ -46,8 +48,11 @@ const initStudyNotes = () => {
     for (const card of cards) {
       const category = card.getAttribute("data-study-category")
       const searchText = card.getAttribute("data-study-search") || ""
+      const uploadedDate = card.getAttribute("data-study-date")
       const matchesSearch = tokens.length === 0 || tokens.every((token) => searchText.includes(token))
-      const shouldShow = (filter === "ALL" || category === filter) && matchesSearch
+      const matchesActivityDate = !activeActivityDate || uploadedDate === activeActivityDate
+      const shouldShow =
+        (filter === "ALL" || category === filter) && matchesSearch && matchesActivityDate
       card.hidden = !shouldShow
       if (shouldShow) visibleCount += 1
     }
@@ -55,16 +60,31 @@ const initStudyNotes = () => {
     if (emptyState instanceof HTMLElement) emptyState.hidden = visibleCount > 0
 
     for (const button of filterButtons) {
-      const isActive = button.getAttribute("data-study-filter") === filter
+      const isActive = !activeActivityDate && button.getAttribute("data-study-filter") === filter
       button.classList.toggle("is-active", isActive)
       button.setAttribute("aria-pressed", String(isActive))
+    }
+
+    for (const cell of activityCells) {
+      const isActive = cell.getAttribute("data-study-activity-date") === activeActivityDate
+      cell.classList.toggle("is-active", isActive)
+      cell.setAttribute("aria-pressed", String(isActive))
     }
   }
 
   const onClick = (event) => {
     if (!(event.target instanceof Element)) return
+    const activityCell = event.target.closest("[data-study-activity-cell]")
+    if (activityCell) {
+      const date = activityCell.getAttribute("data-study-activity-date") || ""
+      activeActivityDate = activeActivityDate === date ? "" : date
+      applyFilter("ALL")
+      return
+    }
+
     const button = event.target.closest("[data-study-filter]")
     if (!button) return
+    activeActivityDate = ""
     applyFilter(button.getAttribute("data-study-filter") || "ALL")
   }
 
@@ -117,7 +137,7 @@ const StudyNotes: QuartzComponent = ({ fileData, allFiles }: QuartzComponentProp
               {notes.length} NOTES PUBLISHED · {categories.length} CATEGORIES
             </p>
           </div>
-          <StudyGraph noteCount={notes.length} graphData={graphData} />
+          <StudyGraph noteCount={notes.length} notes={notes} graphData={graphData} />
         </div>
       </header>
 
@@ -153,6 +173,7 @@ const StudyNotes: QuartzComponent = ({ fileData, allFiles }: QuartzComponentProp
                 class="study-card internal"
                 data-study-card
                 data-study-category={note.categoryKey}
+                data-study-date={note.uploaded ? formatNoteDate(note.uploaded) : undefined}
                 style={`--study-category-color: ${categoryColor(note.categoryKey)}`}
                 data-study-search={studyNoteSearchText(note)}
                 href={resolveRelative(fileData.slug!, note.slug)}

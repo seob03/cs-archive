@@ -6,6 +6,7 @@ const config = readFileSync("quartz.config.yaml", "utf8")
 const styles = readFileSync("quartz/styles/custom.scss", "utf8")
 const home = readFileSync("content/index.md", "utf8")
 const studyNotes = readFileSync("quartz/components/StudyNotes.tsx", "utf8")
+const header = readFileSync("quartz/components/Header.tsx", "utf8")
 
 describe("archive branding and relationship layout", () => {
   it("uses the archive name instead of the default index label", () => {
@@ -26,11 +27,21 @@ describe("archive branding and relationship layout", () => {
     )
   })
 
-  it("keeps the home archive graph compact and cards uniform", () => {
+  it("keeps the home activity grid compact and cards uniform", () => {
     assert.match(styles, /\.study-card-grid\s*\{[\s\S]*repeat\(3,\s*minmax\(0,\s*1fr\)\)/)
     assert.doesNotMatch(styles, /\.study-card\.is-featured\s*\{[\s\S]*grid-column:\s*span\s*2/)
-    assert.match(styles, /\.study-graph-preview\s*\{[\s\S]*height:\s*14rem;/)
-    assert.match(styles, /\.study-graph-edge\s*\{[\s\S]*stroke-width:\s*1\.35;/)
+    assert.match(styles, /\.study-activity\s*\{[\s\S]*margin-top:\s*1rem;/)
+    assert.match(styles, /\.study-activity-grid\s*\{[\s\S]*repeat\(24,\s*minmax\(0,\s*1fr\)\)/)
+    assert.match(styles, /\.study-activity-cell\s*\{[\s\S]*border-radius:\s*3px;/)
+    assert.match(
+      styles,
+      /\.study-activity-cell::after\s*\{[\s\S]*content:\s*attr\(data-study-activity-tooltip\);/,
+    )
+    assert.match(header, /data-study-graph-header-open/)
+    assert.match(styles, /\.study-graph-header-button\s*\{[\s\S]*order:\s*2;/)
+    assert.doesNotMatch(styles, /\.study-graph-preview\s*\{[\s\S]*height:/)
+    assert.match(styles, /\.study-graph-edge\s*\{[\s\S]*stroke-width:\s*0\.9;/)
+    assert.match(styles, /\.study-hero\s*\{[\s\S]*padding:\s*4\.25rem\s+0\s+3\.5rem;/)
     assert.match(styles, /\.study-graph-tooltip\s*\{/)
     assert.match(styles, /\.study-graph-filter-bar\s*\{/)
     assert.doesNotMatch(styles, /\.study-graph-canvas\s*\{[\s\S]*?height:\s*100%\s*!important;/)
@@ -114,9 +125,30 @@ describe("archive branding and relationship layout", () => {
     )
     assert.match(
       styles,
-      /@media\s+\(min-width:\s*960px\)\s*\{[\s\S]*\.page-afterbody\s*\{[\s\S]*width:\s*min\(calc\(100%\s*-\s*10rem\),\s*var\(--site-related\)\);[\s\S]*margin-left:\s*10rem;/,
+      /body:not\(\[data-slug="index"\]\)\s+#quartz-body:has\(\.right\.sidebar:not\(:empty\)\)\s*\{[\s\S]*grid-template-columns:\s*minmax\(0,\s*1fr\);/,
     )
+    assert.match(
+      styles,
+      /body:not\(\[data-slug="index"\]\)\s+#quartz-body:has\(\.right\.sidebar:not\(:empty\)\)\s*>\s*\.right\.sidebar\s*\{[\s\S]*grid-column:\s*1;[\s\S]*grid-row:\s*1;/,
+    )
+    assert.match(
+      styles,
+      /\.page-afterbody\s*\{[\s\S]*width:\s*min\(100%,\s*var\(--site-related\)\);[\s\S]*margin:\s*0\s+auto;/,
+    )
+    assert.doesNotMatch(styles, /@media\s+\(min-width:\s*960px\)[\s\S]*margin-left:\s*10rem;/)
     assert.match(styles, /\.toc\s+\.overflow-end\s*\{[\s\S]*display:\s*none\s*!important;/)
+  })
+
+  it("insets wide-screen note content while reserving space before the table of contents", () => {
+    assert.match(styles, /--site-prose:\s*820px;/)
+    assert.match(
+      styles,
+      /@media\s+\(min-width:\s*1200px\)\s*\{[\s\S]*body:not\(\[data-slug="index"\]\)\s+\.page-header\s*>\s*\.popover-hint,[\s\S]*#quartz-body\s+\.center\s*>\s*article,[\s\S]*\.page-afterbody\s*\{[^}]*margin:\s*0\s+auto\s+0\s+10rem;/,
+    )
+    assert.match(
+      styles,
+      /@media\s+\(min-width:\s*1200px\)\s*\{[\s\S]*\.related-panel-grid\s*\{(?=[^}]*width:\s*100%;)(?=[^}]*grid-template-columns:\s*minmax\(0,\s*21\.25rem\)\s+minmax\(0,\s*1fr\);)/,
+    )
   })
 
   it("keeps long table-of-contents lists scrollable inside the sticky sidebar", () => {
@@ -193,6 +225,10 @@ describe("archive branding and relationship layout", () => {
     assert.match(styles, /\.related-graph(?:\s*,|\s*\{)/)
     assert.match(styles, /\.related-panel-header\s*\{/)
     assert.match(styles, /\.related-panel-grid\s*\{/)
+    assert.match(
+      styles,
+      /\.related-graph\s*\{[^}]*width:\s*min\(100%,\s*52\.15rem\);[^}]*margin:\s*0\s+auto;/,
+    )
     assert.match(styles, /\.related-notes-list\s*\{/)
     assert.doesNotMatch(styles, /\.related-panel-tabs\s*\{/)
     assert.doesNotMatch(styles, /\.related-panel-tab\s*\{/)
@@ -231,6 +267,35 @@ describe("archive branding and relationship layout", () => {
     )
   })
 
+  it("smoothly transitions core theme colors", () => {
+    assert.match(styles, /--site-theme-transition:\s*220ms ease;/)
+    assert.match(styles, /background-color var\(--site-theme-transition\)/)
+    assert.match(styles, /border-color var\(--site-theme-transition\)/)
+    assert.match(styles, /color var\(--site-theme-transition\)/)
+    assert.match(
+      styles,
+      /@media\s+\(prefers-reduced-motion:\s*reduce\)[\s\S]*--site-theme-transition:\s*0ms linear;/,
+    )
+  })
+
+  it("transitions card badge backgrounds with the theme", () => {
+    assert.match(
+      styles,
+      /#quartz-body \.study-card-badge\s*\{[^}]*transition:\s*background-color var\(--site-theme-transition\),\s*color var\(--site-theme-transition\);/,
+    )
+  })
+
+  it("avoids nested color transitions on active filter counts", () => {
+    assert.match(
+      styles,
+      /\.study-category-filter\.is-active span,\s*\.study-category-filter\[aria-pressed="true"\] span\s*\{[^}]*color:\s*color-mix\(in srgb, var\(--study-category-color\) 72%, var\(--site-ink\)\);/,
+    )
+    assert.doesNotMatch(
+      styles,
+      /\.study-category-filter\.is-active span,\s*\.study-category-filter\[aria-pressed="true"\] span\s*\{[^}]*color:\s*inherit;/,
+    )
+  })
+
   it("keeps graph colors readable in light mode", () => {
     assert.match(styles, /--site-graph-bg:\s*#f5f6fb;/)
     assert.match(styles, /--site-graph-edge:\s*rgba\(67,\s*56,\s*202,\s*0\.56\);/)
@@ -259,5 +324,6 @@ describe("archive branding and relationship layout", () => {
       /:root\[saved-theme="dark"\][\s\S]*\.mermaid \.edgeLabel \.labelBkg[\s\S]*background:/,
     )
     assert.match(styles, /:root\[saved-theme="dark"\][\s\S]*\.mermaid \.edgeLabel[\s\S]*color:/)
+    assert.match(styles, /code\.mermaid\s*>\s*svg\.flowchart\s*\{[\s\S]*justify-self:\s*center;/)
   })
 })

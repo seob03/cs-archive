@@ -51,8 +51,16 @@ describe("StudyNotes component", () => {
     assert.match(html, /class="study-home"/)
     assert.match(html, /class="study-hero"/)
     assert.match(html, /class="study-graph"/)
-    assert.match(html, /class="study-graph-preview study-graph-canvas"/)
-    assert.match(html, /class="study-graph-button"[^>]*data-study-graph-open[^>]*>/)
+    assert.match(html, /class="study-activity"/)
+    assert.match(html, /data-study-activity-grid/)
+    assert.equal((html.match(/class="study-activity-cell/g) ?? []).length, 24 * 7)
+    assert.doesNotMatch(html, /class="study-graph-preview study-graph-canvas"/)
+    assert.doesNotMatch(html, /class="study-graph-heading"/)
+    assert.doesNotMatch(html, /class="study-graph-kicker"/)
+    assert.doesNotMatch(html, /class="study-graph-title"/)
+    assert.doesNotMatch(html, /class="study-graph-button"/)
+    assert.match(html, /data-study-activity-date="2026-08-12"/)
+    assert.match(html, /data-study-activity-tooltip="2026-08-12 · 1개 노트"/)
     assert.match(html, /data-study-graph-data=/)
     assert.match(html, /data-study-graph-overlay/)
     assert.match(html, /data-study-graph-category="ALL"/)
@@ -75,6 +83,7 @@ describe("StudyNotes component", () => {
     assert.doesNotMatch(html, /study-card is-featured/)
     assert.match(html, /class="study-card internal"[^>]*data-study-category="DATABASE"/)
     assert.match(html, /data-study-category="DATABASE"[^>]*style="--study-category-color: #54a8ff"/)
+    assert.match(html, /data-study-date="2026-08-12"/)
     assert.match(html, /class="study-card-badge">BACKEND/)
     assert.match(html, /class="study-card-date">2026-08-12/)
     assert.match(html, /class="study-card-title">@Bean/)
@@ -84,6 +93,21 @@ describe("StudyNotes component", () => {
     assert.doesNotMatch(html, /study-note-card-arrow/)
     assert.doesNotMatch(html, /study-graph-button-mark/)
     assert.doesNotMatch(html, /min read/)
-    assert.match(html, /class="study-graph-button"[^>]*>Graph<\/button>/)
+    const afterDOMLoaded = String(StudyNotes.afterDOMLoaded)
+    assert.match(afterDOMLoaded, /activeActivityDate/)
+    assert.match(afterDOMLoaded, /data-study-activity-cell/)
+    assert.match(afterDOMLoaded, /data-study-date/)
+    assert.match(
+      afterDOMLoaded,
+      /const isActive = !activeActivityDate && button\.getAttribute\("data-study-filter"\) === filter/,
+    )
+    assert.match(
+      afterDOMLoaded,
+      /activeActivityDate = activeActivityDate === date \? "" : date[\s\S]*?applyFilter\("ALL"\)/,
+    )
+    assert.match(
+      afterDOMLoaded,
+      /activeActivityDate = ""[\s\S]*?applyFilter\(button\.getAttribute\("data-study-filter"\) \|\| "ALL"\)/,
+    )
   })
 })
