@@ -85,7 +85,7 @@ flowchart TD
 	- `ToolNode`와 같은 노드의 실행은 나중에 컴파일된 graph가 알아서 함.
 	- 정확히는 LangGraph의 실행 엔진이 수행함.
 - `builder.add_edge("execute_tools", "call_model")`
-	- [[Feedback Loop Chain]]까지 완벽하게 구현했다.
+	- [[Feedback Loop]]까지 완벽하게 구현했다.
 
 ```python
 # 그래프 실행

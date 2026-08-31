@@ -27,4 +27,4 @@ ReAct는 Reasoning and Acting을 합친 단어로 가장 일반적인 에이전�
 
 ## 참고
 
-[[LangGraph 내장 ReAct Agent]]
+[[LangGraph 내장 ReAct Agent 구현하기]]
