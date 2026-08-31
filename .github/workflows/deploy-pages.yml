@@ -4,6 +4,9 @@ on:
   push:
     branches:
       - v5
+  schedule:
+    # Refresh date-based activity cells at 00:05 KST (15:05 UTC).
+    - cron: "5 15 * * *"
   workflow_dispatch:
 
 permissions:

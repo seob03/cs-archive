@@ -7,11 +7,16 @@ const styles = readFileSync("quartz/styles/custom.scss", "utf8")
 const home = readFileSync("content/index.md", "utf8")
 const studyNotes = readFileSync("quartz/components/StudyNotes.tsx", "utf8")
 const header = readFileSync("quartz/components/Header.tsx", "utf8")
+const deployPages = readFileSync(".github/workflows/deploy-pages.yml", "utf8")
 
 describe("archive branding and relationship layout", () => {
   it("uses the archive name instead of the default index label", () => {
     assert.match(config, /pageTitle:\s*["']Seob CS Archive["']/)
     assert.match(home, /^---\s+[\s\S]*?title:\s*["']Seob CS Archive["']/)
+  })
+
+  it("rebuilds the activity grid every day", () => {
+    assert.match(deployPages, /schedule:\s*[\s\S]*?cron:\s*["']5 15 \* \* \*["']/)
   })
 
   it("uses the inline archive search instead of Quartz's modal search", () => {
